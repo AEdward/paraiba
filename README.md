@@ -88,11 +88,17 @@ you're logged in.
     convention (`src/lib/richText.ts`) — still rendered and edited correctly; opening one
     in the editor converts it to the new format on next save.
 - **Partners** (`/admin/partners`) — logos shown in the "Trusted by" marquee on the
-  homepage, right under the hero. Each partner has a name, an optional logo URL, an
-  optional website link, and a display order (lower first). A partner without a logo
-  falls back to a text badge instead of an image. The whole section — heading and
-  marquee — is only rendered when at least one partner exists, so the homepage doesn't
-  imply credibility that isn't real yet.
+  homepage, right under the hero. Each partner has a name, a logo, an optional website
+  link, and a display order (lower first). A partner without a logo falls back to a text
+  badge instead of an image. The whole section — heading and marquee — is only rendered
+  when at least one partner exists, so the homepage doesn't imply credibility that isn't
+  real yet.
+  - **Logo**: upload an image file directly from the form (PNG/JPG/SVG, up to 2MB) — it's
+    stored in the database (`Partner.logoData`/`logoMimeType`, a Postgres `bytea` column)
+    and served back through `/api/partners/[id]/logo`, cache-busted by `updatedAt` so a
+    re-upload is never served stale. No third-party storage/env vars needed. A plain
+    `Partner.logoUrl` text field still exists as a fallback for pasting an
+    already-hosted link — it's only used when no file has been uploaded.
 - **Careers** (`/admin/careers`) — open/closed job postings. The public `/careers` page
   shows real postings when any exist, or an honest "no open roles right now" state when
   it's empty. Each posting shows its applicant count, linking into Applicants pre-filtered

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import { db } from "@/lib/db";
+import { partnerLogoSrc } from "@/lib/partners";
 import { DeleteButton } from "../DeleteButton";
 import { deletePartner } from "./actions";
 
@@ -46,12 +47,14 @@ export default async function AdminPartnersPage() {
             </tr>
           </thead>
           <tbody>
-            {partners.map((partner) => (
+            {partners.map((partner) => {
+              const logoSrc = partnerLogoSrc(partner);
+              return (
               <tr key={partner.id} className="border-b last:border-0" style={{ borderColor: "var(--border-soft)" }}>
                 <td className="px-4 py-3">
-                  {partner.logoUrl ? (
+                  {logoSrc ? (
                     <Image
-                      src={partner.logoUrl}
+                      src={logoSrc}
                       alt={partner.name}
                       width={80}
                       height={28}
@@ -80,7 +83,8 @@ export default async function AdminPartnersPage() {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
             {partners.length === 0 && (
               <tr>
                 <td colSpan={5} className="px-4 py-8 text-center opacity-50">

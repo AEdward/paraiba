@@ -1,8 +1,13 @@
 "use client";
 
-import type { Partner } from "@/generated/prisma/client";
+export type PartnerDisplay = {
+  id: string;
+  name: string;
+  website: string | null;
+  logoSrc: string | null;
+};
 
-export function PartnersMarquee({ partners }: { partners: Partner[] }) {
+export function PartnersMarquee({ partners }: { partners: PartnerDisplay[] }) {
   const loop = [...partners, ...partners];
 
   return (
@@ -23,11 +28,11 @@ export function PartnersMarquee({ partners }: { partners: Partner[] }) {
   );
 }
 
-function PartnerLogo({ partner }: { partner: Partner }) {
-  const content = partner.logoUrl ? (
+function PartnerLogo({ partner }: { partner: PartnerDisplay }) {
+  const content = partner.logoSrc ? (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={partner.logoUrl}
+      src={partner.logoSrc}
       alt={partner.name}
       className="partners-marquee-logo h-8 w-auto shrink-0 object-contain sm:h-9"
       loading="lazy"

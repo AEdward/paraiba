@@ -6,7 +6,7 @@ import { GradientMesh } from "@/components/GradientMesh";
 import { Hero3D } from "@/components/three/Hero3D";
 import { PartnersMarquee } from "@/components/PartnersMarquee";
 import { getProjects } from "@/lib/projects-data";
-import { getPartners } from "@/lib/partners";
+import { getPartners, partnerLogoSrc } from "@/lib/partners";
 
 export const dynamic = "force-dynamic";
 
@@ -73,7 +73,12 @@ const products = [
 
 export default async function Home() {
   const projects = (await getProjects()).slice(0, 3);
-  const partners = await getPartners();
+  const partners = (await getPartners()).map((partner) => ({
+    id: partner.id,
+    name: partner.name,
+    website: partner.website,
+    logoSrc: partnerLogoSrc(partner),
+  }));
 
   return (
     <>

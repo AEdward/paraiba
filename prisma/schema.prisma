@@ -19,23 +19,23 @@ model User {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  tagline     String
-  description String
-  status      String // "live" | "in-progress" | "concept" | "archived"
-  kind        String   @default("client") // "client" | "product" — work done for a client vs. a product Paraiba owns
-  tags        String // comma-separated
-  link        String?
-  screenshot  String?
-  embedLive   Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
-  githubRepo  String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
-  featured    Boolean  @default(false) // shown in the large showcase hero above the /projects grid
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  tagline      String
+  description  String
+  status       String // "live" | "in-progress" | "concept" | "archived"
+  kind         String   @default("client") // "client" | "product" — work done for a client vs. a product Paraiba owns
+  tags         String // comma-separated
+  link         String?
+  screenshot   String?
+  embedLive    Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
+  githubRepo   String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
+  featured     Boolean  @default(false) // shown in the large showcase hero above the /projects grid
   deliverables String? // "## Category\n- item\n- item\n\n## Category\n..." — rendered as grouped cards
-  caseStudy   String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  caseStudy    String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model JobPosting {
@@ -64,13 +64,15 @@ model JobApplication {
 }
 
 model Partner {
-  id        String   @id @default(cuid())
-  name      String
-  logoUrl   String?
-  website   String?
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  logoUrl      String? // used when no logo was uploaded — a link to an already-hosted image
+  logoData     Bytes? // set when the admin uploads a file directly; takes priority over logoUrl
+  logoMimeType String?
+  website      String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model ContactSubmission {

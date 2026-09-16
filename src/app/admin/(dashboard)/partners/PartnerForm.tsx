@@ -1,4 +1,5 @@
 import type { Partner } from "@/generated/prisma/client";
+import { partnerLogoSrc } from "@/lib/partners";
 
 const inputClass =
   "w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:border-(--color-teal)";
@@ -18,6 +19,8 @@ export function PartnerForm({
   action: (formData: FormData) => void;
   submitLabel: string;
 }) {
+  const currentLogoSrc = partner ? partnerLogoSrc(partner) : null;
+
   return (
     <form action={action} className="flex max-w-xl flex-col gap-5">
       <div>
@@ -35,8 +38,43 @@ export function PartnerForm({
       </div>
 
       <div>
+        <label className={labelClass} style={{ color: "var(--ink)" }}>
+          Logo
+        </label>
+
+        {currentLogoSrc && (
+          <div className="mb-3 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={currentLogoSrc}
+              alt={partner?.name}
+              className="h-10 w-auto max-w-[160px] rounded border object-contain p-1.5"
+              style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+            />
+            <label className="flex items-center gap-2 text-xs opacity-70">
+              <input type="checkbox" name="removeLogo" value="on" />
+              Remove current logo
+            </label>
+          </div>
+        )}
+
+        <input
+          id="logo"
+          name="logo"
+          type="file"
+          accept="image/*"
+          className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:px-3 file:py-1.5 file:text-xs file:font-semibold`}
+          style={inputStyle}
+        />
+        <p className="mt-1.5 text-xs opacity-50">
+          Upload a logo file (PNG, JPG, SVG — up to 2MB, transparent background works best).
+          {currentLogoSrc ? " Uploading a new file replaces the current logo." : ""}
+        </p>
+      </div>
+
+      <div>
         <label htmlFor="logoUrl" className={labelClass} style={{ color: "var(--ink)" }}>
-          Logo URL
+          Or logo URL
         </label>
         <input
           id="logoUrl"
@@ -48,8 +86,8 @@ export function PartnerForm({
           style={inputStyle}
         />
         <p className="mt-1.5 text-xs opacity-50">
-          Optional. A wide, transparent-background logo works best. Leave blank to show the
-          partner name as a text badge instead.
+          Only used when no logo file is uploaded. Leave everything blank to show the partner
+          name as a text badge instead.
         </p>
       </div>
 
