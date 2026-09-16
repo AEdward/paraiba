@@ -3,16 +3,22 @@
 Marketing site for Paraiba Technology PLC — home, about, projects, careers, contact,
 and an admin dashboard backed by a real database.
 
-Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma (SQLite locally).
-Brand palette, type, and the crystalline P mark come from the internal brand guide
-(Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat + Inter).
+Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma backed by
+Supabase Postgres. Brand palette, type, and the crystalline P mark come from the internal
+brand guide (Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat + Inter).
 
 ## Getting started
 
+1. Create a [Supabase](https://supabase.com) project (or use an existing one).
+2. From Project Settings → Database → Connection string, grab both the transaction-mode
+   pooler URI (`DATABASE_URL`, port 6543) and the session-mode pooler or direct URI
+   (`DIRECT_URL`, port 5432) — Prisma Migrate needs the direct connection, the app uses
+   the pooled one.
+
 ```bash
 npm install                 # also runs `prisma generate` via postinstall
-cp .env.example .env        # fill in AUTH_SECRET, ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD
-npm run db:migrate          # creates the local SQLite database + tables
+cp .env.example .env        # fill in DATABASE_URL, DIRECT_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD
+npm run db:migrate          # creates the tables in your Supabase database
 npm run db:seed             # creates your first admin user + placeholder projects
 npm run dev
 ```
@@ -42,7 +48,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   has only types and pure presentation helpers (client-safe — imported by `ProjectCard`
   and other client components). `projects-data.ts` has the actual Prisma-backed
   `getProjects`/`getProject` and is guarded with `import "server-only"`. Don't merge these
-  back together — importing Prisma/libsql into a client bundle breaks the build.
+  back together — importing Prisma/pg into a client bundle breaks the build.
 - `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `ContactSubmission` models.
 - `prisma/seed.ts` — creates the first admin user and seeds placeholder projects.
 
@@ -86,18 +92,17 @@ you're logged in.
 
 ## Deploying
 
-The local database is SQLite (a `dev.db` file, gitignored). That works great for
-development but **will not persist on serverless hosting** (e.g. Vercel) — the filesystem
-there is ephemeral. Before deploying to production:
+Local dev and production both point at the same Supabase Postgres database via
+`DATABASE_URL` / `DIRECT_URL` — there's no separate local database to worry about. To
+deploy (e.g. to Vercel):
 
-1. Provision a hosted Postgres database (Neon, Supabase, or Vercel Postgres all work).
-2. Update `prisma/schema.prisma`'s `datasource` to `provider = "postgresql"`.
-3. Swap the driver adapter in `src/lib/db.ts` and `prisma/seed.ts` from
-   `@prisma/adapter-libsql` to `@prisma/adapter-pg` (`npm install @prisma/adapter-pg pg`).
-4. Set `DATABASE_URL` to the hosted connection string, run `npm run db:deploy` to apply
-   migrations, then `npm run db:seed` once to create the first admin user.
+1. Set `DATABASE_URL`, `DIRECT_URL` (and `AUTH_SECRET`, `ADMIN_EMAIL`, `ADMIN_NAME`, `ADMIN_PASSWORD`)
+   in your host's environment variables.
+2. Run `npm run db:deploy` to apply migrations against Supabase, then `npm run db:seed`
+   once to create the first admin user.
 
-The schema itself doesn't need to change — this is a config swap, not a rewrite.
+If you'd rather give production its own database, create a second Supabase project (or
+branch) and point its `DATABASE_URL` there instead.
 
 ## Notes
 
