@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --color-indigo: #16233f;
+  --color-amber: #f4b942;
+  --color-ember: #c1562e;
+  --color-teal: #2e8c86;
+  --color-cream: #faf5ec;
+  --color-slate: #3a4556;
+
+  --background: var(--color-cream);
+  --foreground: var(--color-slate);
+  --surface: #ffffff;
+  --border-soft: rgba(22, 35, 63, 0.12);
+  --ink: var(--color-indigo);
+}
+
+:root[data-theme="dark"] {
+  --background: var(--color-indigo);
+  --foreground: var(--color-cream);
+  --surface: #1c2b4a;
+  --border-soft: rgba(250, 245, 236, 0.12);
+  --ink: var(--color-cream);
+}
+
+@theme inline {
+  --color-indigo: var(--color-indigo);
+  --color-amber: var(--color-amber);
+  --color-ember: var(--color-ember);
+  --color-teal: var(--color-teal);
+  --color-cream: var(--color-cream);
+  --color-slate: var(--color-slate);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border-soft: var(--border-soft);
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-amharic: var(--font-noto-ethiopic);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-indigo);
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(4%, 6%) scale(1.08);
+  }
+}
+
+@keyframes tilt-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+

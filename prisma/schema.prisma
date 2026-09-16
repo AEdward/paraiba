@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  tagline     String
+  description String
+  status      String // "live" | "in-progress" | "concept" | "archived"
+  tags        String // comma-separated
+  link        String?
+  screenshot  String?
+  embedLive   Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
+  githubRepo  String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
+  featured    Boolean  @default(false) // shown in the large showcase hero above the /projects grid
+  deliverables String? // "## Category\n- item\n- item\n\n## Category\n..." — rendered as grouped cards
+  caseStudy   String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JobPosting {
+  id          String   @id @default(cuid())
+  title       String
+  location    String
+  type        String // "Full-time" | "Part-time" | "Contract"
+  description String
+  status      String   @default("open") // "open" | "closed"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
