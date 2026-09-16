@@ -87,6 +87,20 @@ body {
   background-size: 48px 48px;
 }
 
+/* Redefines the same custom properties every component already reads
+   (--background, --foreground, --surface, --border-soft, --ink), so wrapping
+   a section in this class re-themes everything inside it to light, with no
+   per-component changes needed. */
+.paraiba-light-section {
+  --background: var(--color-cream);
+  --foreground: var(--color-slate);
+  --surface: #ffffff;
+  --border-soft: rgba(6, 20, 38, 0.12);
+  --ink: var(--color-indigo);
+  background: var(--background);
+  color: var(--foreground);
+}
+
 .paraiba-text-gradient {
   background: linear-gradient(110deg, #ffffff, #b8fbff, var(--color-amber));
   background-clip: text;

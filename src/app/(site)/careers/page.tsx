@@ -36,7 +36,7 @@ export default async function CareersPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
+      <section className="paraiba-dark-section relative overflow-hidden">
         <GradientMesh />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <FadeIn>
@@ -60,6 +60,7 @@ export default async function CareersPage() {
         </div>
       </section>
 
+      <div className="paraiba-light-section">
       <section className="border-t" style={{ borderColor: "var(--border-soft)" }}>
         <div className="mx-auto max-w-6xl px-6 py-20">
           <FadeIn>
@@ -125,6 +126,7 @@ export default async function CareersPage() {
           )}
         </div>
       </section>
+      </div>
     </>
   );
 }

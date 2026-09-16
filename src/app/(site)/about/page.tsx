@@ -18,6 +18,7 @@ const philosophy = [
 export default function AboutPage() {
   return (
     <>
+    <div className="paraiba-light-section">
       <section className="relative overflow-hidden">
         <GradientMesh />
         <div className="relative mx-auto max-w-4xl px-6 py-20 sm:py-28">
@@ -184,9 +185,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </div>
 
       <section
-        className="relative overflow-hidden border-t"
+        className="paraiba-dark-section relative overflow-hidden border-t"
         style={{ borderColor: "var(--border-soft)" }}
       >
         <GradientMesh />
@@ -215,3 +217,4 @@ export default function AboutPage() {
     </>
   );
 }
+

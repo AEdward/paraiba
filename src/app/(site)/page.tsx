@@ -73,8 +73,8 @@ export default async function Home() {
   const projects = (await getProjects()).slice(0, 3);
 
   return (
-    <div className="paraiba-dark-section">
-      <section className="relative overflow-hidden">
+    <>
+      <section className="paraiba-dark-section relative overflow-hidden">
         <GradientMesh />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-20 sm:pt-16 lg:grid-cols-2 lg:gap-16 lg:pb-28">
           <div>
@@ -134,193 +134,195 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="solutions" className="border-t" style={{ borderColor: "rgba(245,250,255,0.1)", scrollMarginTop: "90px" }}>
-        <div className="mx-auto max-w-6xl px-6 py-24">
-          <FadeIn>
-            <p
-              className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
-              style={{ color: "var(--color-amber)" }}
-            >
-              What we build
-            </p>
-            <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl">
-              Digital solutions built for real life.
-            </h2>
-            <p className="mt-4 max-w-lg opacity-65">
-              Our work spans across the digital ecosystem — from our own products to the
-              systems that run other businesses.
-            </p>
-          </FadeIn>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {solutions.map((s, i) => (
-              <FadeIn key={s.number} delay={i * 0.08}>
-                <div
-                  className="h-full rounded-2xl border p-7 transition-transform hover:-translate-y-1"
-                  style={{ borderColor: "rgba(245,250,255,0.1)", background: "rgba(255,255,255,0.03)" }}
-                >
-                  <span
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-sm font-bold"
-                    style={{
-                      color: "var(--color-amber)",
-                      background: "rgba(8,220,232,0.08)",
-                      border: "1px solid rgba(8,220,232,0.2)",
-                    }}
-                  >
-                    {s.number}
-                  </span>
-                  <h3 className="font-display mt-6 text-xl font-bold">{s.title}</h3>
-                  <p className="mt-2 text-sm opacity-65">{s.description}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="border-t"
-        style={{
-          borderColor: "rgba(245,250,255,0.1)",
-          background: "linear-gradient(rgba(8,124,255,0.05), transparent)",
-        }}
-      >
-        <div className="mx-auto grid max-w-6xl gap-14 px-6 py-24 lg:grid-cols-2 lg:items-center">
-          <FadeIn>
-            <div>
+      <div className="paraiba-light-section">
+        <section id="solutions" className="border-t" style={{ borderColor: "var(--border-soft)", scrollMarginTop: "90px" }}>
+          <div className="mx-auto max-w-6xl px-6 py-24">
+            <FadeIn>
               <p
                 className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
-                style={{ color: "var(--color-amber)" }}
+                style={{ color: "var(--color-ember)" }}
               >
-                The Paraiba idea
+                What we build
               </p>
-              <h2 className="font-display mt-4 text-3xl leading-tight font-bold sm:text-4xl">
-                Born in Ethiopia.
-                <br />
-                Built for what&apos;s next.
+              <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
+                Digital solutions built for real life.
               </h2>
-              <p className="mt-4 max-w-md opacity-65">
-                Inspired by the brilliance and vivid color associated with Paraíba-type
-                tourmaline, our identity represents precision, energy and distinction.
+              <p className="mt-4 max-w-lg opacity-65">
+                Our work spans across the digital ecosystem — from our own products to the
+                systems that run other businesses.
               </p>
-              <div className="mt-8 grid grid-cols-2 gap-3">
-                {stats.map((s) => (
+            </FadeIn>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {solutions.map((s, i) => (
+                <FadeIn key={s.number} delay={i * 0.08}>
                   <div
-                    key={s.number}
-                    className="rounded-xl border p-5"
-                    style={{ borderColor: "rgba(245,250,255,0.1)", background: "rgba(255,255,255,0.03)" }}
+                    className="h-full rounded-2xl border p-7 transition-transform hover:-translate-y-1"
+                    style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
                   >
-                    <b className="block text-2xl font-bold" style={{ color: "var(--color-amber)" }}>
+                    <span
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-sm font-bold"
+                      style={{
+                        color: "var(--color-ember)",
+                        background: "rgba(8,124,255,0.08)",
+                        border: "1px solid rgba(8,124,255,0.2)",
+                      }}
+                    >
                       {s.number}
-                    </b>
-                    <span className="text-xs opacity-60">{s.label}</span>
+                    </span>
+                    <h3 className="font-display mt-6 text-xl font-bold" style={{ color: "var(--ink)" }}>{s.title}</h3>
+                    <p className="mt-2 text-sm opacity-65">{s.description}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div
-              className="rounded-3xl border p-10"
-              style={{
-                borderColor: "rgba(8,220,232,0.18)",
-                background:
-                  "radial-gradient(circle at 80% 20%, rgba(8,220,232,0.11), transparent 48%), rgba(255,255,255,0.03)",
-              }}
-            >
-              <p className="text-2xl leading-snug font-medium tracking-tight">
-                &ldquo;Great technology should not feel complicated. It should feel
-                natural, powerful and useful.&rdquo;
-              </p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {projects.length > 0 && (
-        <section className="border-t" style={{ borderColor: "rgba(245,250,255,0.1)" }}>
-          <div className="mx-auto max-w-6xl px-6 py-24">
-            <div className="flex items-end justify-between gap-4">
-              <FadeIn>
-                <p
-                  className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
-                  style={{ color: "var(--color-amber)" }}
-                >
-                  Portfolio
-                </p>
-                <h2 className="font-display mt-4 text-3xl font-bold">What we&apos;re building</h2>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <Link
-                  href="/projects"
-                  className="font-display hidden items-center gap-1 text-sm font-semibold sm:inline-flex"
-                  style={{ color: "var(--color-amber)" }}
-                >
-                  View all <ArrowRight size={14} />
-                </Link>
-              </FadeIn>
-            </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, i) => (
-                <FadeIn key={project.slug} delay={i * 0.08}>
-                  <ProjectCard project={project} />
                 </FadeIn>
               ))}
             </div>
           </div>
         </section>
-      )}
 
-      <section id="products" className="border-t" style={{ borderColor: "rgba(245,250,255,0.1)" }}>
-        <div className="mx-auto max-w-6xl px-6 py-24">
-          <FadeIn>
-            <p
-              className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
-              style={{ color: "var(--color-amber)" }}
-            >
-              Future ecosystem
-            </p>
-            <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl">
-              One brand. Many possibilities.
-            </h2>
-            <p className="mt-4 max-w-lg opacity-65">
-              The Paraiba master brand can support a growing family of digital products
-              and platforms.
-            </p>
-          </FadeIn>
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
-            {products.map((p, i) => {
-              const Icon = p.icon;
-              return (
-                <FadeIn key={p.title} delay={i * 0.08}>
-                  <div
-                    className="h-full rounded-2xl border p-7"
-                    style={{ borderColor: "rgba(245,250,255,0.1)", background: "#081a2d" }}
-                  >
-                    <div className="flex items-center gap-2">
-                      <Icon size={14} style={{ color: "var(--color-amber)" }} />
-                      <small
-                        className="text-xs font-bold tracking-[0.14em] uppercase"
-                        style={{ color: "var(--color-amber)" }}
-                      >
-                        {p.label}
-                      </small>
+        <section
+          className="border-t"
+          style={{
+            borderColor: "var(--border-soft)",
+            background: "linear-gradient(rgba(8,124,255,0.05), transparent)",
+          }}
+        >
+          <div className="mx-auto grid max-w-6xl gap-14 px-6 py-24 lg:grid-cols-2 lg:items-center">
+            <FadeIn>
+              <div>
+                <p
+                  className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
+                  style={{ color: "var(--color-ember)" }}
+                >
+                  The Paraiba idea
+                </p>
+                <h2 className="font-display mt-4 text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
+                  Born in Ethiopia.
+                  <br />
+                  Built for what&apos;s next.
+                </h2>
+                <p className="mt-4 max-w-md opacity-65">
+                  Inspired by the brilliance and vivid color associated with Paraíba-type
+                  tourmaline, our identity represents precision, energy and distinction.
+                </p>
+                <div className="mt-8 grid grid-cols-2 gap-3">
+                  {stats.map((s) => (
+                    <div
+                      key={s.number}
+                      className="rounded-xl border p-5"
+                      style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+                    >
+                      <b className="block text-2xl font-bold" style={{ color: "var(--color-ember)" }}>
+                        {s.number}
+                      </b>
+                      <span className="text-xs opacity-60">{s.label}</span>
                     </div>
-                    <h3 className="font-display mt-3 text-xl font-bold">{p.title}</h3>
-                    <p className="mt-2 text-sm opacity-65">{p.description}</p>
-                  </div>
-                </FadeIn>
-              );
-            })}
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.15}>
+              <div
+                className="rounded-3xl border p-10"
+                style={{
+                  borderColor: "rgba(8,124,255,0.2)",
+                  background:
+                    "radial-gradient(circle at 80% 20%, rgba(8,124,255,0.09), transparent 48%), var(--surface)",
+                }}
+              >
+                <p className="text-2xl leading-snug font-medium tracking-tight" style={{ color: "var(--ink)" }}>
+                  &ldquo;Great technology should not feel complicated. It should feel
+                  natural, powerful and useful.&rdquo;
+                </p>
+              </div>
+            </FadeIn>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="border-t px-6 py-24" style={{ borderColor: "rgba(245,250,255,0.1)" }}>
+        {projects.length > 0 && (
+          <section className="border-t" style={{ borderColor: "var(--border-soft)" }}>
+            <div className="mx-auto max-w-6xl px-6 py-24">
+              <div className="flex items-end justify-between gap-4">
+                <FadeIn>
+                  <p
+                    className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
+                    style={{ color: "var(--color-ember)" }}
+                  >
+                    Portfolio
+                  </p>
+                  <h2 className="font-display mt-4 text-3xl font-bold" style={{ color: "var(--ink)" }}>What we&apos;re building</h2>
+                </FadeIn>
+                <FadeIn delay={0.1}>
+                  <Link
+                    href="/projects"
+                    className="font-display hidden items-center gap-1 text-sm font-semibold sm:inline-flex"
+                    style={{ color: "var(--color-ember)" }}
+                  >
+                    View all <ArrowRight size={14} />
+                  </Link>
+                </FadeIn>
+              </div>
+              <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {projects.map((project, i) => (
+                  <FadeIn key={project.slug} delay={i * 0.08}>
+                    <ProjectCard project={project} />
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section id="products" className="border-t" style={{ borderColor: "var(--border-soft)" }}>
+          <div className="mx-auto max-w-6xl px-6 py-24">
+            <FadeIn>
+              <p
+                className="font-display text-xs font-semibold tracking-[0.3em] uppercase"
+                style={{ color: "var(--color-ember)" }}
+              >
+                Future ecosystem
+              </p>
+              <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
+                One brand. Many possibilities.
+              </h2>
+              <p className="mt-4 max-w-lg opacity-65">
+                The Paraiba master brand can support a growing family of digital products
+                and platforms.
+              </p>
+            </FadeIn>
+            <div className="mt-12 grid gap-5 sm:grid-cols-3">
+              {products.map((p, i) => {
+                const Icon = p.icon;
+                return (
+                  <FadeIn key={p.title} delay={i * 0.08}>
+                    <div
+                      className="h-full rounded-2xl border p-7"
+                      style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon size={14} style={{ color: "var(--color-ember)" }} />
+                        <small
+                          className="text-xs font-bold tracking-[0.14em] uppercase"
+                          style={{ color: "var(--color-ember)" }}
+                        >
+                          {p.label}
+                        </small>
+                      </div>
+                      <h3 className="font-display mt-3 text-xl font-bold" style={{ color: "var(--ink)" }}>{p.title}</h3>
+                      <p className="mt-2 text-sm opacity-65">{p.description}</p>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="paraiba-dark-section border-t px-6 py-24" style={{ borderColor: "var(--border-soft)" }}>
         <FadeIn>
           <div
             className="mx-auto max-w-3xl rounded-3xl border p-16 text-center"
             style={{
-              borderColor: "rgba(245,250,255,0.1)",
+              borderColor: "var(--border-soft)",
               background:
                 "radial-gradient(circle at 50% 0%, rgba(8,220,232,0.15), transparent 50%), linear-gradient(145deg, #0a2038, var(--color-indigo))",
             }}
@@ -348,6 +350,6 @@ export default async function Home() {
           </div>
         </FadeIn>
       </section>
-    </div>
+    </>
   );
 }

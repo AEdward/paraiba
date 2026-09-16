@@ -35,6 +35,7 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   return (
+    <div className="paraiba-light-section">
     <div className="mx-auto max-w-4xl px-6 py-20">
       <FadeIn>
         <Link
@@ -137,6 +138,7 @@ export default async function ProjectPage({
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }
