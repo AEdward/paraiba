@@ -18,10 +18,17 @@ brand guide (Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat +
 ```bash
 npm install                 # also runs `prisma generate` via postinstall
 cp .env.example .env        # fill in DATABASE_URL, DIRECT_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD
-npm run db:migrate          # creates the tables in your Supabase database
+npm run db:deploy           # applies the committed migrations to your Supabase database
 npm run db:seed             # creates your first admin user + placeholder projects
 npm run dev
 ```
+
+Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
+`migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase
+doesn't allow creating extra databases — it'll fail with a shadow-database error. `db:deploy`
+just applies the migration files already committed in `prisma/migrations/`, no shadow database
+needed. Only reach for `migrate dev` if you're changing `schema.prisma` yourself and need to
+generate a *new* migration — and even then, expect the shadow-database step to fail on Supabase.
 
 Open [http://localhost:3000](http://localhost:3000) for the site, and
 [http://localhost:3000/admin/login](http://localhost:3000/admin/login) to sign in with the
