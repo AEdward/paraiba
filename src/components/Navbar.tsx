@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
-import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { href: "/", label: "Home" },
@@ -38,11 +37,9 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <ThemeToggle />
         </nav>
 
         <div className="flex items-center gap-3 lg:hidden">
-          <ThemeToggle />
           <button
             type="button"
             aria-label="Toggle menu"

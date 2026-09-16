@@ -10,14 +10,7 @@
   --color-cream: #f5faff; /* Crystal White — primary light text / surfaces */
   --color-slate: #33465c; /* supporting neutral for body copy */
 
-  --background: var(--color-cream);
-  --foreground: var(--color-slate);
-  --surface: #ffffff;
-  --border-soft: rgba(6, 20, 38, 0.12);
-  --ink: var(--color-indigo);
-}
-
-:root[data-theme="dark"] {
+  /* Paraiba is a dark-only brand experience — no light theme. */
   --background: var(--color-indigo);
   --foreground: var(--color-cream);
   --surface: #0d2547;
