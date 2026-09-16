@@ -64,7 +64,7 @@ export default async function Home() {
     <div className="paraiba-dark-section">
       <section className="relative overflow-hidden">
         <GradientMesh />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-32 pb-20 sm:pt-40 lg:grid-cols-2 lg:gap-16 lg:pb-28">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-20 sm:pt-16 lg:grid-cols-2 lg:gap-16 lg:pb-28">
           <div>
             <FadeIn>
               <p
