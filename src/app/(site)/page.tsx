@@ -11,21 +11,33 @@ export const dynamic = "force-dynamic";
 const solutions = [
   {
     number: "01",
-    title: "Business Technology",
+    title: "Digital Products",
     description:
-      "ERP, workflow, management and custom software that helps organizations operate with greater clarity.",
+      "We develop our own technology products and platforms designed to solve real problems and create new opportunities.",
   },
   {
     number: "02",
-    title: "Digital Products",
+    title: "Websites & Digital Experiences",
     description:
-      "Web platforms, mobile experiences and SaaS products designed around the people who use them.",
+      "From corporate websites to advanced web platforms, we create modern digital experiences that represent businesses and connect them with their customers.",
   },
   {
     number: "03",
-    title: "Emerging Technology",
+    title: "ERP & Business Systems",
     description:
-      "AI, automation, cloud and connected digital services that turn new possibilities into practical products.",
+      "We build powerful business management systems that bring operations, finance, sales, people, inventory, and other business functions together in one connected environment.",
+  },
+  {
+    number: "04",
+    title: "Apps & Platforms",
+    description:
+      "We design and develop mobile and web applications that turn ideas into scalable digital products.",
+  },
+  {
+    number: "05",
+    title: "Bots & Automation",
+    description:
+      "We build intelligent bots and automated systems that help businesses communicate with customers, streamline operations, and reduce repetitive work.",
   },
 ];
 
@@ -135,11 +147,11 @@ export default async function Home() {
               Digital solutions built for real life.
             </h2>
             <p className="mt-4 max-w-lg opacity-65">
-              From business systems to digital experiences, Paraiba turns ambitious ideas
-              into reliable technology.
+              Our work spans across the digital ecosystem — from our own products to the
+              systems that run other businesses.
             </p>
           </FadeIn>
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.map((s, i) => (
               <FadeIn key={s.number} delay={i * 0.08}>
                 <div
