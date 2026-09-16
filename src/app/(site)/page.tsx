@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Cloud, Cpu, Sparkles } from "lucide-react";
 import { ProjectCard } from "@/components/ProjectCard";
 import { FadeIn } from "@/components/FadeIn";
 import { GradientMesh } from "@/components/GradientMesh";
+import { Hero3D } from "@/components/three/Hero3D";
 import { getProjects } from "@/lib/projects-data";
 
 export const dynamic = "force-dynamic";
@@ -108,22 +108,16 @@ export default async function Home() {
           </div>
           <FadeIn delay={0.15} className="relative">
             <div
-              className="motion-safe:animate-[float_5s_ease-in-out_infinite] mx-auto flex max-w-md items-center justify-center rounded-3xl border p-10"
+              className="mx-auto flex max-w-md items-center justify-center rounded-3xl border p-6"
               style={{
                 borderColor: "rgba(8,220,232,0.16)",
                 background:
                   "radial-gradient(circle at 70% 20%, rgba(8,220,232,0.12), transparent 60%), rgba(255,255,255,0.03)",
               }}
             >
-              <Image
-                src="/paraiba-logo-full.png"
-                alt="Paraiba Technology PLC — crystalline P emblem and wordmark"
-                width={937}
-                height={616}
-                className="h-auto w-full drop-shadow-[0_0_50px_rgba(8,220,232,0.16)]"
-                priority
-              />
+              <Hero3D />
             </div>
+            <p className="mt-3 text-center text-xs opacity-40">Drag to spin the mark</p>
           </FadeIn>
         </div>
       </section>
