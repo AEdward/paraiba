@@ -118,8 +118,8 @@ export default async function Home() {
               <Image
                 src="/paraiba-logo-full.png"
                 alt="Paraiba Technology PLC — crystalline P emblem and wordmark"
-                width={1049}
-                height={772}
+                width={937}
+                height={616}
                 className="h-auto w-full drop-shadow-[0_0_50px_rgba(8,220,232,0.16)]"
                 priority
               />
