@@ -153,6 +153,40 @@ body {
   margin: 0.2em 0;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.partners-marquee-track {
+  animation: marquee 34s linear infinite;
+}
+
+.partners-marquee-fade:hover .partners-marquee-track {
+  animation-play-state: paused;
+}
+
+.partners-marquee-logo {
+  filter: grayscale(1) brightness(0) invert(1);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.partners-marquee-logo:hover {
+  filter: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-marquee-track {
+    animation: none;
+  }
+}
+
 .rich-text-editor-content p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;

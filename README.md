@@ -44,9 +44,9 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 - `src/app/(site)` — public pages: home, `/about`, `/projects`, `/projects/[slug]`,
   `/careers`, `/contact`
-- `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Projects, Careers,
-  Messages, Users). Protected by `src/proxy.ts` (session cookie check) plus a
-  server-side session check in the dashboard layout as a second line of defense.
+- `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Projects, Partners,
+  Careers, Applicants, Messages, Users). Protected by `src/proxy.ts` (session cookie check)
+  plus a server-side session check in the dashboard layout as a second line of defense.
 - `src/app/api/contact` — saves contact form submissions to the database
   (`ContactSubmission`), viewable/manageable at `/admin/messages`.
 - `src/lib/db.ts` — Prisma client singleton.
@@ -56,7 +56,8 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   and other client components). `projects-data.ts` has the actual Prisma-backed
   `getProjects`/`getProject` and is guarded with `import "server-only"`. Don't merge these
   back together — importing Prisma/pg into a client bundle breaks the build.
-- `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `ContactSubmission` models.
+- `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `JobApplication`, `Partner`,
+  `ContactSubmission` models.
 - `prisma/seed.ts` — creates the first admin user and seeds placeholder projects.
 
 ## Admin dashboard
@@ -86,6 +87,12 @@ you're logged in.
     Projects saved before the editor existed used a plain-text "## Heading" / "- bullet"
     convention (`src/lib/richText.ts`) — still rendered and edited correctly; opening one
     in the editor converts it to the new format on next save.
+- **Partners** (`/admin/partners`) — logos shown in the "Trusted by" marquee on the
+  homepage, right under the hero. Each partner has a name, an optional logo URL, an
+  optional website link, and a display order (lower first). A partner without a logo
+  falls back to a text badge instead of an image. The whole section — heading and
+  marquee — is only rendered when at least one partner exists, so the homepage doesn't
+  imply credibility that isn't real yet.
 - **Careers** (`/admin/careers`) — open/closed job postings. The public `/careers` page
   shows real postings when any exist, or an honest "no open roles right now" state when
   it's empty. Each posting shows its applicant count, linking into Applicants pre-filtered
@@ -121,5 +128,7 @@ branch) and point its `DATABASE_URL` there instead.
   Wiring up email notifications (e.g. via Resend) is a reasonable next step.
 - Footer social links (`src/lib/social.ts`) point at placeholder handles
   (`facebook.com/paraiba`, etc.) — update them once real profiles exist.
-- No partner-bank trust bar, awards section, or team photo yet — those would represent
-  credibility Paraiba doesn't actually have. Add them once they're real.
+- No awards section or team photo yet — those would represent credibility Paraiba
+  doesn't actually have. Add them once they're real. The homepage "Trusted by" partner
+  bar is admin-manageable and already wired up (see Partners above) — it just stays
+  hidden until real partners are added.

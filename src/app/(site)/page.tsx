@@ -4,7 +4,9 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { FadeIn } from "@/components/FadeIn";
 import { GradientMesh } from "@/components/GradientMesh";
 import { Hero3D } from "@/components/three/Hero3D";
+import { PartnersMarquee } from "@/components/PartnersMarquee";
 import { getProjects } from "@/lib/projects-data";
+import { getPartners } from "@/lib/partners";
 
 export const dynamic = "force-dynamic";
 
@@ -71,6 +73,7 @@ const products = [
 
 export default async function Home() {
   const projects = (await getProjects()).slice(0, 3);
+  const partners = await getPartners();
 
   return (
     <>
@@ -132,6 +135,24 @@ export default async function Home() {
             <p className="mt-3 text-center text-xs opacity-40">Drag to spin the mark</p>
           </FadeIn>
         </div>
+
+        {partners.length > 0 && (
+          <FadeIn delay={0.3}>
+            <div
+              className="relative mx-auto max-w-6xl border-t px-6 py-10"
+              style={{ borderColor: "rgba(245,250,255,0.1)" }}
+            >
+              <p
+                className="font-display text-center text-xs font-semibold tracking-[0.3em] uppercase opacity-45"
+              >
+                Trusted by
+              </p>
+              <div className="mt-6">
+                <PartnersMarquee partners={partners} />
+              </div>
+            </div>
+          </FadeIn>
+        )}
       </section>
 
       <div className="paraiba-light-section">
