@@ -82,7 +82,12 @@ you're logged in.
     "Case Study" renders them as numbered sections, 01/02/03/… (`src/components/CaseStudySections.tsx`).
 - **Careers** (`/admin/careers`) — open/closed job postings. The public `/careers` page
   shows real postings when any exist, or an honest "no open roles right now" state when
-  it's empty.
+  it's empty. Each posting shows its applicant count, linking into Applicants pre-filtered
+  to that job.
+- **Applicants** (`/admin/applicants`) — applications submitted from a job's inline "Apply"
+  form on `/careers` (name, email, phone, cover letter, resume link — all optional except
+  name/email). Filter by job, status, or search name/email; change an applicant's status
+  (`new` / `reviewed` / `shortlisted` / `rejected` / `hired`) inline.
 - **Messages** (`/admin/messages`) — contact form submissions, mark read/unread.
 - **Users** (`/admin/users`) — add or remove teammate accounts. You can't delete your own
   account while logged in as it.

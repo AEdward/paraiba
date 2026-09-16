@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FolderKanban, Briefcase, Mail, Users } from "lucide-react";
+import { FolderKanban, Briefcase, UserCheck, Mail, Users } from "lucide-react";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = { title: "Admin Overview" };
 export const dynamic = "force-dynamic";
 
 async function getStats() {
-  const [projectCount, liveProjectCount, openJobCount, unreadMessageCount, userCount] =
+  const [projectCount, liveProjectCount, openJobCount, newApplicantCount, unreadMessageCount, userCount] =
     await Promise.all([
       db.project.count(),
       db.project.count({ where: { status: "live" } }),
       db.jobPosting.count({ where: { status: "open" } }),
+      db.jobApplication.count({ where: { status: "new" } }),
       db.contactSubmission.count({ where: { read: false } }),
       db.user.count(),
     ]);
-  return { projectCount, liveProjectCount, openJobCount, unreadMessageCount, userCount };
+  return { projectCount, liveProjectCount, openJobCount, newApplicantCount, unreadMessageCount, userCount };
 }
 
 export default async function AdminOverviewPage() {
@@ -37,6 +38,14 @@ export default async function AdminOverviewPage() {
       icon: Briefcase,
       href: "/admin/careers",
       accent: "var(--color-amber)",
+    },
+    {
+      label: "New applicants",
+      value: stats.newApplicantCount,
+      sub: "awaiting review",
+      icon: UserCheck,
+      href: "/admin/applicants?status=new",
+      accent: "var(--color-teal)",
     },
     {
       label: "Unread messages",
@@ -66,7 +75,7 @@ export default async function AdminOverviewPage() {
         actually stored right now.
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {tiles.map((tile) => {
           const Icon = tile.icon;
           return (

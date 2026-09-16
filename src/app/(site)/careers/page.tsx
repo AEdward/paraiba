@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Briefcase, Compass, MapPin, Rocket } from "lucide-react";
+import { ArrowRight, Briefcase, Compass, Rocket } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { GradientMesh } from "@/components/GradientMesh";
-import { TiltCard } from "@/components/TiltCard";
+import { JobCard } from "@/components/JobCard";
 import { getOpenJobs } from "@/lib/jobs";
 
 export const metadata: Metadata = {
@@ -101,34 +101,7 @@ export default async function CareersPage() {
             <div className="mt-10 flex flex-col gap-4">
               {jobs.map((job, i) => (
                 <FadeIn key={job.id} delay={i * 0.06}>
-                  <TiltCard glowColor="var(--color-teal)" className="rounded-2xl">
-                    <div
-                      className="rounded-2xl border p-6"
-                      style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                          <h3 className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
-                            {job.title}
-                          </h3>
-                          <div className="mt-1 flex items-center gap-3 text-sm opacity-60">
-                            <span className="inline-flex items-center gap-1">
-                              <MapPin size={13} /> {job.location}
-                            </span>
-                            <span>{job.type}</span>
-                          </div>
-                        </div>
-                        <Link
-                          href={`/contact?role=${encodeURIComponent(job.title)}`}
-                          className="font-display inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-(--color-cream)"
-                          style={{ background: "var(--color-indigo)" }}
-                        >
-                          Apply <ArrowRight size={14} />
-                        </Link>
-                      </div>
-                      <p className="mt-3 text-sm whitespace-pre-wrap opacity-75">{job.description}</p>
-                    </div>
-                  </TiltCard>
+                  <JobCard job={job} />
                 </FadeIn>
               ))}
             </div>

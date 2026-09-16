@@ -9,7 +9,10 @@ export const metadata: Metadata = { title: "Careers" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminCareersPage() {
-  const jobs = await db.jobPosting.findMany({ orderBy: { createdAt: "desc" } });
+  const jobs = await db.jobPosting.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { _count: { select: { applications: true } } },
+  });
 
   return (
     <div>
@@ -33,6 +36,7 @@ export default async function AdminCareersPage() {
               <th className="px-4 py-3 font-medium">Title</th>
               <th className="px-4 py-3 font-medium">Location</th>
               <th className="px-4 py-3 font-medium">Status</th>
+              <th className="px-4 py-3 font-medium">Applicants</th>
               <th className="px-4 py-3 font-medium"></th>
             </tr>
           </thead>
@@ -44,6 +48,15 @@ export default async function AdminCareersPage() {
                 </td>
                 <td className="px-4 py-3 opacity-70">{job.location}</td>
                 <td className="px-4 py-3 opacity-70">{job.status}</td>
+                <td className="px-4 py-3">
+                  <Link
+                    href={`/admin/applicants?jobId=${job.id}`}
+                    className="font-medium"
+                    style={{ color: "var(--color-teal)" }}
+                  >
+                    {job._count.applications}
+                  </Link>
+                </td>
                 <td className="px-4 py-3 text-right">
                   <div className="flex justify-end gap-3">
                     <Link
@@ -60,7 +73,7 @@ export default async function AdminCareersPage() {
             ))}
             {jobs.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center opacity-50">
+                <td colSpan={5} className="px-4 py-8 text-center opacity-50">
                   No postings yet.
                 </td>
               </tr>

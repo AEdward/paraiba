@@ -38,14 +38,28 @@ model Project {
 }
 
 model JobPosting {
-  id          String   @id @default(cuid())
-  title       String
-  location    String
-  type        String // "Full-time" | "Part-time" | "Contract"
-  description String
-  status      String   @default("open") // "open" | "closed"
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String           @id @default(cuid())
+  title        String
+  location     String
+  type         String // "Full-time" | "Part-time" | "Contract"
+  description  String
+  status       String           @default("open") // "open" | "closed"
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id          String     @id @default(cuid())
+  jobId       String
+  job         JobPosting @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  name        String
+  email       String
+  phone       String?
+  coverLetter String?
+  resumeUrl   String?
+  status      String     @default("new") // "new" | "reviewed" | "shortlisted" | "rejected" | "hired"
+  createdAt   DateTime   @default(now())
 }
 
 model ContactSubmission {
