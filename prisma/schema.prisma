@@ -25,7 +25,6 @@ model Project {
   tagline      String
   description  String
   status       String // "live" | "in-progress" | "concept" | "archived"
-  kind         String   @default("client") // "client" | "product" — work done for a client vs. a product Paraiba owns
   tags         String // comma-separated
   link         String?
   screenshot   String?
@@ -73,6 +72,34 @@ model Partner {
   order        Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+// A page in the drag-and-drop CMS ("home" | "about" | "careers" | "contact" |
+// "products"). Its content is an ordered list of Blocks — the page itself
+// carries no copy, just identity + ordering.
+model Page {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String // internal label shown in the admin, not rendered on the site
+  blocks    Block[]
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+// One section of a page. `type` selects which React component renders it
+// (see src/lib/blocks/types.ts) and `data` is that type's JSON shape —
+// schemaless in the database so new block types don't need a migration.
+model Block {
+  id        String   @id @default(cuid())
+  pageId    String
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  type      String
+  order     Int      @default(0)
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([pageId, order])
 }
 
 model ContactSubmission {

@@ -38,8 +38,8 @@ export function Footer() {
           <Link href="/about" className="opacity-70 hover:opacity-100">
             About
           </Link>
-          <Link href="/projects" className="opacity-70 hover:opacity-100">
-            Projects
+          <Link href="/products" className="opacity-70 hover:opacity-100">
+            Products
           </Link>
           <Link href="/careers" className="opacity-70 hover:opacity-100">
             Careers

@@ -37,7 +37,7 @@ export function ProjectForm({
 
       <div>
         <label htmlFor="slug" className={labelClass} style={{ color: "var(--ink)" }}>
-          Slug (URL: /projects/…)
+          Slug (URL: /products/…)
         </label>
         <input
           id="slug"
@@ -79,43 +79,22 @@ export function ProjectForm({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="kind" className={labelClass} style={{ color: "var(--ink)" }}>
-            Kind
-          </label>
-          <select
-            id="kind"
-            name="kind"
-            defaultValue={project?.kind ?? "client"}
-            className={inputClass}
-            style={inputStyle}
-          >
-            <option value="client">Client Project</option>
-            <option value="product">Our Product</option>
-          </select>
-          <p className="mt-1 text-xs opacity-50">
-            Which section it shows in on /projects — work done for a client, or a product
-            Paraiba owns.
-          </p>
-        </div>
-        <div>
-          <label htmlFor="status" className={labelClass} style={{ color: "var(--ink)" }}>
-            Status
-          </label>
-          <select
-            id="status"
-            name="status"
-            defaultValue={project?.status ?? "concept"}
-            className={inputClass}
-            style={inputStyle}
-          >
-            <option value="live">Live</option>
-            <option value="in-progress">Building</option>
-            <option value="concept">Prototype</option>
-            <option value="archived">Built · not published</option>
-          </select>
-        </div>
+      <div>
+        <label htmlFor="status" className={labelClass} style={{ color: "var(--ink)" }}>
+          Status
+        </label>
+        <select
+          id="status"
+          name="status"
+          defaultValue={project?.status ?? "concept"}
+          className={inputClass}
+          style={inputStyle}
+        >
+          <option value="live">Live</option>
+          <option value="in-progress">Building</option>
+          <option value="concept">Prototype</option>
+          <option value="archived">Built · not published</option>
+        </select>
       </div>
 
       <div>
@@ -139,7 +118,7 @@ export function ProjectForm({
             Feature this project
           </span>
           <p className="mt-1 text-xs opacity-60">
-            Shows it in the large showcase hero above the grid on /projects. Only one
+            Shows it in the large showcase hero above the grid on /products. Only one
             project should be featured at a time — if more than one is checked, the most
             recently created one wins.
           </p>

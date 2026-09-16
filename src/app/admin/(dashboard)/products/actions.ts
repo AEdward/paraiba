@@ -7,7 +7,6 @@ import { getSession } from "@/lib/auth";
 import { getRichSections } from "@/lib/richDoc";
 
 const STATUSES = ["live", "in-progress", "concept", "archived"];
-const KINDS = ["client", "product"];
 const GITHUB_REPO_PATTERN = /^[\w.-]+\/[\w.-]+$/;
 
 async function requireSession() {
@@ -21,11 +20,6 @@ function readProjectForm(formData: FormData) {
   if (!STATUSES.includes(status)) {
     throw new Error("Invalid project status.");
   }
-  const kind = String(formData.get("kind") ?? "");
-  if (!KINDS.includes(kind)) {
-    throw new Error("Invalid project kind.");
-  }
-
   const slug = String(formData.get("slug") ?? "")
     .trim()
     .toLowerCase()
@@ -68,7 +62,6 @@ function readProjectForm(formData: FormData) {
     tagline,
     description,
     status,
-    kind,
     tags,
     link,
     screenshot,
@@ -84,18 +77,18 @@ export async function createProject(formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
   const project = await db.project.create({ data });
-  revalidatePath("/admin/projects");
+  revalidatePath("/admin/products");
   // A brand-new project doesn't have an edit page to "stay on" yet — send the
   // admin straight into it instead of dumping them back at the bare list.
-  redirect(`/admin/projects/${project.id}`);
+  redirect(`/admin/products/${project.id}`);
 }
 
 export async function updateProject(id: string, formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
   await db.project.update({ where: { id }, data });
-  revalidatePath("/admin/projects");
-  revalidatePath(`/admin/projects/${id}`);
+  revalidatePath("/admin/products");
+  revalidatePath(`/admin/products/${id}`);
 }
 
 export async function deleteProject(formData: FormData) {
@@ -103,5 +96,5 @@ export async function deleteProject(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   if (!id) throw new Error("Missing project id.");
   await db.project.delete({ where: { id } });
-  redirect("/admin/projects");
+  redirect("/admin/products");
 }

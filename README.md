@@ -1,7 +1,9 @@
 # Paraiba Technology PLC
 
-Marketing site for Paraiba Technology PLC — home, about, projects, careers, contact,
-and an admin dashboard backed by a real database.
+Marketing site for Paraiba Technology PLC — home, about, products, careers, contact,
+and an admin dashboard backed by a real database. Every page is a drag-and-drop CMS:
+its content is an ordered list of blocks (hero, rich text, card grids, …) managed from
+`/admin/pages`, not hardcoded JSX.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma backed by
 Supabase Postgres. Brand palette, type, and the crystalline P mark come from the internal
@@ -19,7 +21,7 @@ brand guide (Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat +
 npm install                 # also runs `prisma generate` via postinstall
 cp .env.example .env        # fill in DATABASE_URL, DIRECT_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD
 npm run db:deploy           # applies the committed migrations to your Supabase database
-npm run db:seed             # creates your first admin user + placeholder projects
+npm run db:seed             # creates your first admin user, placeholder products, and all page/block content
 npm run dev
 ```
 
@@ -42,11 +44,15 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 ## Structure
 
-- `src/app/(site)` — public pages: home, `/about`, `/projects`, `/projects/[slug]`,
-  `/careers`, `/contact`
-- `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Projects, Partners,
-  Careers, Applicants, Messages, Users). Protected by `src/proxy.ts` (session cookie check)
-  plus a server-side session check in the dashboard layout as a second line of defense.
+- `src/app/(site)` — public pages: home, `/about`, `/products`, `/products/[slug]`,
+  `/careers`, `/contact`. Every one of these except the product detail page is just a
+  thin wrapper: fetch that page's blocks, render them in order. There's no page-specific
+  layout code to touch when the content changes — only when a genuinely new kind of
+  section is needed (see "Page builder / CMS" below).
+- `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Pages, Products,
+  Partners, Careers, Applicants, Messages, Users). Protected by `src/proxy.ts` (session
+  cookie check) plus a server-side session check in the dashboard layout as a second line
+  of defense.
 - `src/app/api/contact` — saves contact form submissions to the database
   (`ContactSubmission`), viewable/manageable at `/admin/messages`.
 - `src/lib/db.ts` — Prisma client singleton.
@@ -55,10 +61,43 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   has only types and pure presentation helpers (client-safe — imported by `ProjectCard`
   and other client components). `projects-data.ts` has the actual Prisma-backed
   `getProjects`/`getProject` and is guarded with `import "server-only"`. Don't merge these
-  back together — importing Prisma/pg into a client bundle breaks the build.
+  back together — importing Prisma/pg into a client bundle breaks the build. (The model
+  and these files are still named "project" internally — only the public-facing URL, nav
+  label, and admin section are "Products.")
 - `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `JobApplication`, `Partner`,
-  `ContactSubmission` models.
-- `prisma/seed.ts` — creates the first admin user and seeds placeholder projects.
+  `Page`, `Block`, `ContactSubmission` models.
+- `prisma/seed.ts` / `prisma/seedPages.ts` — creates the first admin user, seeds
+  placeholder products, and seeds every page's block content (see below). Safe to re-run:
+  it skips anything that already exists.
+
+## Page builder / CMS
+
+Every page's content lives in the database as an ordered list of **blocks**, not in JSX:
+
+- `Page` (`home` / `about` / `careers` / `contact` / `products`) has many `Block`s, each
+  with a `type` (`hero`, `richText`, `cardGrid`, `statsQuote`, `quote`, `cta`,
+  `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`)
+  and a schemaless `data` JSON column shaped by that type — see
+  `src/lib/blocks/types.ts` for every type's exact fields.
+- `/admin/pages` lists the five pages; `/admin/pages/[slug]` is the builder — drag blocks
+  to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
+  one, or delete one. Saving, adding, deleting, and reordering all go through
+  `src/app/admin/(dashboard)/pages/actions.ts` and take effect immediately on the live
+  site (`revalidatePath`).
+- `src/components/blocks/*.tsx` render each block type on the public site;
+  `BlockRenderer.tsx` is the switch that dispatches `type` → component. A handful of
+  block types (`productsPreview`, `partnersTrustBar`, `openPositions`, `productsGrid`)
+  pull their content live from the database instead of storing it in `data` — e.g. the
+  partners trust bar always reflects `/admin/partners`, not a stale copy.
+- Rich prose (currently only the `richText` block's body) reuses the same TipTap editor
+  and JSON document format as a product's "What We Built"/"Case Study" fields — see
+  `src/lib/blocks/renderRichDoc.tsx` for the flowing (non-grouped) renderer used here,
+  as opposed to `src/lib/richDoc.ts`'s heading-grouped one.
+- Adding a genuinely new block type means: add its data shape to `blocks/types.ts`, a
+  default in `blocks/defaults.ts`, a renderer in `components/blocks/`, a case in
+  `BlockRenderer.tsx`, form fields in `admin/(dashboard)/pages/BlockFields.tsx`, and a
+  parser case in `admin/(dashboard)/pages/actions.ts`. Everything else (add/reorder/
+  delete, the builder UI) already works for it.
 
 ## Admin dashboard
 
@@ -66,17 +105,18 @@ Anyone with an account has full access — there are no permission tiers, since 
 requirement so far is "me + a few teammates." Add teammates from `/admin/users` once
 you're logged in.
 
-- **Projects** (`/admin/projects`) — replaces manually editing `src/lib/projects.ts`.
-  Each project's **Kind** (`client` or `product`) decides which section it shows in on
-  `/projects` — Paraiba's own products, or client work — each with its own tag filter.
-  Set a project's status to `archived` to show it as "Built · not published" (still
-  visible, no live link) instead of `live`. Each project's device mockup can show, in
-  priority order: (1) a **GitHub repo** (`owner/repo`) — boots and renders the app live
-  from source via StackBlitz, no deployment needed, best for JS/web-stack projects; (2) a
-  **live link** rendered in an iframe, if the target site allows framing; (3) a static
-  **screenshot URL**; (4) a placeholder if none of the above are set.
-  - Mark one project **featured** to show it in a large showcase hero above the grid on
-    `/projects`.
+- **Pages** (`/admin/pages`) — the drag-and-drop builder for every page's content. See
+  "Page builder / CMS" above for how it works.
+- **Products** (`/admin/products`) — replaces manually editing `src/lib/projects.ts`.
+  Paraiba only publishes its own products now (no client-project section) — set a
+  product's status to `archived` to show it as "Built · not published" (still visible, no
+  live link) instead of `live`. Each product's device mockup can show, in priority order:
+  (1) a **GitHub repo** (`owner/repo`) — boots and renders the app live from source via
+  StackBlitz, no deployment needed, best for JS/web-stack projects; (2) a **live link**
+  rendered in an iframe, if the target site allows framing; (3) a static **screenshot
+  URL**; (4) a placeholder if none of the above are set.
+  - Mark one product **featured** to show it in a large showcase hero above the grid on
+    `/products`.
   - **What We Built** and **Case Study** are optional fields edited with a small WYSIWYG
     editor (`src/components/admin/RichTextEditor.tsx`, built on TipTap) — use the toolbar's
     heading button to start a new group/section, then write paragraphs and/or a bullet

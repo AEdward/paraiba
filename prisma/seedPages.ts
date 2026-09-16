@@ -1,0 +1,349 @@
+// Seeds the CMS Page/Block content that reproduces the site's original,
+// hand-written copy — run once per environment so the pages aren't blank
+// after the migration to the block-based CMS. Safe to re-run: skips any
+// page slug that already has blocks.
+
+import type { PrismaClient, Prisma } from "../src/generated/prisma/client";
+import type { BlockDataMap, BlockType, PageSlug, RichDoc } from "../src/lib/blocks/types";
+
+type DocText = { type: "text"; text: string; marks?: { type: string }[] };
+type DocNode = { type: string; attrs?: Record<string, unknown>; content?: DocNode[] };
+
+const t = (text: string, bold = false): DocText =>
+  bold ? { type: "text", text, marks: [{ type: "bold" }] } : { type: "text", text };
+const p = (...content: DocText[]): DocNode => ({ type: "paragraph", content });
+const doc = (...content: DocNode[]): RichDoc => ({ type: "doc", content });
+
+type SeedBlock<T extends BlockType = BlockType> = { type: T; data: BlockDataMap[T] };
+
+function block<T extends BlockType>(type: T, data: BlockDataMap[T]): SeedBlock<T> {
+  return { type, data };
+}
+
+const homeBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Ethiopian Technology Company",
+    headline: "Technology with ",
+    headlineHighlight: "Brilliance.",
+    subhead:
+      "Paraiba Technology PLC builds modern digital products and technology solutions designed to make business simpler, smarter and more connected.",
+    primaryLabel: "Start a Project",
+    primaryHref: "/contact",
+    secondaryLabel: "Explore Solutions",
+    secondaryHref: "#solutions",
+    theme: "dark",
+    align: "left",
+    showLogo3D: true,
+  }),
+  block("partnersTrustBar", { eyebrow: "Trusted by", theme: "dark" }),
+  block("cardGrid", {
+    anchorId: "solutions",
+    eyebrow: "What we build",
+    heading: "Digital solutions built for real life.",
+    body: "Our work spans across the digital ecosystem — from our own products to the systems that run other businesses.",
+    theme: "light",
+    columns: 3,
+    items: [
+      {
+        number: "01",
+        title: "Digital Products",
+        description:
+          "We develop our own technology products and platforms designed to solve real problems and create new opportunities.",
+      },
+      {
+        number: "02",
+        title: "Websites & Digital Experiences",
+        description:
+          "From corporate websites to advanced web platforms, we create modern digital experiences that represent businesses and connect them with their customers.",
+      },
+      {
+        number: "03",
+        title: "ERP & Business Systems",
+        description:
+          "We build powerful business management systems that bring operations, finance, sales, people, inventory, and other business functions together in one connected environment.",
+      },
+      {
+        number: "04",
+        title: "Apps & Platforms",
+        description:
+          "We design and develop mobile and web applications that turn ideas into scalable digital products.",
+      },
+      {
+        number: "05",
+        title: "Bots & Automation",
+        description:
+          "We build intelligent bots and automated systems that help businesses communicate with customers, streamline operations, and reduce repetitive work.",
+      },
+    ],
+  }),
+  block("statsQuote", {
+    eyebrow: "The Paraiba idea",
+    heading: "Born in Ethiopia.\nBuilt for what's next.",
+    body: "Inspired by the brilliance and vivid color associated with Paraíba-type tourmaline, our identity represents precision, energy and distinction.",
+    stats: [
+      { number: "01", label: "Clarity in every product" },
+      { number: "02", label: "Design-led technology" },
+      { number: "03", label: "Built to scale" },
+      { number: "04", label: "African roots, global ambition" },
+    ],
+    quote: "Great technology should not feel complicated. It should feel natural, powerful and useful.",
+    theme: "light",
+  }),
+  block("productsPreview", {
+    eyebrow: "Portfolio",
+    heading: "What we're building",
+    viewAllLabel: "View all",
+    limit: 3,
+    theme: "light",
+  }),
+  block("cardGrid", {
+    eyebrow: "Future ecosystem",
+    heading: "One brand. Many possibilities.",
+    body: "The Paraiba master brand can support a growing family of digital products and platforms.",
+    theme: "light",
+    columns: 3,
+    items: [
+      {
+        icon: "cloud",
+        label: "Cloud",
+        title: "Paraiba Cloud",
+        description: "Infrastructure, hosting and cloud services for modern organizations.",
+      },
+      {
+        icon: "cpu",
+        label: "Business",
+        title: "Paraiba ERP",
+        description: "Business management tools designed for growing companies.",
+      },
+      {
+        icon: "sparkles",
+        label: "Intelligence",
+        title: "Paraiba AI",
+        description: "Practical AI products, automation and intelligent workflows.",
+      },
+    ],
+  }),
+  block("cta", {
+    eyebrow: "Let's build",
+    heading: "Have an idea worth building?",
+    body: "Tell us what you want to create. Paraiba can help turn the idea into a clear digital product and technology roadmap.",
+    buttonLabel: "Talk to Paraiba",
+    buttonHref: "/contact",
+    theme: "dark",
+  }),
+];
+
+const aboutBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "About Us",
+    headline: "A new discovery from Ethiopia.",
+    theme: "light",
+    align: "left",
+  }),
+  block("richText", {
+    theme: "light",
+    body: doc(
+      p(
+        t("Paraiba Technology PLC", true),
+        t(
+          " is an Ethiopian technology company building the next generation of digital products, platforms, and technology solutions.",
+        ),
+      ),
+      p(
+        t(
+          "Just as Paraiba represents something rare and brilliant discovered in Ethiopia, Paraiba Technology is our own new addition to Ethiopia's growing technology landscape — born here, built here, and created with ambitions that reach far beyond Ethiopia.",
+        ),
+      ),
+      p(
+        t(
+          "We believe great technology doesn't simply have to be imported. It can be discovered, designed, engineered, and built here.",
+        ),
+      ),
+      p(
+        t(
+          "At Paraiba, we combine technology, design, and practical problem-solving to turn ideas into products people can actually use. We are currently developing our own portfolio of digital products while also helping businesses and organizations build the technology they need to operate, grow, and connect.",
+        ),
+      ),
+    ),
+  }),
+  block("richText", {
+    eyebrow: "More Than a Technology Company",
+    heading: "We are building technology.",
+    theme: "light",
+    body: doc(
+      p(
+        t(
+          "Paraiba is not built around simply writing software for clients. Some of that technology will be created for businesses. Some will become products of our own. And some may grow into platforms capable of serving thousands or millions of users.",
+        ),
+      ),
+      p(
+        t("Our goal is to create a company where "),
+        t("products, platforms, services, and innovation live under one technology brand.", true),
+      ),
+    ),
+  }),
+  block("richText", {
+    eyebrow: "Our Origin",
+    heading: "Born in Ethiopia. Built for the world.",
+    theme: "light",
+    tint: true,
+    body: doc(
+      p(
+        t(
+          "Ethiopia is where Paraiba begins. We see Ethiopia not only as our home market, but as a place where ambitious technology can be created and exported to the world.",
+        ),
+      ),
+      p(
+        t(
+          "Our identity is Ethiopian in origin, but our ambition is global. We want Paraiba to become a technology brand recognized for creating products that are useful, beautifully designed, reliable, and built to scale.",
+        ),
+      ),
+    ),
+  }),
+  block("cardGrid", {
+    eyebrow: "Our Philosophy",
+    heading: "We believe technology should be —",
+    theme: "light",
+    columns: 2,
+    items: [
+      { title: "Powerful enough to make an impact." },
+      { title: "Simple enough to use." },
+      { title: "Beautiful enough to inspire." },
+      { title: "Reliable enough to trust." },
+    ],
+  }),
+  block("richText", {
+    theme: "light",
+    body: doc(
+      p(
+        t("We don't build technology for the sake of technology. "),
+        t("We build technology that moves ideas forward.", true),
+      ),
+    ),
+  }),
+  block("cardGrid", {
+    eyebrow: "What We Value",
+    heading: "How we build.",
+    theme: "light",
+    columns: 3,
+    items: [
+      { icon: "lightbulb", title: "Innovation", description: "Build useful things, not technology for its own sake." },
+      { icon: "sparkles", title: "Clarity", description: "Make complex technology understandable and usable." },
+      {
+        icon: "shieldCheck",
+        title: "Reliability",
+        description: "Prioritize stable products, security and dependable delivery.",
+      },
+      {
+        icon: "gem",
+        title: "Craft",
+        description: "Care about details, design and the quality of the final experience.",
+      },
+      { icon: "target", title: "Impact", description: "Measure success by the value technology creates." },
+    ],
+  }),
+  block("quote", {
+    eyebrow: "Paraiba",
+    intro: "A new discovery from Ethiopia.",
+    lines: [
+      "A new name in technology.",
+      "A new generation of digital products.",
+      "A new kind of technology company.",
+    ],
+    highlight: "Technology with Ethiopian Brilliance.",
+    theme: "dark",
+  }),
+];
+
+const careersBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Careers",
+    headline: "Build technology with Ethiopian brilliance.",
+    subhead:
+      "We're a small team building technology, products, and ventures out of Addis Ababa. If that sounds like your kind of work, we'd like to hear from you.",
+    theme: "dark",
+    align: "center",
+  }),
+  block("cardGrid", {
+    heading: "Why Paraiba",
+    theme: "light",
+    columns: 3,
+    items: [
+      {
+        icon: "rocket",
+        title: "Build things that ship",
+        description: "Real products for real users, not exercises that live in a drawer.",
+      },
+      {
+        icon: "compass",
+        title: "Room to shape direction",
+        description: "We're small enough that your judgment changes what gets built and how.",
+      },
+      {
+        icon: "briefcase",
+        title: "Work across the portfolio",
+        description: "Move between projects and problems instead of one narrow lane forever.",
+      },
+    ],
+  }),
+  block("openPositions", { heading: "Open positions", theme: "light" }),
+];
+
+const contactBlocks: SeedBlock[] = [
+  block("contactPanel", {
+    eyebrow: "Get in touch",
+    heading: "Let's build something new.",
+    body: "Have a project, partnership, or investment idea in mind? We'd love to hear about it.",
+    email: "hello@paraiba.com",
+    location: "Addis Ababa, Ethiopia",
+    theme: "light",
+  }),
+];
+
+const productsBlocks: SeedBlock[] = [
+  block("productsGrid", {
+    eyebrow: "Portfolio",
+    heading: "Products",
+    body: "The products we're building — from first sketch to shipped software.",
+    emptyMessage: "No products published yet — we're currently building.",
+    theme: "light",
+  }),
+];
+
+const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
+  home: homeBlocks,
+  about: aboutBlocks,
+  careers: careersBlocks,
+  contact: contactBlocks,
+  products: productsBlocks,
+};
+
+const PAGE_TITLES: Record<PageSlug, string> = {
+  home: "Home",
+  about: "About",
+  careers: "Careers",
+  contact: "Contact",
+  products: "Products",
+};
+
+export async function seedPages(db: PrismaClient) {
+  for (const slug of Object.keys(PAGE_SEEDS) as PageSlug[]) {
+    const existing = await db.page.findUnique({ where: { slug } });
+    if (existing) {
+      console.log(`Page "${slug}" already has content, skipping.`);
+      continue;
+    }
+
+    const blocks = PAGE_SEEDS[slug];
+    await db.page.create({
+      data: {
+        slug,
+        title: PAGE_TITLES[slug],
+        blocks: {
+          create: blocks.map((b, i) => ({ type: b.type, order: i, data: b.data as Prisma.InputJsonValue })),
+        },
+      },
+    });
+    console.log(`Seeded page "${slug}" with ${blocks.length} blocks.`);
+  }
+}

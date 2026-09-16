@@ -39,11 +39,11 @@ export default async function ProjectPage({
     <div className="mx-auto max-w-4xl px-6 py-20">
       <FadeIn>
         <Link
-          href="/projects"
+          href="/products"
           className="inline-flex items-center gap-1.5 text-sm font-medium opacity-70 hover:opacity-100"
           style={{ color: "var(--ink)" }}
         >
-          <ArrowLeft size={14} /> All projects
+          <ArrowLeft size={14} /> All products
         </Link>
 
         <div className="mt-8">

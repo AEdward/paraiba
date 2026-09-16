@@ -24,11 +24,11 @@ export default async function AdminOverviewPage() {
 
   const tiles = [
     {
-      label: "Projects",
+      label: "Products",
       value: stats.projectCount,
       sub: `${stats.liveProjectCount} live`,
       icon: FolderKanban,
-      href: "/admin/projects",
+      href: "/admin/products",
       accent: "var(--color-teal)",
     },
     {

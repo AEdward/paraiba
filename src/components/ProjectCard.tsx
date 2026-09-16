@@ -3,13 +3,12 @@ import { ArrowUpRight, Lock } from "lucide-react";
 import { statusColor, type Project } from "@/lib/projects";
 import { TiltCard } from "@/components/TiltCard";
 import { StatusBadge } from "@/components/StatusBadge";
-import { KindBadge } from "@/components/KindBadge";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <TiltCard glowColor={statusColor[project.status]} className="rounded-2xl">
       <Link
-        href={`/projects/${project.slug}`}
+        href={`/products/${project.slug}`}
         className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border p-6 shadow-[0_1px_2px_rgba(22,35,63,0.04),0_16px_28px_-12px_rgba(22,35,63,0.18)] backdrop-blur-md transition-shadow duration-300 hover:shadow-[0_1px_2px_rgba(22,35,63,0.06),0_24px_40px_-14px_rgba(22,35,63,0.28)]"
         style={{
           borderColor: "var(--border-soft)",
@@ -26,7 +25,6 @@ export function ProjectCard({ project }: { project: Project }) {
         <div>
           <div className="flex items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <KindBadge kind={project.kind} />
               <StatusBadge status={project.status} />
             </div>
             {project.status === "archived" ? (

@@ -2,28 +2,27 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { db } from "@/lib/db";
-import { kindLabel, type ProjectKind } from "@/lib/projects";
 import { DeleteButton } from "../DeleteButton";
 import { deleteProject } from "./actions";
 
-export const metadata: Metadata = { title: "Projects" };
+export const metadata: Metadata = { title: "Products" };
 export const dynamic = "force-dynamic";
 
-export default async function AdminProjectsPage() {
+export default async function AdminProductsPage() {
   const projects = await db.project.findMany({ orderBy: { createdAt: "desc" } });
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
-          Projects
+          Products
         </h1>
         <Link
-          href="/admin/projects/new"
+          href="/admin/products/new"
           className="font-display inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-(--color-cream)"
           style={{ background: "var(--color-indigo)" }}
         >
-          <Plus size={15} /> New project
+          <Plus size={15} /> New product
         </Link>
       </div>
 
@@ -32,7 +31,6 @@ export default async function AdminProjectsPage() {
           <thead>
             <tr className="border-b text-left opacity-60" style={{ borderColor: "var(--border-soft)" }}>
               <th className="px-4 py-3 font-medium">Name</th>
-              <th className="px-4 py-3 font-medium">Kind</th>
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Slug</th>
               <th className="px-4 py-3 font-medium"></th>
@@ -44,27 +42,26 @@ export default async function AdminProjectsPage() {
                 <td className="px-4 py-3 font-medium" style={{ color: "var(--ink)" }}>
                   {project.name}
                 </td>
-                <td className="px-4 py-3 opacity-70">{kindLabel[project.kind as ProjectKind]}</td>
                 <td className="px-4 py-3 opacity-70">{project.status}</td>
-                <td className="px-4 py-3 opacity-70">/projects/{project.slug}</td>
+                <td className="px-4 py-3 opacity-70">/products/{project.slug}</td>
                 <td className="px-4 py-3 text-right">
                   <div className="flex justify-end gap-3">
                     <Link
-                      href={`/admin/projects/${project.id}`}
+                      href={`/admin/products/${project.id}`}
                       className="font-medium"
                       style={{ color: "var(--color-teal)" }}
                     >
                       Edit
                     </Link>
-                    <DeleteButton action={deleteProject} id={project.id} label="project" />
+                    <DeleteButton action={deleteProject} id={project.id} label="product" />
                   </div>
                 </td>
               </tr>
             ))}
             {projects.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center opacity-50">
-                  No projects yet.
+                <td colSpan={4} className="px-4 py-8 text-center opacity-50">
+                  No products yet.
                 </td>
               </tr>
             )}

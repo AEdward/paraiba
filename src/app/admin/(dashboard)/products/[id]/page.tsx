@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { ProjectForm } from "../ProjectForm";
 import { updateProject } from "../actions";
 
-export const metadata: Metadata = { title: "Edit Project" };
+export const metadata: Metadata = { title: "Edit Product" };
 
 export default async function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,7 +16,7 @@ export default async function EditProjectPage({ params }: { params: Promise<{ id
   return (
     <div>
       <h1 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
-        Edit project
+        Edit product
       </h1>
       <div className="mt-8">
         <ProjectForm project={project} action={boundUpdate} submitLabel="Save changes" />
