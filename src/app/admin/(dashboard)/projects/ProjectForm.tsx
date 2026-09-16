@@ -1,4 +1,5 @@
 import type { Project } from "@/generated/prisma/client";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 const inputClass =
   "w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:border-(--color-teal)";
@@ -230,42 +231,34 @@ export function ProjectForm({
       </div>
 
       <div>
-        <label htmlFor="deliverables" className={labelClass} style={{ color: "var(--ink)" }}>
+        <label className={labelClass} style={{ color: "var(--ink)" }}>
           What We Built (optional)
         </label>
-        <textarea
-          id="deliverables"
+        <RichTextEditor
           name="deliverables"
-          rows={6}
-          defaultValue={project?.deliverables ?? ""}
-          placeholder={"## Website\n- Corporate website\n- Product catalog\n\n## ERP\n- Inventory\n- Sales"}
-          className={`${inputClass} font-mono`}
-          style={inputStyle}
+          defaultValue={project?.deliverables}
+          placeholder="e.g. Website — Corporate website, Product catalog"
         />
         <p className="mt-1 text-xs opacity-50">
-          Rendered as grouped cards on the project page. One{" "}
-          <code>## Category</code> heading per group, followed by <code>- item</code>{" "}
-          bullet lines, blank line between groups. Leave blank to skip this section.
+          Rendered as grouped cards on the project page. Use the heading button to start a
+          new group (e.g. &ldquo;Website&rdquo;, &ldquo;ERP&rdquo;), then list its items as
+          a bullet list. Leave blank to skip this section.
         </p>
       </div>
 
       <div>
-        <label htmlFor="caseStudy" className={labelClass} style={{ color: "var(--ink)" }}>
+        <label className={labelClass} style={{ color: "var(--ink)" }}>
           Case Study (optional)
         </label>
-        <textarea
-          id="caseStudy"
+        <RichTextEditor
           name="caseStudy"
-          rows={10}
-          defaultValue={project?.caseStudy ?? ""}
-          placeholder={"## The Challenge\nWhat problem were we solving?\n\n## Strategy\nHow did we approach it?\n\n## Results\nWhat changed?"}
-          className={`${inputClass} font-mono`}
-          style={inputStyle}
+          defaultValue={project?.caseStudy}
+          placeholder="e.g. The Challenge — what problem were we solving?"
         />
         <p className="mt-1 text-xs opacity-50">
-          Rendered as numbered sections (01, 02, …) on the project page. One{" "}
-          <code>## Section title</code> heading per section, followed by paragraph text
-          and/or <code>- item</code> bullet lines. Leave blank to skip this section.
+          Rendered as numbered sections (01, 02, …) on the project page. Use the heading
+          button to start a new section (e.g. &ldquo;The Challenge&rdquo;), then write
+          paragraphs and/or bullet points under it. Leave blank to skip this section.
         </p>
       </div>
 

@@ -1,7 +1,7 @@
-import { parseRichSections } from "@/lib/richText";
+import { getRichSections } from "@/lib/richDoc";
 
 export function DeliverablesGrid({ text }: { text?: string | null }) {
-  const sections = parseRichSections(text);
+  const sections = getRichSections(text);
   if (sections.length === 0) return null;
 
   return (

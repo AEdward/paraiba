@@ -1,8 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { getRichSections } from "@/lib/richDoc";
 
 const STATUSES = ["live", "in-progress", "concept", "archived"];
 const KINDS = ["client", "product"];
@@ -46,8 +48,12 @@ function readProjectForm(formData: FormData) {
   const githubRepoRaw = String(formData.get("githubRepo") ?? "").trim();
   const githubRepo = githubRepoRaw.replace(/^https?:\/\/(www\.)?github\.com\//i, "").replace(/\/+$/, "") || null;
   const featured = formData.get("featured") === "on";
-  const deliverables = String(formData.get("deliverables") ?? "").trim() || null;
-  const caseStudy = String(formData.get("caseStudy") ?? "").trim() || null;
+  // The rich text editor always submits a JSON doc, even when the admin left it
+  // empty — treat that as blank too instead of storing a hollow "empty doc" string.
+  const deliverablesRaw = String(formData.get("deliverables") ?? "").trim();
+  const deliverables = deliverablesRaw && getRichSections(deliverablesRaw).length > 0 ? deliverablesRaw : null;
+  const caseStudyRaw = String(formData.get("caseStudy") ?? "").trim();
+  const caseStudy = caseStudyRaw && getRichSections(caseStudyRaw).length > 0 ? caseStudyRaw : null;
 
   if (!slug || !name || !tagline || !description) {
     throw new Error("Slug, name, tagline, and description are required.");
@@ -77,15 +83,19 @@ function readProjectForm(formData: FormData) {
 export async function createProject(formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
-  await db.project.create({ data });
-  redirect("/admin/projects");
+  const project = await db.project.create({ data });
+  revalidatePath("/admin/projects");
+  // A brand-new project doesn't have an edit page to "stay on" yet — send the
+  // admin straight into it instead of dumping them back at the bare list.
+  redirect(`/admin/projects/${project.id}`);
 }
 
 export async function updateProject(id: string, formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
   await db.project.update({ where: { id }, data });
-  redirect("/admin/projects");
+  revalidatePath("/admin/projects");
+  revalidatePath(`/admin/projects/${id}`);
 }
 
 export async function deleteProject(formData: FormData) {

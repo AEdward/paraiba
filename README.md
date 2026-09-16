@@ -76,19 +76,16 @@ you're logged in.
   **screenshot URL**; (4) a placeholder if none of the above are set.
   - Mark one project **featured** to show it in a large showcase hero above the grid on
     `/projects`.
-  - **What We Built** and **Case Study** are optional free-text fields using one shared
-    lightweight convention (no markdown library — parsed by `src/lib/richText.ts` into
-    real React elements, not `dangerouslySetInnerHTML`):
-    ```
-    ## Heading
-    - bullet item
-    - bullet item
-
-    ## Another Heading
-    A paragraph instead of bullets.
-    ```
-    "What We Built" renders each block as a grouped card (`src/components/DeliverablesGrid.tsx`);
-    "Case Study" renders them as numbered sections, 01/02/03/… (`src/components/CaseStudySections.tsx`).
+  - **What We Built** and **Case Study** are optional fields edited with a small WYSIWYG
+    editor (`src/components/admin/RichTextEditor.tsx`, built on TipTap) — use the toolbar's
+    heading button to start a new group/section, then write paragraphs and/or a bullet
+    list under it. It saves as a TipTap JSON document, walked into real React elements by
+    `src/lib/richDoc.ts` (still no `dangerouslySetInnerHTML`). "What We Built" renders each
+    heading's content as a grouped card (`src/components/DeliverablesGrid.tsx`); "Case
+    Study" renders them as numbered sections, 01/02/03/… (`src/components/CaseStudySections.tsx`).
+    Projects saved before the editor existed used a plain-text "## Heading" / "- bullet"
+    convention (`src/lib/richText.ts`) — still rendered and edited correctly; opening one
+    in the editor converts it to the new format on next save.
 - **Careers** (`/admin/careers`) — open/closed job postings. The public `/careers` page
   shows real postings when any exist, or an honest "no open roles right now" state when
   it's empty. Each posting shows its applicant count, linking into Applicants pre-filtered

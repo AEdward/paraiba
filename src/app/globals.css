@@ -94,3 +94,57 @@ body {
   color: transparent;
 }
 
+.rich-text-editor-content {
+  min-height: 140px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.rich-text-editor-content p {
+  margin: 0 0 0.6em;
+}
+
+.rich-text-editor-content p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-editor-content h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin: 0.9em 0 0.4em;
+}
+
+.rich-text-editor-content h3:first-child {
+  margin-top: 0;
+}
+
+.rich-text-editor-content ul,
+.rich-text-editor-content ol {
+  margin: 0 0 0.6em;
+  padding-left: 1.25rem;
+}
+
+.rich-text-editor-content ul {
+  list-style: disc;
+}
+
+.rich-text-editor-content ol {
+  list-style: decimal;
+}
+
+.rich-text-editor-content li {
+  margin: 0.2em 0;
+}
+
+.rich-text-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--foreground);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
