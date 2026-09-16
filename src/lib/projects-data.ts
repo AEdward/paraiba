@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 import type { Project as ProjectRow } from "@/generated/prisma/client";
-import type { Project, ProjectStatus } from "@/lib/projects";
+import type { Project, ProjectStatus, ProjectKind } from "@/lib/projects";
 
 function toProject(row: ProjectRow): Project {
   return {
@@ -11,6 +11,7 @@ function toProject(row: ProjectRow): Project {
     tagline: row.tagline,
     description: row.description,
     status: row.status as ProjectStatus,
+    kind: row.kind as ProjectKind,
     tags: row.tags ? row.tags.split(",").filter(Boolean) : [],
     link: row.link ?? undefined,
     screenshot: row.screenshot ?? undefined,

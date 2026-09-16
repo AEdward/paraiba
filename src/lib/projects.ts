@@ -4,6 +4,7 @@
 // client bundle. DB-backed data fetching lives in lib/projects-data.ts.
 
 export type ProjectStatus = "live" | "in-progress" | "concept" | "archived";
+export type ProjectKind = "client" | "product";
 
 export type Project = {
   id: string;
@@ -12,6 +13,7 @@ export type Project = {
   tagline: string;
   description: string;
   status: ProjectStatus;
+  kind: ProjectKind;
   tags: string[];
   link?: string;
   // Screenshot shown in the laptop/phone showcase on the detail page.
@@ -70,6 +72,16 @@ export const statusColor: Record<ProjectStatus, string> = {
   "in-progress": "var(--color-amber)",
   concept: "var(--color-ember)",
   archived: "var(--color-slate)",
+};
+
+export const kindLabel: Record<ProjectKind, string> = {
+  product: "Our Product",
+  client: "Client Project",
+};
+
+export const kindColor: Record<ProjectKind, string> = {
+  product: "var(--color-amber)",
+  client: "var(--color-ember)",
 };
 
 // Showcase gradient for the device mockup, rotated deterministically by slug

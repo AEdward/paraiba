@@ -25,6 +25,7 @@ model Project {
   tagline     String
   description String
   status      String // "live" | "in-progress" | "concept" | "archived"
+  kind        String   @default("client") // "client" | "product" — work done for a client vs. a product Paraiba owns
   tags        String // comma-separated
   link        String?
   screenshot  String?

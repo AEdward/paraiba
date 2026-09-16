@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { statusColor, getShowcaseGradient, getEmbedUrl, getEmbedLabel } from "@/lib/projects";
 import { StatusBadge } from "@/components/StatusBadge";
+import { KindBadge } from "@/components/KindBadge";
 import { TiltCard } from "@/components/TiltCard";
 import { DeviceMockup } from "@/components/DeviceMockup";
 import { LiveBrowserPreview } from "@/components/LiveBrowserPreview";
@@ -22,7 +23,10 @@ export function FeaturedProject({ project }: { project: Project }) {
 
       <div className="mt-4 grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
         <div>
-          <StatusBadge status={project.status} size="lg" />
+          <div className="flex flex-wrap items-center gap-2">
+            <KindBadge kind={project.kind} size="lg" />
+            <StatusBadge status={project.status} size="lg" />
+          </div>
           <h2 className="font-display mt-4 text-3xl font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
             {project.name}
           </h2>

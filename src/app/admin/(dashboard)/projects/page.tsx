@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { db } from "@/lib/db";
+import { kindLabel, type ProjectKind } from "@/lib/projects";
 import { DeleteButton } from "../DeleteButton";
 import { deleteProject } from "./actions";
 
@@ -31,6 +32,7 @@ export default async function AdminProjectsPage() {
           <thead>
             <tr className="border-b text-left opacity-60" style={{ borderColor: "var(--border-soft)" }}>
               <th className="px-4 py-3 font-medium">Name</th>
+              <th className="px-4 py-3 font-medium">Kind</th>
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Slug</th>
               <th className="px-4 py-3 font-medium"></th>
@@ -42,6 +44,7 @@ export default async function AdminProjectsPage() {
                 <td className="px-4 py-3 font-medium" style={{ color: "var(--ink)" }}>
                   {project.name}
                 </td>
+                <td className="px-4 py-3 opacity-70">{kindLabel[project.kind as ProjectKind]}</td>
                 <td className="px-4 py-3 opacity-70">{project.status}</td>
                 <td className="px-4 py-3 opacity-70">/projects/{project.slug}</td>
                 <td className="px-4 py-3 text-right">
@@ -60,7 +63,7 @@ export default async function AdminProjectsPage() {
             ))}
             {projects.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center opacity-50">
+                <td colSpan={5} className="px-4 py-8 text-center opacity-50">
                   No projects yet.
                 </td>
               </tr>

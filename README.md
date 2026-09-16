@@ -66,6 +66,8 @@ requirement so far is "me + a few teammates." Add teammates from `/admin/users` 
 you're logged in.
 
 - **Projects** (`/admin/projects`) — replaces manually editing `src/lib/projects.ts`.
+  Each project's **Kind** (`client` or `product`) decides which section it shows in on
+  `/projects` — Paraiba's own products, or client work — each with its own tag filter.
   Set a project's status to `archived` to show it as "Built · not published" (still
   visible, no live link) instead of `live`. Each project's device mockup can show, in
   priority order: (1) a **GitHub repo** (`owner/repo`) — boots and renders the app live

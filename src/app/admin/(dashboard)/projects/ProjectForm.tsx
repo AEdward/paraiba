@@ -80,6 +80,25 @@ export function ProjectForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <label htmlFor="kind" className={labelClass} style={{ color: "var(--ink)" }}>
+            Kind
+          </label>
+          <select
+            id="kind"
+            name="kind"
+            defaultValue={project?.kind ?? "client"}
+            className={inputClass}
+            style={inputStyle}
+          >
+            <option value="client">Client Project</option>
+            <option value="product">Our Product</option>
+          </select>
+          <p className="mt-1 text-xs opacity-50">
+            Which section it shows in on /projects — work done for a client, or a product
+            Paraiba owns.
+          </p>
+        </div>
+        <div>
           <label htmlFor="status" className={labelClass} style={{ color: "var(--ink)" }}>
             Status
           </label>
@@ -96,19 +115,20 @@ export function ProjectForm({
             <option value="archived">Built · not published</option>
           </select>
         </div>
-        <div>
-          <label htmlFor="tags" className={labelClass} style={{ color: "var(--ink)" }}>
-            Tags (comma-separated)
-          </label>
-          <input
-            id="tags"
-            name="tags"
-            defaultValue={project?.tags}
-            placeholder="Product, Fintech"
-            className={inputClass}
-            style={inputStyle}
-          />
-        </div>
+      </div>
+
+      <div>
+        <label htmlFor="tags" className={labelClass} style={{ color: "var(--ink)" }}>
+          Tags (comma-separated)
+        </label>
+        <input
+          id="tags"
+          name="tags"
+          defaultValue={project?.tags}
+          placeholder="Product, Fintech"
+          className={inputClass}
+          style={inputStyle}
+        />
       </div>
 
       <label className="flex items-start gap-3 text-sm">

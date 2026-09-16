@@ -3,6 +3,7 @@ import { ArrowUpRight, Lock } from "lucide-react";
 import { statusColor, type Project } from "@/lib/projects";
 import { TiltCard } from "@/components/TiltCard";
 import { StatusBadge } from "@/components/StatusBadge";
+import { KindBadge } from "@/components/KindBadge";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -24,7 +25,10 @@ export function ProjectCard({ project }: { project: Project }) {
         />
         <div>
           <div className="flex items-center justify-between gap-3">
-            <StatusBadge status={project.status} />
+            <div className="flex flex-wrap items-center gap-2">
+              <KindBadge kind={project.kind} />
+              <StatusBadge status={project.status} />
+            </div>
             {project.status === "archived" ? (
               <Lock size={16} className="opacity-40" style={{ color: "var(--ink)" }} />
             ) : (

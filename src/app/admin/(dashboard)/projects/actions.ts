@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
 const STATUSES = ["live", "in-progress", "concept", "archived"];
+const KINDS = ["client", "product"];
 const GITHUB_REPO_PATTERN = /^[\w.-]+\/[\w.-]+$/;
 
 async function requireSession() {
@@ -17,6 +18,10 @@ function readProjectForm(formData: FormData) {
   const status = String(formData.get("status") ?? "");
   if (!STATUSES.includes(status)) {
     throw new Error("Invalid project status.");
+  }
+  const kind = String(formData.get("kind") ?? "");
+  if (!KINDS.includes(kind)) {
+    throw new Error("Invalid project kind.");
   }
 
   const slug = String(formData.get("slug") ?? "")
@@ -57,6 +62,7 @@ function readProjectForm(formData: FormData) {
     tagline,
     description,
     status,
+    kind,
     tags,
     link,
     screenshot,

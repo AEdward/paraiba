@@ -5,7 +5,13 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { FadeIn } from "@/components/FadeIn";
 import type { Project } from "@/lib/projects";
 
-export function ProjectsGrid({ projects }: { projects: Project[] }) {
+export function ProjectsGrid({
+  projects,
+  emptyMessage = "No projects yet.",
+}: {
+  projects: Project[];
+  emptyMessage?: string;
+}) {
   const tags = useMemo(
     () => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(),
     [projects],
@@ -15,7 +21,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
   const filtered = active ? projects.filter((p) => p.tags.includes(active)) : projects;
 
   if (projects.length === 0) {
-    return <p className="mt-14 text-center opacity-50">No projects yet.</p>;
+    return <p className="mt-8 text-center opacity-50">{emptyMessage}</p>;
   }
 
   return (
