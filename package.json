@@ -16,8 +16,6 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
-    "@react-three/drei": "^10.7.8",
-    "@react-three/fiber": "^9.7.0",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^13.1.0",
     "jose": "^6.2.8",
@@ -27,8 +25,7 @@
     "pg": "^8.13.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "server-only": "^0.0.1",
-    "three": "^0.185.1"
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

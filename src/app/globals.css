@@ -75,3 +75,29 @@ body {
   }
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.paraiba-dark-section {
+  background-color: var(--color-indigo);
+  color: var(--color-cream);
+  background-image:
+    linear-gradient(rgba(245, 250, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 250, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.paraiba-text-gradient {
+  background: linear-gradient(110deg, #ffffff, #b8fbff, var(--color-amber));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
