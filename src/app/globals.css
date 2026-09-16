@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --color-indigo: #16233f;
-  --color-amber: #f4b942;
-  --color-ember: #c1562e;
-  --color-teal: #2e8c86;
-  --color-cream: #faf5ec;
-  --color-slate: #3a4556;
+  /* Paraiba Technology PLC brand palette */
+  --color-indigo: #061426; /* Midnight Navy — primary dark background */
+  --color-amber: #08dce8; /* Paraiba Cyan — primary accent / highlights */
+  --color-ember: #087cff; /* Electric Blue — technology / energy accent */
+  --color-deep-blue: #073b8f; /* Deep Blue — depth / secondary blue */
+  --color-teal: #16cfc0; /* Aqua Teal — secondary accent */
+  --color-cream: #f5faff; /* Crystal White — primary light text / surfaces */
+  --color-slate: #33465c; /* supporting neutral for body copy */
 
   --background: var(--color-cream);
   --foreground: var(--color-slate);
   --surface: #ffffff;
-  --border-soft: rgba(22, 35, 63, 0.12);
+  --border-soft: rgba(6, 20, 38, 0.12);
   --ink: var(--color-indigo);
 }
 
 :root[data-theme="dark"] {
   --background: var(--color-indigo);
   --foreground: var(--color-cream);
-  --surface: #1c2b4a;
-  --border-soft: rgba(250, 245, 236, 0.12);
+  --surface: #0d2547;
+  --border-soft: rgba(245, 250, 255, 0.12);
   --ink: var(--color-cream);
 }
 
@@ -27,6 +29,7 @@
   --color-indigo: var(--color-indigo);
   --color-amber: var(--color-amber);
   --color-ember: var(--color-ember);
+  --color-deep-blue: var(--color-deep-blue);
   --color-teal: var(--color-teal);
   --color-cream: var(--color-cream);
   --color-slate: var(--color-slate);
@@ -34,9 +37,8 @@
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-border-soft: var(--border-soft);
-  --font-display: var(--font-space-grotesk);
+  --font-display: var(--font-montserrat);
   --font-sans: var(--font-inter);
-  --font-amharic: var(--font-noto-ethiopic);
 }
 
 body {

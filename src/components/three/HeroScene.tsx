@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 import * as THREE from "three";
-import { AdeyCircuit3D } from "./AdeyCircuit3D";
+import { CrystalMark3D } from "./CrystalMark3D";
 
 export function HeroScene() {
   return (
@@ -15,11 +15,11 @@ export function HeroScene() {
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.65} />
-        <directionalLight position={[3, 4, 5]} intensity={1.4} color="#fff8ec" />
-        <directionalLight position={[-2, -2, 3]} intensity={0.4} color="#faf5ec" />
-        <pointLight position={[-3, -1.5, 2.5]} intensity={12} color="#2E8C86" />
-        <pointLight position={[3, 2.5, -1.5]} intensity={10} color="#F4B942" />
-        <AdeyCircuit3D />
+        <directionalLight position={[3, 4, 5]} intensity={1.4} color="#f5faff" />
+        <directionalLight position={[-2, -2, 3]} intensity={0.4} color="#f5faff" />
+        <pointLight position={[-3, -1.5, 2.5]} intensity={12} color="#16CFC0" />
+        <pointLight position={[3, 2.5, -1.5]} intensity={10} color="#08DCE8" />
+        <CrystalMark3D />
         <OrbitControls
           enableZoom={false}
           enablePan={false}

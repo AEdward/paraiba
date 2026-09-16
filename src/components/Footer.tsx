@@ -9,7 +9,8 @@ export function Footer() {
         <div>
           <Logo size={36} />
           <p className="mt-3 max-w-sm text-sm opacity-60">
-            Technology · Innovation · Investment — building new beginnings out of Addis Ababa.
+            Technology with Ethiopian brilliance — practical, reliable and beautiful digital
+            products, built out of Addis Ababa.
           </p>
           <div className="mt-5 flex gap-3">
             {socialLinks.map((social) => {
@@ -52,7 +53,7 @@ export function Footer() {
         className="border-t px-6 py-5 text-center text-xs opacity-50"
         style={{ borderColor: "var(--border-soft)" }}
       >
-        © {new Date().getFullYear()} Meskeday Technologies Group. All rights reserved.
+        © {new Date().getFullYear()} Paraiba Technology PLC. All rights reserved.
       </div>
     </footer>
   );

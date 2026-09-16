@@ -5,7 +5,7 @@ import { ValuesGrid } from "@/components/ValuesGrid";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "The story and values behind Meskeday Technologies Group.",
+  description: "The story and values behind Paraiba Technology PLC.",
 };
 
 export default function AboutPage() {
@@ -25,36 +25,36 @@ export default function AboutPage() {
               className="font-display mt-4 max-w-2xl text-4xl leading-tight font-bold sm:text-5xl"
               style={{ color: "var(--ink)" }}
             >
-              A new beginning, built by two histories.
+              Ethiopian brilliance, translated into technology.
             </h1>
           </FadeIn>
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
             <FadeIn delay={0.1}>
               <p className="text-base leading-relaxed opacity-80">
-                <strong style={{ color: "var(--ink)" }}>Meskeday</strong> was built from the
-                people behind it — Meskerem, the mother whose name means &ldquo;new
-                beginnings&rdquo; and marks the first month of the Ethiopian calendar, joined
-                with Giday, the family name shared by our founders, Anahom and Dagmawi.
+                The name <strong style={{ color: "var(--ink)" }}>Paraiba</strong> is inspired
+                by the vivid blue and blue-green character of Paraíba tourmaline — a
+                metaphor for clarity, rarity, energy and brilliance. We translate those
+                qualities into technology: bold ideas, precise execution, and products
+                designed to stand out.
               </p>
               <p className="mt-4 text-base leading-relaxed opacity-80">
-                We&apos;re a technology, innovation, and investment group — the home for the
-                products and ventures we build together, from first sketch to shipped
-                software.
+                Our mission is to build practical, reliable and beautiful technology that
+                helps people and businesses operate, grow and connect. Our vision is to
+                become a recognized African technology brand known for turning ambitious
+                ideas into useful digital products.
               </p>
             </FadeIn>
             <FadeIn delay={0.2}>
               <p className="text-base leading-relaxed opacity-80">
-                Our mark, the <strong style={{ color: "var(--ink)" }}>Adey Circuit</strong>,
-                is the Adey Abeba — the yellow flower that blooms across Ethiopia at the New
-                Year — rebuilt from six alternating nodes: warm gold and clay for the season
-                it comes from, teal and indigo for the technology it&apos;s becoming.
+                We&apos;re a premium-but-accessible technology company for businesses,
+                organizations and consumers who need modern digital solutions without
+                unnecessary complexity. Paraiba makes technology feel powerful, modern and
+                usable.
               </p>
-              <p
-                className="font-amharic mt-4 text-base opacity-70"
-                style={{ fontFamily: "var(--font-amharic)" }}
-              >
-                መስከዳይ ቴክኖሎጂ ግሩፕ — አዲስ ጅማሮ በቴክኖሎጂ።
+              <p className="mt-4 text-base leading-relaxed opacity-80">
+                We&apos;re Ethiopian in origin and global in ambition — without relying on
+                literal flags, maps, or clichés.
               </p>
             </FadeIn>
           </div>

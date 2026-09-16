@@ -7,7 +7,7 @@ import { getProjects } from "@/lib/projects-data";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "The projects Meskeday Technologies Group is building.",
+  description: "The projects Paraiba Technology PLC is building.",
 };
 
 export const dynamic = "force-dynamic";

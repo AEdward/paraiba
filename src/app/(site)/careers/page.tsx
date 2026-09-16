@@ -8,7 +8,7 @@ import { getOpenJobs } from "@/lib/jobs";
 
 export const metadata: Metadata = {
   title: "Careers",
-  description: "Build new beginnings with Meskeday Technologies Group.",
+  description: "Build technology with Ethiopian brilliance at Paraiba Technology PLC.",
 };
 
 export const dynamic = "force-dynamic";
@@ -50,7 +50,7 @@ export default async function CareersPage() {
               className="font-display mx-auto mt-4 max-w-2xl text-4xl leading-tight font-bold sm:text-5xl"
               style={{ color: "var(--ink)" }}
             >
-              Build the next new beginning with us.
+              Build technology with Ethiopian brilliance.
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg opacity-75">
               We&apos;re a small team building technology, products, and ventures out of Addis
@@ -64,7 +64,7 @@ export default async function CareersPage() {
         <div className="mx-auto max-w-6xl px-6 py-20">
           <FadeIn>
             <h2 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
-              Why Meskeday
+              Why Paraiba
             </h2>
           </FadeIn>
           <div className="mt-10 grid gap-6 sm:grid-cols-3">

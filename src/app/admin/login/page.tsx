@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
         <h1 className="font-display mt-6 text-xl font-bold" style={{ color: "var(--ink)" }}>
           Admin sign in
         </h1>
-        <p className="mt-1 text-sm opacity-60">Meskeday Technologies Group</p>
+        <p className="mt-1 text-sm opacity-60">Paraiba Technology PLC</p>
         <div className="mt-8">
           <LoginForm />
         </div>

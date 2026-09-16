@@ -1,4 +1,4 @@
-import { Accessibility, Lightbulb, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { Gem, Lightbulb, ShieldCheck, Sparkles, Target } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export type Value = {
@@ -9,28 +9,28 @@ export type Value = {
 
 export const values: Value[] = [
   {
-    icon: ShieldCheck,
-    title: "Trust",
-    description: "We build systems people can rely on, and relationships that hold up over time.",
-  },
-  {
     icon: Lightbulb,
     title: "Innovation",
-    description: "New beginnings are the point. We look for better ways to build, not just familiar ones.",
+    description: "Build useful things, not technology for its own sake.",
   },
   {
     icon: Sparkles,
+    title: "Clarity",
+    description: "Make complex technology understandable and usable.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Reliability",
+    description: "Prioritize stable products, security and dependable delivery.",
+  },
+  {
+    icon: Gem,
+    title: "Craft",
+    description: "Care about details, design and the quality of the final experience.",
+  },
+  {
+    icon: Target,
     title: "Impact",
-    description: "We measure our work by what it changes for the people and businesses that use it.",
-  },
-  {
-    icon: Accessibility,
-    title: "Accessibility",
-    description: "Good technology works for everyone it's meant for, not just the easiest users to reach.",
-  },
-  {
-    icon: Users,
-    title: "User-Centric",
-    description: "We start from the person on the other end of the product, every time.",
+    description: "Measure success by the value technology creates.",
   },
 ];

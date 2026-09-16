@@ -6,7 +6,7 @@ import { GradientMesh } from "@/components/GradientMesh";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Meskeday Technologies Group.",
+  description: "Get in touch with Paraiba Technology PLC.",
 };
 
 export default async function ContactPage({
@@ -45,8 +45,8 @@ export default async function ContactPage({
                 <p className="text-sm font-semibold" style={{ color: "var(--ink)" }}>
                   Email
                 </p>
-                <a href="mailto:hello@meskeday.com" className="text-sm opacity-70 hover:opacity-100">
-                  hello@meskeday.com
+                <a href="mailto:hello@paraiba.com" className="text-sm opacity-70 hover:opacity-100">
+                  hello@paraiba.com
                 </a>
               </div>
             </div>

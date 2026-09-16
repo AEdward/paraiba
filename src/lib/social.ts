@@ -10,8 +10,8 @@ export type SocialLink = {
 
 // Placeholder handles — swap in the real profile URLs when they exist.
 export const socialLinks: SocialLink[] = [
-  { icon: FacebookIcon, label: "Facebook", href: "https://facebook.com/meskeday" },
-  { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/meskeday" },
-  { icon: LinkedinIcon, label: "LinkedIn", href: "https://linkedin.com/company/meskeday" },
-  { icon: X, label: "X", href: "https://x.com/meskeday" },
+  { icon: FacebookIcon, label: "Facebook", href: "https://facebook.com/paraiba" },
+  { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/paraiba" },
+  { icon: LinkedinIcon, label: "LinkedIn", href: "https://linkedin.com/company/paraiba" },
+  { icon: X, label: "X", href: "https://x.com/paraiba" },
 ];

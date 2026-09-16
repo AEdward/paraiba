@@ -23,7 +23,7 @@ export default async function Home() {
                 className="font-display text-sm font-semibold tracking-[0.3em] uppercase"
                 style={{ color: "var(--color-ember)" }}
               >
-                Technology · Innovation · Investment
+                Technology · Products · Software
               </p>
             </FadeIn>
             <FadeIn delay={0.1}>
@@ -31,13 +31,13 @@ export default async function Home() {
                 className="font-display mt-6 max-w-xl text-4xl leading-tight font-bold sm:text-6xl"
                 style={{ color: "var(--ink)" }}
               >
-                New beginnings, built in technology.
+                Technology with Ethiopian brilliance.
               </h1>
             </FadeIn>
             <FadeIn delay={0.2}>
               <p className="mt-6 max-w-xl text-lg opacity-75">
-                Meskeday Technologies Group is the home for the products and ventures we
-                build together — one flower, two histories, fused at the center.
+                Paraiba Technology PLC builds practical, reliable and beautiful digital
+                products — modern technology without unnecessary complexity.
               </p>
             </FadeIn>
             <FadeIn delay={0.3}>
@@ -65,7 +65,7 @@ export default async function Home() {
           <FadeIn delay={0.15} className="relative">
             <Hero3D />
             <p className="mt-1 hidden text-center text-xs opacity-40 lg:block">
-              Drag to spin the Adey Circuit
+              Drag to spin the mark
             </p>
           </FadeIn>
         </div>
@@ -84,30 +84,21 @@ export default async function Home() {
           <div className="mt-6 grid gap-8 sm:grid-cols-2">
             <FadeIn delay={0.05}>
               <p className="max-w-md text-base opacity-80">
-                <strong style={{ color: "var(--ink)" }}>Meskeday</strong> was built from
-                the people behind it — Meskerem, the mother whose name means &ldquo;new
-                beginnings&rdquo; and marks the first month of the Ethiopian calendar,
-                joined with Giday, the family name shared by our founders.
+                The name <strong style={{ color: "var(--ink)" }}>Paraiba</strong> is inspired
+                by the vivid blue and blue-green brilliance of Paraíba tourmaline — a
+                metaphor for clarity, rarity, energy and brilliance, translated into
+                technology.
               </p>
             </FadeIn>
             <FadeIn delay={0.15}>
               <p className="max-w-md text-base opacity-80">
-                Our mark, the <strong style={{ color: "var(--ink)" }}>Adey Circuit</strong>,
-                is the Adey Abeba — the yellow flower that blooms across Ethiopia at the
-                New Year — rebuilt from six alternating nodes: warm gold and clay for the
-                season it comes from, teal and indigo for the technology it&apos;s
-                becoming.
+                We&apos;re Ethiopian in origin and global in ambition: bold ideas, precise
+                execution, and products built to stand out — practical, reliable and
+                beautiful technology that helps people and businesses operate, grow and
+                connect.
               </p>
             </FadeIn>
           </div>
-          <FadeIn delay={0.2}>
-            <p
-              className="font-amharic mt-8 text-base opacity-70"
-              style={{ fontFamily: "var(--font-amharic)" }}
-            >
-              መስከዳይ ቴክኖሎጂ ግሩፕ — አዲስ ጅማሮ በቴክኖሎጂ።
-            </p>
-          </FadeIn>
         </div>
       </section>
 

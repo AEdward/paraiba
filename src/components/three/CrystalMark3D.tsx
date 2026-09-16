@@ -10,10 +10,10 @@ const SHOULDER_X = 0.42;
 const TIP_Y = 2.15;
 const DEPTH = 0.18;
 
-const WARM_A = "#F4B942";
-const WARM_B = "#C1562E";
-const COOL_A = "#2E8C86";
-const COOL_B = "#16233F";
+const CYAN_A = "#16CFC0";
+const CYAN_B = "#08DCE8";
+const BLUE_A = "#087CFF";
+const BLUE_B = "#073B8F";
 
 function useTriangleGeometry(points: [number, number][]) {
   return useMemo(() => {
@@ -36,7 +36,7 @@ function useTriangleGeometry(points: [number, number][]) {
   }, []);
 }
 
-function Petal({ rotation, colorA, colorB }: { rotation: number; colorA: string; colorB: string }) {
+function Facet({ rotation, colorA, colorB }: { rotation: number; colorA: string; colorB: string }) {
   const inner: [number, number] = [0, WAIST];
   const left: [number, number] = [-SHOULDER_X, SHOULDER_Y];
   const right: [number, number] = [SHOULDER_X, SHOULDER_Y];
@@ -57,13 +57,13 @@ function Petal({ rotation, colorA, colorB }: { rotation: number; colorA: string;
       </mesh>
       <mesh position={[0, midY, -DEPTH]}>
         <boxGeometry args={[0.03, TIP_Y - WAIST, 0.03]} />
-        <meshStandardMaterial color="#16233F" transparent opacity={0.45} roughness={0.6} />
+        <meshStandardMaterial color="#061426" transparent opacity={0.45} roughness={0.6} />
       </mesh>
       <mesh position={[0, TIP_Y, 0.02]}>
         <sphereGeometry args={[0.09, 20, 20]} />
         <meshStandardMaterial
-          color="#FAF5EC"
-          emissive="#FAF5EC"
+          color="#F5FAFF"
+          emissive="#F5FAFF"
           emissiveIntensity={0.15}
           metalness={0.2}
           roughness={0.4}
@@ -73,7 +73,7 @@ function Petal({ rotation, colorA, colorB }: { rotation: number; colorA: string;
   );
 }
 
-export function AdeyCircuit3D() {
+export function CrystalMark3D() {
   const group = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -83,14 +83,14 @@ export function AdeyCircuit3D() {
     group.current.rotation.x = 0.15 + Math.sin(t * 0.4) * 0.03;
   });
 
-  const petals = useMemo(
+  const facets = useMemo(
     () =>
       Array.from({ length: 6 }, (_, i) => {
-        const isWarm = i % 2 === 0;
+        const isCyan = i % 2 === 0;
         return {
           rotation: (i * Math.PI) / 3,
-          colorA: isWarm ? WARM_A : COOL_A,
-          colorB: isWarm ? WARM_B : COOL_B,
+          colorA: isCyan ? CYAN_A : BLUE_A,
+          colorB: isCyan ? CYAN_B : BLUE_B,
         };
       }),
     [],
@@ -98,18 +98,18 @@ export function AdeyCircuit3D() {
 
   return (
     <group ref={group}>
-      {petals.map((p, i) => (
-        <Petal key={i} rotation={p.rotation} colorA={p.colorA} colorB={p.colorB} />
+      {facets.map((p, i) => (
+        <Facet key={i} rotation={p.rotation} colorA={p.colorA} colorB={p.colorB} />
       ))}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.34, 32, 32]} />
-        <meshStandardMaterial color="#16233F" metalness={0.5} roughness={0.3} />
+        <meshStandardMaterial color="#061426" metalness={0.5} roughness={0.3} />
       </mesh>
       <mesh position={[0, 0, 0.28]}>
         <sphereGeometry args={[0.15, 32, 32]} />
         <meshStandardMaterial
-          color="#F4B942"
-          emissive="#F4B942"
+          color="#08DCE8"
+          emissive="#08DCE8"
           emissiveIntensity={0.6}
           metalness={0.3}
           roughness={0.25}

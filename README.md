@@ -1,10 +1,11 @@
-# Meskeday Technologies Group
+# Paraiba Technology PLC
 
-Marketing site for Meskeday Technologies Group — home, about, projects, careers, contact,
+Marketing site for Paraiba Technology PLC — home, about, projects, careers, contact,
 and an admin dashboard backed by a real database.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma (SQLite locally).
-Brand palette, type, and the Adey Circuit mark come from the internal brand guide.
+Brand palette, type, and the crystalline P mark come from the internal brand guide
+(Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat + Inter).
 
 ## Getting started
 
@@ -103,6 +104,6 @@ The schema itself doesn't need to change — this is a config swap, not a rewrit
 - Contact form submissions are stored, not emailed — check `/admin/messages` for now.
   Wiring up email notifications (e.g. via Resend) is a reasonable next step.
 - Footer social links (`src/lib/social.ts`) point at placeholder handles
-  (`facebook.com/meskeday`, etc.) — update them once real profiles exist.
+  (`facebook.com/paraiba`, etc.) — update them once real profiles exist.
 - No partner-bank trust bar, awards section, or team photo yet — those would represent
-  credibility Meskeday doesn't actually have. Add them once they're real.
+  credibility Paraiba doesn't actually have. Add them once they're real.
