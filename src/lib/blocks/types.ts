@@ -153,6 +153,16 @@ export type ProductsGridData = {
   theme: SectionTheme;
 };
 
+// Only valid on a product's own mini-site pages (see ProductPage) — pulls
+// that product's githubRepo/link live, the same StackBlitz/iframe preview
+// already used on its corporate /products/[slug] page.
+export type LiveDemoData = {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  theme: SectionTheme;
+};
+
 export type BlockDataMap = {
   hero: HeroData;
   richText: RichTextData;
@@ -165,6 +175,7 @@ export type BlockDataMap = {
   openPositions: OpenPositionsData;
   contactPanel: ContactPanelData;
   productsGrid: ProductsGridData;
+  liveDemo: LiveDemoData;
 };
 
 export type BlockType = keyof BlockDataMap;
@@ -181,6 +192,7 @@ export const BLOCK_TYPES = [
   "openPositions",
   "contactPanel",
   "productsGrid",
+  "liveDemo",
 ] as const satisfies readonly BlockType[];
 
 export const BLOCK_LABELS: Record<BlockType, string> = {
@@ -195,6 +207,7 @@ export const BLOCK_LABELS: Record<BlockType, string> = {
   openPositions: "Open positions (live)",
   contactPanel: "Contact info + form",
   productsGrid: "Products grid (live)",
+  liveDemo: "Live app demo (product sites only)",
 };
 
 export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
@@ -209,12 +222,14 @@ export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
   openPositions: "Shows open job postings automatically.",
   contactPanel: "Contact details next to the live contact form.",
   productsGrid: "The full products listing, including the featured showcase.",
+  liveDemo: "Boots and renders this product's own GitHub repo/live link automatically.",
 };
 
-// A generic block row shape both the DB layer and the renderer agree on.
+// A generic block row shape both the DB layer and the renderer agree on —
+// intentionally shaped to fit both Block (site pages) and ProductBlock
+// (product mini-site pages) rows.
 export type BlockRecord<T extends BlockType = BlockType> = {
   id: string;
-  pageId: string;
   type: T;
   order: number;
   data: BlockDataMap[T];
@@ -229,4 +244,17 @@ export const PAGE_TITLES: Record<PageSlug, string> = {
   careers: "Careers",
   contact: "Contact",
   products: "Products",
+};
+
+// The fixed set of pages every product's own mini-site gets.
+export const PRODUCT_PAGE_SLUGS = ["home", "features", "pricing", "about", "contact", "demo"] as const;
+export type ProductPageSlug = (typeof PRODUCT_PAGE_SLUGS)[number];
+
+export const PRODUCT_PAGE_TITLES: Record<ProductPageSlug, string> = {
+  home: "Home",
+  features: "Features",
+  pricing: "Pricing",
+  about: "About",
+  contact: "Contact",
+  demo: "Demo",
 };

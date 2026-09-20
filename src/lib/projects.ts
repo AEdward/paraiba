@@ -31,6 +31,14 @@ export type Project = {
   deliverables?: string;
   // "## Section\nbody text" blocks — rendered as numbered case-study sections.
   caseStudy?: string;
+  // <subdomain>.<root domain> — set once this product has its own mini-site.
+  subdomain?: string;
+  // Shown in the mini-site's own nav instead of the Paraiba logo.
+  logoUrl?: string;
+  // Override --color-ember/--color-teal and --color-amber on the mini-site;
+  // unset falls back to Paraiba's own brand colors.
+  themeColor?: string;
+  themeColorSecondary?: string;
 };
 
 export function getEmbedUrl(project: Project): string | undefined {

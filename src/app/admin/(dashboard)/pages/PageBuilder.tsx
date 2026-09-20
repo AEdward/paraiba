@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -17,22 +17,30 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, ChevronUp, GripVertical, Plus, Trash2 } from "lucide-react";
-import {
-  BLOCK_TYPES,
-  BLOCK_DESCRIPTIONS,
-  BLOCK_LABELS,
-  type BlockRecord,
-  type BlockType,
-  type PageSlug,
-} from "@/lib/blocks/types";
+import { BLOCK_TYPES, BLOCK_DESCRIPTIONS, BLOCK_LABELS, type BlockRecord, type BlockType } from "@/lib/blocks/types";
 import { BlockFields } from "./BlockFields";
-import { addBlock, deleteBlock, reorderBlocks, updateBlockData } from "./actions";
 
-export function PageBuilder({ pageSlug, blocks }: { pageSlug: PageSlug; blocks: BlockRecord[] }) {
+// Reusable for both the site-wide page builder and a product's own mini-site
+// page builder — the caller binds these to whichever tables/identity they
+// point at (Page/Block vs. ProductPage/ProductBlock) and hands them down
+// already-bound, so this component itself has no notion of "which page".
+export type PageBuilderActions = {
+  addBlock: (type: BlockType) => Promise<void>;
+  deleteBlockAction: (formData: FormData) => void;
+  reorderBlocks: (orderedIds: string[]) => Promise<void>;
+  // Still expects (blockId, formData) — PageBuilder does the final
+  // .bind(null, block.id) itself, client-side, per card (see the comment on
+  // updateBlockData in admin/(dashboard)/pages/actions.ts for why this can't
+  // instead be a server-computed closure passed down as a prop).
+  updateBlockAction: (blockId: string, formData: FormData) => void;
+};
+
+export function PageBuilder({ blocks, actions }: { blocks: BlockRecord[]; actions: PageBuilderActions }) {
   const [items, setItems] = useState(blocks);
   const [openId, setOpenId] = useState<string | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
+  const dndId = useId();
 
   // Re-sync when the server component re-renders with fresh data (after any
   // action's revalidatePath) — e.g. a block was just added, edited, or deleted.
@@ -51,24 +59,19 @@ export function PageBuilder({ pageSlug, blocks }: { pageSlug: PageSlug; blocks: 
     const newIndex = items.findIndex((b) => b.id === over.id);
     const next = arrayMove(items, oldIndex, newIndex);
     setItems(next);
-    reorderBlocks(pageSlug, next.map((b) => b.id));
+    actions.reorderBlocks(next.map((b) => b.id));
   }
 
   return (
     <div>
-      <DndContext
-        id={`page-builder-${pageSlug}`}
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
+      <DndContext id={dndId} sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={items.map((b) => b.id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-3">
             {items.map((block) => (
               <BlockCard
                 key={block.id}
                 block={block}
-                pageSlug={pageSlug}
+                actions={actions}
                 open={openId === block.id}
                 onToggle={() => setOpenId((id) => (id === block.id ? null : block.id))}
               />
@@ -99,7 +102,12 @@ export function PageBuilder({ pageSlug, blocks }: { pageSlug: PageSlug; blocks: 
             style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
           >
             {BLOCK_TYPES.map((type) => (
-              <AddBlockOption key={type} type={type} pageSlug={pageSlug} onAdded={() => setAddOpen(false)} />
+              <AddBlockOption
+                key={type}
+                type={type}
+                onAdd={actions.addBlock}
+                onAdded={() => setAddOpen(false)}
+              />
             ))}
           </div>
         )}
@@ -110,11 +118,11 @@ export function PageBuilder({ pageSlug, blocks }: { pageSlug: PageSlug; blocks: 
 
 function AddBlockOption({
   type,
-  pageSlug,
+  onAdd,
   onAdded,
 }: {
   type: BlockType;
-  pageSlug: PageSlug;
+  onAdd: (type: BlockType) => Promise<void>;
   onAdded: () => void;
 }) {
   return (
@@ -122,7 +130,7 @@ function AddBlockOption({
       type="button"
       onClick={async () => {
         onAdded();
-        await addBlock(pageSlug, type);
+        await onAdd(type);
       }}
       className="block w-full rounded-lg px-3 py-2 text-left transition-colors hover:opacity-100"
       style={{ opacity: 0.85 }}
@@ -137,20 +145,19 @@ function AddBlockOption({
 
 function BlockCard({
   block,
-  pageSlug,
+  actions,
   open,
   onToggle,
 }: {
   block: BlockRecord;
-  pageSlug: PageSlug;
+  actions: PageBuilderActions;
   open: boolean;
   onToggle: () => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: block.id,
   });
-  const boundUpdate = updateBlockData.bind(null, block.id, pageSlug);
-  const boundDelete = deleteBlock.bind(null, pageSlug);
+  const boundUpdate = actions.updateBlockAction.bind(null, block.id);
 
   return (
     <div
@@ -181,7 +188,7 @@ function BlockCard({
           {open ? <ChevronUp size={16} opacity={0.5} /> : <ChevronDown size={16} opacity={0.5} />}
         </button>
         <form
-          action={boundDelete}
+          action={actions.deleteBlockAction}
           onSubmit={(e) => {
             if (!confirm("Delete this block? This can't be undone.")) e.preventDefault();
           }}

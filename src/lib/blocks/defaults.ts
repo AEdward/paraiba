@@ -87,5 +87,12 @@ export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] 
         emptyMessage: "No products published yet — we're currently building.",
         theme: "light",
       } satisfies BlockDataMap["productsGrid"] as BlockDataMap[T];
+    case "liveDemo":
+      return {
+        eyebrow: "Demo",
+        heading: "See it in action",
+        body: "",
+        theme: "light",
+      } satisfies BlockDataMap["liveDemo"] as BlockDataMap[T];
   }
 }

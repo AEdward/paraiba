@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { db } from "@/lib/db";
 import { PAGE_SLUGS, PAGE_TITLES, type BlockRecord, type BlockType, type PageSlug } from "@/lib/blocks/types";
-import { PageBuilder } from "../PageBuilder";
+import { PageBuilder, type PageBuilderActions } from "../PageBuilder";
+import { addBlock, deleteBlock, reorderBlocks, updateBlockData } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -42,11 +43,17 @@ export default async function PageBuilderPage({ params }: { params: Promise<{ sl
 
   const blocks: BlockRecord[] = page.blocks.map((block) => ({
     id: block.id,
-    pageId: block.pageId,
     type: block.type as BlockType,
     order: block.order,
     data: block.data as BlockRecord["data"],
   }));
+
+  const actions: PageBuilderActions = {
+    addBlock: addBlock.bind(null, slug),
+    deleteBlockAction: deleteBlock.bind(null, slug),
+    reorderBlocks: reorderBlocks.bind(null, slug),
+    updateBlockAction: updateBlockData.bind(null, slug),
+  };
 
   return (
     <div>
@@ -69,7 +76,7 @@ export default async function PageBuilderPage({ params }: { params: Promise<{ sl
       </p>
 
       <div className="mt-8">
-        <PageBuilder pageSlug={slug} blocks={blocks} />
+        <PageBuilder blocks={blocks} actions={actions} />
       </div>
     </div>
   );

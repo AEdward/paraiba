@@ -4,6 +4,7 @@ import type {
   ContactPanelData,
   CtaData,
   HeroData,
+  LiveDemoData,
   OpenPositionsData,
   PartnersTrustBarData,
   ProductsGridData,
@@ -12,6 +13,7 @@ import type {
   RichTextData,
   StatsQuoteData,
 } from "@/lib/blocks/types";
+import type { Project } from "@/lib/projects";
 import { HeroBlock } from "./HeroBlock";
 import { RichTextBlock } from "./RichTextBlock";
 import { CardGridBlock } from "./CardGridBlock";
@@ -23,15 +25,19 @@ import { PartnersTrustBarBlock } from "./PartnersTrustBarBlock";
 import { OpenPositionsBlock } from "./OpenPositionsBlock";
 import { ContactPanelBlock } from "./ContactPanelBlock";
 import { ProductsGridBlock } from "./ProductsGridBlock";
+import { LiveDemoBlock } from "./LiveDemoBlock";
 
 export function BlockRenderer({
   block,
   contactInitialMessage,
+  project,
 }: {
   block: BlockRecord;
   // Only read by a "contactPanel" block — threaded down from the page's
   // ?role= search param so a careers "Apply" link can prefill the message.
   contactInitialMessage?: string;
+  // Only read by a "liveDemo" block, on a product's own mini-site pages.
+  project?: Project;
 }) {
   switch (block.type) {
     case "hero":
@@ -58,6 +64,8 @@ export function BlockRenderer({
       );
     case "productsGrid":
       return <ProductsGridBlock data={block.data as ProductsGridData} />;
+    case "liveDemo":
+      return <LiveDemoBlock data={block.data as LiveDemoData} project={project} />;
     default:
       return null;
   }

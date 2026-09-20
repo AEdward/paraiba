@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { BlockRecord, BlockType, PageSlug } from "./types";
+import type { BlockRecord, BlockType, PageSlug, ProductPageSlug } from "./types";
 
 export async function getPageBlocks(slug: PageSlug): Promise<BlockRecord[]> {
   const page = await db.page.findUnique({
@@ -11,7 +11,6 @@ export async function getPageBlocks(slug: PageSlug): Promise<BlockRecord[]> {
 
   return page.blocks.map((block) => ({
     id: block.id,
-    pageId: block.pageId,
     type: block.type as BlockType,
     order: block.order,
     data: block.data as BlockRecord["data"],
@@ -23,4 +22,22 @@ export async function getAllPagesWithBlockCounts() {
     orderBy: { title: "asc" },
     include: { _count: { select: { blocks: true } } },
   });
+}
+
+export async function getProductPageBlocks(
+  projectId: string,
+  slug: ProductPageSlug,
+): Promise<BlockRecord[]> {
+  const page = await db.productPage.findUnique({
+    where: { projectId_slug: { projectId, slug } },
+    include: { blocks: { orderBy: { order: "asc" } } },
+  });
+  if (!page) return [];
+
+  return page.blocks.map((block) => ({
+    id: block.id,
+    type: block.type as BlockType,
+    order: block.order,
+    data: block.data as BlockRecord["data"],
+  }));
 }

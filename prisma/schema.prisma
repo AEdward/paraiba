@@ -35,6 +35,45 @@ model Project {
   caseStudy    String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  // Optional standalone mini-site: <subdomain>.<root domain>, its own set of
+  // pages (see ProductPage below), and its own accent colors instead of
+  // Paraiba's. Unset fields fall back to the main brand's look.
+  subdomain           String?       @unique
+  logoUrl             String?
+  themeColor          String? // overrides --color-ember/--color-teal
+  themeColorSecondary String? // overrides --color-amber
+  pages               ProductPage[]
+}
+
+// One page of a product's own mini-site ("home" | "features" | "pricing" |
+// "about" | "contact" | "demo"). Mirrors Page/Block — kept as a separate
+// model (rather than a nullable Page.projectId) so a product's page slugs
+// don't collide with, or get mixed up with, the main site's Page.slug space.
+model ProductPage {
+  id        String         @id @default(cuid())
+  projectId String
+  project   Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  slug      String
+  title     String
+  blocks    ProductBlock[]
+  updatedAt DateTime       @updatedAt
+  createdAt DateTime       @default(now())
+
+  @@unique([projectId, slug])
+}
+
+model ProductBlock {
+  id            String      @id @default(cuid())
+  productPageId String
+  productPage   ProductPage @relation(fields: [productPageId], references: [id], onDelete: Cascade)
+  type          String
+  order         Int         @default(0)
+  data          Json
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([productPageId, order])
 }
 
 model JobPosting {

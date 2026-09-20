@@ -65,7 +65,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   and these files are still named "project" internally — only the public-facing URL, nav
   label, and admin section are "Products.")
 - `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `JobApplication`, `Partner`,
-  `Page`, `Block`, `ContactSubmission` models.
+  `Page`, `Block`, `ProductPage`, `ProductBlock`, `ContactSubmission` models.
 - `prisma/seed.ts` / `prisma/seedPages.ts` — creates the first admin user, seeds
   placeholder products, and seeds every page's block content (see below). Safe to re-run:
   it skips anything that already exists.
@@ -99,6 +99,45 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   parser case in `admin/(dashboard)/pages/actions.ts`. Everything else (add/reorder/
   delete, the builder UI) already works for it.
 
+## Product mini-sites
+
+Since most products (industry-specific ERP systems, each in their own GitHub repo) are
+real standalone products, not just portfolio entries, any product can get its own
+subdomain with its own multi-page site and its own accent colors — instead of only a
+single `/products/[slug]` detail page on the corporate site.
+
+- Set a **subdomain** on a product (`/admin/products/[id]` → "Mini-site") — e.g.
+  `temari` — and it becomes reachable at `temari.<ROOT_DOMAIN>`, with its own Home,
+  Features, Pricing, About, Contact, and Demo pages (`ProductPageSlug` in
+  `src/lib/blocks/types.ts`), built with the exact same drag-and-drop block builder as
+  the main site (`/admin/products/[id]/pages`, reusing
+  `src/app/admin/(dashboard)/pages/PageBuilder.tsx`) — just stored in `ProductPage`/
+  `ProductBlock` instead of `Page`/`Block`.
+- A product can also set its own **theme color** and **secondary color** (hex) and its
+  own **mini-site logo** — these override `--color-ember`/`--color-teal` and
+  `--color-amber` for that product's pages only (see `src/app/sites/[subdomain]/layout.tsx`),
+  the same CSS-custom-property trick `.paraiba-light-section`/`.paraiba-dark-section`
+  already use, so every existing block renders correctly re-themed with zero
+  per-component changes. Leave them unset to use Paraiba's own brand colors.
+- A dedicated **`liveDemo`** block type (Demo page's natural choice, though usable
+  anywhere on a product's pages) renders that product's own GitHub repo/live link — the
+  same StackBlitz/iframe preview already used on its corporate `/products/[slug]` page,
+  just automatically scoped to whichever product's pages it's on.
+- **Routing**: `src/proxy.ts` inspects the request's `Host` header
+  (`src/lib/subdomain.ts`, pure string logic — no database access from the proxy, since
+  the `pg` driver adapter this app uses isn't Edge-compatible) and rewrites
+  `<subdomain>.<ROOT_DOMAIN>/*` to `/sites/<subdomain>/*` internally. Set `ROOT_DOMAIN`
+  (e.g. `paraiba.com`) in your environment and point a wildcard DNS record
+  (`*.paraiba.com`) at this deployment. In local dev, `<subdomain>.localhost:3000`
+  always works with no configuration — Chromium and most browsers resolve `*.localhost`
+  to `127.0.0.1` automatically. A product's pages are also reachable directly at
+  `/sites/<subdomain>` on the main domain/host, without any subdomain at all — handy for
+  previewing a mini-site before its DNS is live.
+- Contact forms on a product's own Contact page still post to the same
+  `/api/contact` → `ContactSubmission` table as the corporate site — there's no
+  per-product inbox yet. Add one (e.g. a `productId` column) if that becomes worth
+  telling apart.
+
 ## Admin dashboard
 
 Anyone with an account has full access — there are no permission tiers, since the only
@@ -117,6 +156,8 @@ you're logged in.
   URL**; (4) a placeholder if none of the above are set.
   - Mark one product **featured** to show it in a large showcase hero above the grid on
     `/products`.
+  - A product can optionally get its own standalone multi-page mini-site (its own
+    subdomain, pages, and theme colors) — see "Product mini-sites" below.
   - **What We Built** and **Case Study** are optional fields edited with a small WYSIWYG
     editor (`src/components/admin/RichTextEditor.tsx`, built on TipTap) — use the toolbar's
     heading button to start a new group/section, then write paragraphs and/or a bullet
@@ -167,6 +208,10 @@ deploy (e.g. to Vercel):
 
 If you'd rather give production its own database, create a second Supabase project (or
 branch) and point its `DATABASE_URL` there instead.
+
+To use product mini-sites (see "Product mini-sites" above), also set `ROOT_DOMAIN`
+(e.g. `paraiba.com`) and add a wildcard DNS record (`*.paraiba.com`) pointing at this
+deployment, alongside your apex/`www` records.
 
 ## Notes
 

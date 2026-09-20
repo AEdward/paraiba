@@ -1,8 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 import { SESSION_COOKIE } from "@/lib/auth";
+import { getProductSubdomain } from "@/lib/subdomain";
 
 export async function proxy(request: NextRequest) {
+  const subdomain = getProductSubdomain(request.headers.get("host"), process.env.ROOT_DOMAIN ?? "");
+  if (subdomain) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/sites/${subdomain}${request.nextUrl.pathname}`;
+    return NextResponse.rewrite(url);
+  }
+
+  if (!request.nextUrl.pathname.startsWith("/admin")) {
+    return NextResponse.next();
+  }
+
   if (request.nextUrl.pathname === "/admin/login") {
     return NextResponse.next();
   }
@@ -29,5 +41,10 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*"],
+  // Runs on every page route (needed to catch a product subdomain's "/"),
+  // but skips API routes, Next internals, and static file requests — a
+  // rewritten path for those would 404 or serve the wrong file.
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|woff2?|ttf)$).*)",
+  ],
 };
