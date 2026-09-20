@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-6 py-20">
+    <div className="paraiba-light-section flex min-h-screen items-center justify-center px-6 py-20">
       <div
         className="w-full max-w-sm rounded-2xl border p-8 shadow-[0_1px_2px_rgba(22,35,63,0.04),0_20px_36px_-16px_rgba(22,35,63,0.22)]"
         style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}

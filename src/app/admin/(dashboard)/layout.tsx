@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   if (!session) redirect("/admin/login");
 
   return (
-    <div className="flex min-h-full flex-1" style={{ background: "var(--background)" }}>
+    <div className="paraiba-light-section flex min-h-full flex-1">
       <aside
         className="hidden w-60 shrink-0 flex-col border-r px-4 py-6 sm:flex"
         style={{ borderColor: "var(--border-soft)" }}
