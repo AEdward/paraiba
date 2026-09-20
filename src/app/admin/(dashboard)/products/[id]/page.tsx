@@ -23,12 +23,17 @@ export default async function EditProjectPage({ params }: { params: Promise<{ id
         </h1>
         <Link
           href={`/admin/products/${project.id}/pages`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium"
-          style={{ color: "var(--color-teal)" }}
+          className="font-display inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-(--color-cream)"
+          style={{ background: "var(--color-indigo)" }}
         >
-          <Layers size={14} /> Manage mini-site pages
+          <Layers size={15} /> Manage mini-site pages
         </Link>
       </div>
+      <p className="mt-1 text-sm opacity-60">
+        This form is the product&apos;s data (name, tagline, status, etc.) and its mini-site
+        settings (subdomain, colors). Its actual Home/Features/Pricing/… pages are built
+        separately — use the button above.
+      </p>
       <div className="mt-8">
         <ProjectForm project={project} action={boundUpdate} submitLabel="Save changes" />
       </div>
