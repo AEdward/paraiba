@@ -47,18 +47,21 @@ export function PageBuilder({ pageSlug, blocks }: { pageSlug: PageSlug; blocks: 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
-    setItems((current) => {
-      const oldIndex = current.findIndex((b) => b.id === active.id);
-      const newIndex = current.findIndex((b) => b.id === over.id);
-      const next = arrayMove(current, oldIndex, newIndex);
-      reorderBlocks(pageSlug, next.map((b) => b.id));
-      return next;
-    });
+    const oldIndex = items.findIndex((b) => b.id === active.id);
+    const newIndex = items.findIndex((b) => b.id === over.id);
+    const next = arrayMove(items, oldIndex, newIndex);
+    setItems(next);
+    reorderBlocks(pageSlug, next.map((b) => b.id));
   }
 
   return (
     <div>
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext
+        id={`page-builder-${pageSlug}`}
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
         <SortableContext items={items.map((b) => b.id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-3">
             {items.map((block) => (
