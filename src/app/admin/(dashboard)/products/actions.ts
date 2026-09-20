@@ -5,12 +5,9 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { getRichSections } from "@/lib/richDoc";
-import { RESERVED_SUBDOMAINS } from "@/lib/subdomain";
 
 const STATUSES = ["live", "in-progress", "concept", "archived"];
 const GITHUB_REPO_PATTERN = /^[\w.-]+\/[\w.-]+$/;
-const SUBDOMAIN_PATTERN = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-const HEX_COLOR_PATTERN = /^#[0-9a-f]{6}$/i;
 
 async function requireSession() {
   const session = await getSession();
@@ -52,33 +49,11 @@ function readProjectForm(formData: FormData) {
   const caseStudyRaw = String(formData.get("caseStudy") ?? "").trim();
   const caseStudy = caseStudyRaw && getRichSections(caseStudyRaw).length > 0 ? caseStudyRaw : null;
 
-  const subdomainRaw = String(formData.get("subdomain") ?? "").trim().toLowerCase();
-  const subdomain = subdomainRaw || null;
-  const logoUrl = String(formData.get("logoUrl") ?? "").trim() || null;
-  const themeColorRaw = String(formData.get("themeColor") ?? "").trim();
-  const themeColor = themeColorRaw || null;
-  const themeColorSecondaryRaw = String(formData.get("themeColorSecondary") ?? "").trim();
-  const themeColorSecondary = themeColorSecondaryRaw || null;
-
   if (!slug || !name || !tagline || !description) {
     throw new Error("Slug, name, tagline, and description are required.");
   }
   if (githubRepo && !GITHUB_REPO_PATTERN.test(githubRepo)) {
     throw new Error('GitHub repo must look like "owner/repo".');
-  }
-  if (subdomain) {
-    if (!SUBDOMAIN_PATTERN.test(subdomain)) {
-      throw new Error("Subdomain can only contain lowercase letters, numbers, and hyphens.");
-    }
-    if (RESERVED_SUBDOMAINS.has(subdomain)) {
-      throw new Error(`"${subdomain}" is reserved and can't be used as a product subdomain.`);
-    }
-  }
-  if (themeColor && !HEX_COLOR_PATTERN.test(themeColor)) {
-    throw new Error("Theme color must be a hex color like #1e6fd9.");
-  }
-  if (themeColorSecondary && !HEX_COLOR_PATTERN.test(themeColorSecondary)) {
-    throw new Error("Secondary theme color must be a hex color like #f5a623.");
   }
 
   return {
@@ -95,10 +70,6 @@ function readProjectForm(formData: FormData) {
     featured,
     deliverables,
     caseStudy,
-    subdomain,
-    logoUrl,
-    themeColor,
-    themeColorSecondary,
   };
 }
 

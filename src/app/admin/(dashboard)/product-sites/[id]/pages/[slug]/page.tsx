@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { db } from "@/lib/db";
 import {
+  MICROSITE_BLOCK_TYPES,
   PRODUCT_PAGE_SLUGS,
   PRODUCT_PAGE_TITLES,
   type BlockRecord,
@@ -33,7 +34,7 @@ export async function generateMetadata({
   return { title: isProductPageSlug(slug) ? PRODUCT_PAGE_TITLES[slug] : "Page" };
 }
 
-export default async function ProductPageBuilderPage({
+export default async function ProductSitePageBuilderPage({
   params,
 }: {
   params: Promise<{ id: string; slug: string }>;
@@ -41,16 +42,16 @@ export default async function ProductPageBuilderPage({
   const { id, slug } = await params;
   if (!isProductPageSlug(slug)) notFound();
 
-  const project = await db.project.findUnique({ where: { id } });
-  if (!project) notFound();
+  const site = await db.productSite.findUnique({ where: { id } });
+  if (!site) notFound();
 
   let page = await db.productPage.findUnique({
-    where: { projectId_slug: { projectId: id, slug } },
+    where: { productSiteId_slug: { productSiteId: id, slug } },
     include: { blocks: { orderBy: { order: "asc" } } },
   });
   if (!page) {
     page = await db.productPage.create({
-      data: { projectId: id, slug, title: PRODUCT_PAGE_TITLES[slug] },
+      data: { productSiteId: id, slug, title: PRODUCT_PAGE_TITLES[slug] },
       include: { blocks: { orderBy: { order: "asc" } } },
     });
   }
@@ -69,34 +70,30 @@ export default async function ProductPageBuilderPage({
     updateBlockAction: updateProductBlockData.bind(null, id, slug),
   };
 
-  const livePath = project.subdomain
-    ? `/sites/${project.subdomain}${slug === "home" ? "" : `/${slug}`}`
-    : undefined;
+  const livePath = `/sites/${site.subdomain}${slug === "home" ? "" : `/${slug}`}`;
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
-          {project.name} — {PRODUCT_PAGE_TITLES[slug]}
+          {site.name} — {PRODUCT_PAGE_TITLES[slug]}
         </h1>
-        {livePath && (
-          <Link
-            href={livePath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium"
-            style={{ color: "var(--color-teal)" }}
-          >
-            View live page <ExternalLink size={13} />
-          </Link>
-        )}
+        <Link
+          href={livePath}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium"
+          style={{ color: "var(--color-teal)" }}
+        >
+          View live page <ExternalLink size={13} />
+        </Link>
       </div>
       <p className="mt-1 text-sm opacity-60">
         Drag to reorder, click a block to edit it, or add a new one below.
       </p>
 
       <div className="mt-8">
-        <PageBuilder blocks={blocks} actions={actions} />
+        <PageBuilder blocks={blocks} actions={actions} availableTypes={MICROSITE_BLOCK_TYPES} />
       </div>
     </div>
   );

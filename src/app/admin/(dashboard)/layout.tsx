@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Briefcase, FolderKanban, Handshake, Layers, Mail, UserCheck, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Briefcase, FolderKanban, Globe, Handshake, Layers, Mail, UserCheck, Users, LogOut } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { getSession } from "@/lib/auth";
 import { logout } from "./actions";
@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/pages", label: "Pages", icon: Layers },
   { href: "/admin/products", label: "Products", icon: FolderKanban },
+  { href: "/admin/product-sites", label: "Product Sites", icon: Globe },
   { href: "/admin/partners", label: "Partners", icon: Handshake },
   { href: "/admin/careers", label: "Careers", icon: Briefcase },
   { href: "/admin/applicants", label: "Applicants", icon: UserCheck },

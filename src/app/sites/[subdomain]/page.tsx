@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
-import { getProjectBySubdomain } from "@/lib/projects-data";
+import { getProductSiteBySubdomain } from "@/lib/productSites-data";
 import { getProductPageBlocks } from "@/lib/blocks/data";
 
 export const dynamic = "force-dynamic";
@@ -12,27 +12,27 @@ export async function generateMetadata({
   params: Promise<{ subdomain: string }>;
 }): Promise<Metadata> {
   const { subdomain } = await params;
-  const project = await getProjectBySubdomain(subdomain);
-  // A product's mini-site is meant to feel independent — an absolute title
+  const site = await getProductSiteBySubdomain(subdomain);
+  // A product's own site is meant to feel independent — an absolute title
   // skips the root layout's "%s — Paraiba Technology PLC" template.
-  return project ? { title: { absolute: project.name }, description: project.tagline } : {};
+  return site ? { title: { absolute: site.name } } : {};
 }
 
-export default async function ProductHomePage({
+export default async function ProductSiteHomePage({
   params,
 }: {
   params: Promise<{ subdomain: string }>;
 }) {
   const { subdomain } = await params;
-  const project = await getProjectBySubdomain(subdomain);
-  if (!project) notFound();
+  const site = await getProductSiteBySubdomain(subdomain);
+  if (!site) notFound();
 
-  const blocks = await getProductPageBlocks(project.id, "home");
+  const blocks = await getProductPageBlocks(site.id, "home");
 
   return (
     <>
       {blocks.map((block) => (
-        <BlockRenderer key={block.id} block={block} project={project} />
+        <BlockRenderer key={block.id} block={block} />
       ))}
     </>
   );

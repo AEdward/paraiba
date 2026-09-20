@@ -10,7 +10,6 @@ import {
   type ContactPanelData,
   type CtaData,
   type HeroData,
-  type LiveDemoData,
   type OpenPositionsData,
   type PartnersTrustBarData,
   type ProductsGridData,
@@ -461,21 +460,6 @@ export function BlockFields({ block }: { block: BlockRecord }) {
           <Field label="Empty-state message" name="emptyMessage" defaultValue={data.emptyMessage} />
           <ThemeField defaultValue={data.theme} />
           <p className="text-xs opacity-50">Products shown here come live from Admin → Products.</p>
-        </div>
-      );
-    }
-    case "liveDemo": {
-      const data = block.data as LiveDemoData;
-      return (
-        <div className="flex flex-col gap-4">
-          <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
-          <Field label="Heading — optional" name="heading" defaultValue={data.heading} />
-          <TextAreaField label="Body — optional" name="body" defaultValue={data.body} rows={2} />
-          <ThemeField defaultValue={data.theme} />
-          <p className="text-xs opacity-50">
-            Renders this product&apos;s own GitHub repo or live link (set on the product itself)
-            — only works on this product&apos;s own pages, not the main site.
-          </p>
         </div>
       );
     }

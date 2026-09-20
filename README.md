@@ -99,30 +99,34 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   parser case in `admin/(dashboard)/pages/actions.ts`. Everything else (add/reorder/
   delete, the builder UI) already works for it.
 
-## Product mini-sites
+## Product sites
 
-Since most products (industry-specific ERP systems, each in their own GitHub repo) are
-real standalone products, not just portfolio entries, any product can get its own
-subdomain with its own multi-page site and its own accent colors — instead of only a
-single `/products/[slug]` detail page on the corporate site.
+Most products in the catalog are real, industry-specific applications that live in
+their own GitHub repo and aren't deployed yet — there's no live link to point to. To
+still promote and show off a product before it ships, it can get its own standalone,
+custom-themed marketing site on its own subdomain — completely independent of the
+Products catalog (`/admin/products`) entirely. A product site has no tagline,
+description, status, or GitHub link; it's just a name, a subdomain, a logo, and a
+couple of theme colors, with its own drag-and-drop-built pages.
 
-- Set a **subdomain** on a product (`/admin/products/[id]` → "Mini-site") — e.g.
-  `temari` — and it becomes reachable at `temari.<ROOT_DOMAIN>`, with its own Home,
-  Features, Pricing, About, Contact, and Demo pages (`ProductPageSlug` in
-  `src/lib/blocks/types.ts`), built with the exact same drag-and-drop block builder as
-  the main site (`/admin/products/[id]/pages`, reusing
-  `src/app/admin/(dashboard)/pages/PageBuilder.tsx`) — just stored in `ProductPage`/
-  `ProductBlock` instead of `Page`/`Block`.
-- A product can also set its own **theme color** and **secondary color** (hex) and its
-  own **mini-site logo** — these override `--color-ember`/`--color-teal` and
-  `--color-amber` for that product's pages only (see `src/app/sites/[subdomain]/layout.tsx`),
-  the same CSS-custom-property trick `.paraiba-light-section`/`.paraiba-dark-section`
+- Manage them from **`/admin/product-sites`** — a standalone admin section, not part of
+  editing a product. Create a site with a **name**, a **subdomain** (e.g. `temari`,
+  reachable at `temari.<ROOT_DOMAIN>`), and optionally a **logo** (upload a file — same
+  2MB-limit, `Bytes`-column pattern as Partners — or paste a URL) and a **theme color** /
+  **secondary color** (hex).
+- Each site gets the same fixed set of pages as before — Home, Features, Pricing,
+  About, Contact, Demo (`ProductPageSlug` in `src/lib/blocks/types.ts`) — built from
+  **`/admin/product-sites/[id]/pages`** with the exact same drag-and-drop block builder
+  as the main site (`src/app/admin/(dashboard)/pages/PageBuilder.tsx`), just stored in
+  `ProductPage`/`ProductBlock` rows keyed by `productSiteId` instead of `Page`/`Block`.
+  The "Add block" menu there only offers `MICROSITE_BLOCK_TYPES` — a product site has no
+  products catalog, partners, or job postings of its own, so those live-data blocks
+  (products preview, partners trust bar, open positions, products grid) are hidden.
+- The theme color and secondary color override `--color-ember`/`--color-teal` and
+  `--color-amber` for that site's pages only (see `src/app/sites/[subdomain]/layout.tsx`)
+  — the same CSS-custom-property trick `.paraiba-light-section`/`.paraiba-dark-section`
   already use, so every existing block renders correctly re-themed with zero
   per-component changes. Leave them unset to use Paraiba's own brand colors.
-- A dedicated **`liveDemo`** block type (Demo page's natural choice, though usable
-  anywhere on a product's pages) renders that product's own GitHub repo/live link — the
-  same StackBlitz/iframe preview already used on its corporate `/products/[slug]` page,
-  just automatically scoped to whichever product's pages it's on.
 - **Routing**: `src/proxy.ts` inspects the request's `Host` header
   (`src/lib/subdomain.ts`, pure string logic — no database access from the proxy, since
   the `pg` driver adapter this app uses isn't Edge-compatible) and rewrites
@@ -130,12 +134,12 @@ single `/products/[slug]` detail page on the corporate site.
   (e.g. `paraiba.com`) in your environment and point a wildcard DNS record
   (`*.paraiba.com`) at this deployment. In local dev, `<subdomain>.localhost:3000`
   always works with no configuration — Chromium and most browsers resolve `*.localhost`
-  to `127.0.0.1` automatically. A product's pages are also reachable directly at
+  to `127.0.0.1` automatically. A site's pages are also reachable directly at
   `/sites/<subdomain>` on the main domain/host, without any subdomain at all — handy for
-  previewing a mini-site before its DNS is live.
-- Contact forms on a product's own Contact page still post to the same
+  previewing a site before its DNS is live.
+- Contact forms on a product site's own Contact page still post to the same
   `/api/contact` → `ContactSubmission` table as the corporate site — there's no
-  per-product inbox yet. Add one (e.g. a `productId` column) if that becomes worth
+  per-site inbox yet. Add one (e.g. a `productSiteId` column) if that becomes worth
   telling apart.
 
 ## Admin dashboard
@@ -156,8 +160,6 @@ you're logged in.
   URL**; (4) a placeholder if none of the above are set.
   - Mark one product **featured** to show it in a large showcase hero above the grid on
     `/products`.
-  - A product can optionally get its own standalone multi-page mini-site (its own
-    subdomain, pages, and theme colors) — see "Product mini-sites" below.
   - **What We Built** and **Case Study** are optional fields edited with a small WYSIWYG
     editor (`src/components/admin/RichTextEditor.tsx`, built on TipTap) — use the toolbar's
     heading button to start a new group/section, then write paragraphs and/or a bullet
@@ -168,6 +170,8 @@ you're logged in.
     Projects saved before the editor existed used a plain-text "## Heading" / "- bullet"
     convention (`src/lib/richText.ts`) — still rendered and edited correctly; opening one
     in the editor converts it to the new format on next save.
+- **Product Sites** (`/admin/product-sites`) — standalone, custom-themed marketing sites
+  for products that don't have a live link yet. See "Product sites" above.
 - **Partners** (`/admin/partners`) — logos shown in the "Trusted by" marquee on the
   homepage, right under the hero. Each partner has a name, a logo, an optional website
   link, and a display order (lower first). A partner without a logo falls back to a text
@@ -209,7 +213,7 @@ deploy (e.g. to Vercel):
 If you'd rather give production its own database, create a second Supabase project (or
 branch) and point its `DATABASE_URL` there instead.
 
-To use product mini-sites (see "Product mini-sites" above), also set `ROOT_DOMAIN`
+To use product sites (see "Product sites" above), also set `ROOT_DOMAIN`
 (e.g. `paraiba.com`) and add a wildcard DNS record (`*.paraiba.com`) pointing at this
 deployment, alongside your apex/`www` records.
 

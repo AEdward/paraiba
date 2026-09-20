@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
-import { getProjectBySubdomain } from "@/lib/projects-data";
+import { getProductSiteBySubdomain } from "@/lib/productSites-data";
 import { getProductPageBlocks } from "@/lib/blocks/data";
 import { PRODUCT_PAGE_SLUGS, PRODUCT_PAGE_TITLES, type ProductPageSlug } from "@/lib/blocks/types";
 
@@ -18,12 +18,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { subdomain, pageSlug } = await params;
   if (!isProductPageSlug(pageSlug)) return {};
-  const project = await getProjectBySubdomain(subdomain);
-  if (!project) return {};
-  return { title: { absolute: `${PRODUCT_PAGE_TITLES[pageSlug]} — ${project.name}` } };
+  const site = await getProductSiteBySubdomain(subdomain);
+  if (!site) return {};
+  return { title: { absolute: `${PRODUCT_PAGE_TITLES[pageSlug]} — ${site.name}` } };
 }
 
-export default async function ProductSubPage({
+export default async function ProductSiteSubPage({
   params,
 }: {
   params: Promise<{ subdomain: string; pageSlug: string }>;
@@ -34,15 +34,15 @@ export default async function ProductSubPage({
   // confusing duplicate URL for the same content.
   if (pageSlug === "home") notFound();
 
-  const project = await getProjectBySubdomain(subdomain);
-  if (!project) notFound();
+  const site = await getProductSiteBySubdomain(subdomain);
+  if (!site) notFound();
 
-  const blocks = await getProductPageBlocks(project.id, pageSlug);
+  const blocks = await getProductPageBlocks(site.id, pageSlug);
 
   return (
     <>
       {blocks.map((block) => (
-        <BlockRenderer key={block.id} block={block} project={project} />
+        <BlockRenderer key={block.id} block={block} />
       ))}
     </>
   );

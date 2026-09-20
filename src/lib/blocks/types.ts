@@ -153,16 +153,6 @@ export type ProductsGridData = {
   theme: SectionTheme;
 };
 
-// Only valid on a product's own mini-site pages (see ProductPage) — pulls
-// that product's githubRepo/link live, the same StackBlitz/iframe preview
-// already used on its corporate /products/[slug] page.
-export type LiveDemoData = {
-  eyebrow?: string;
-  heading?: string;
-  body?: string;
-  theme: SectionTheme;
-};
-
 export type BlockDataMap = {
   hero: HeroData;
   richText: RichTextData;
@@ -175,7 +165,6 @@ export type BlockDataMap = {
   openPositions: OpenPositionsData;
   contactPanel: ContactPanelData;
   productsGrid: ProductsGridData;
-  liveDemo: LiveDemoData;
 };
 
 export type BlockType = keyof BlockDataMap;
@@ -192,7 +181,20 @@ export const BLOCK_TYPES = [
   "openPositions",
   "contactPanel",
   "productsGrid",
-  "liveDemo",
+] as const satisfies readonly BlockType[];
+
+// The subset that makes sense on a standalone product site — the others
+// (productsPreview, partnersTrustBar, openPositions, productsGrid) all pull
+// Paraiba-corporate-specific data (its product catalog, its partners, its
+// job postings), which has no meaning on an independent product's own site.
+export const MICROSITE_BLOCK_TYPES = [
+  "hero",
+  "richText",
+  "cardGrid",
+  "statsQuote",
+  "quote",
+  "cta",
+  "contactPanel",
 ] as const satisfies readonly BlockType[];
 
 export const BLOCK_LABELS: Record<BlockType, string> = {
@@ -207,7 +209,6 @@ export const BLOCK_LABELS: Record<BlockType, string> = {
   openPositions: "Open positions (live)",
   contactPanel: "Contact info + form",
   productsGrid: "Products grid (live)",
-  liveDemo: "Live app demo (product sites only)",
 };
 
 export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
@@ -222,7 +223,6 @@ export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
   openPositions: "Shows open job postings automatically.",
   contactPanel: "Contact details next to the live contact form.",
   productsGrid: "The full products listing, including the featured showcase.",
-  liveDemo: "Boots and renders this product's own GitHub repo/live link automatically.",
 };
 
 // A generic block row shape both the DB layer and the renderer agree on —

@@ -35,7 +35,18 @@ export type PageBuilderActions = {
   updateBlockAction: (blockId: string, formData: FormData) => void;
 };
 
-export function PageBuilder({ blocks, actions }: { blocks: BlockRecord[]; actions: PageBuilderActions }) {
+export function PageBuilder({
+  blocks,
+  actions,
+  availableTypes = BLOCK_TYPES,
+}: {
+  blocks: BlockRecord[];
+  actions: PageBuilderActions;
+  // Restricts the "Add block" menu — e.g. a product site's page builder only
+  // offers MICROSITE_BLOCK_TYPES, since the corporate-data blocks (products
+  // preview, partners bar, open positions) don't apply to an independent site.
+  availableTypes?: readonly BlockType[];
+}) {
   const [items, setItems] = useState(blocks);
   const [openId, setOpenId] = useState<string | null>(null);
   const [addOpen, setAddOpen] = useState(false);
@@ -101,7 +112,7 @@ export function PageBuilder({ blocks, actions }: { blocks: BlockRecord[]; action
             className="absolute z-10 mt-2 w-96 max-w-[90vw] rounded-xl border p-2 shadow-lg"
             style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
           >
-            {BLOCK_TYPES.map((type) => (
+            {availableTypes.map((type) => (
               <AddBlockOption
                 key={type}
                 type={type}

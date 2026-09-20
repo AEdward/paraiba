@@ -25,11 +25,11 @@ export async function getAllPagesWithBlockCounts() {
 }
 
 export async function getProductPageBlocks(
-  projectId: string,
+  productSiteId: string,
   slug: ProductPageSlug,
 ): Promise<BlockRecord[]> {
   const page = await db.productPage.findUnique({
-    where: { projectId_slug: { projectId, slug } },
+    where: { productSiteId_slug: { productSiteId, slug } },
     include: { blocks: { orderBy: { order: "asc" } } },
   });
   if (!page) return [];

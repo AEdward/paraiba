@@ -141,12 +141,5 @@ export function readBlockFormData(type: BlockType, formData: FormData): unknown 
         emptyMessage: optStr(formData, "emptyMessage"),
         theme,
       };
-    case "liveDemo":
-      return {
-        eyebrow: optStr(formData, "eyebrow"),
-        heading: optStr(formData, "heading"),
-        body: optStr(formData, "body"),
-        theme,
-      };
   }
 }

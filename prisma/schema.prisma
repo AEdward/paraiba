@@ -35,32 +35,41 @@ model Project {
   caseStudy    String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
 
-  // Optional standalone mini-site: <subdomain>.<root domain>, its own set of
-  // pages (see ProductPage below), and its own accent colors instead of
-  // Paraiba's. Unset fields fall back to the main brand's look.
-  subdomain           String?       @unique
-  logoUrl             String?
+// A standalone, custom-designed marketing site for a product — fully
+// independent of the Project catalog above (no GitHub repo/link, no
+// tagline/status — those don't apply to a product that isn't deployed yet).
+// Just a name, a subdomain, a logo, and a couple of theme colors; its actual
+// content is a set of drag-and-drop-built ProductPages, same as the main site.
+model ProductSite {
+  id                  String        @id @default(cuid())
+  name                String
+  subdomain           String        @unique
+  logoUrl             String? // used when no logo was uploaded — a link to an already-hosted image
+  logoData            Bytes? // set when the admin uploads a file directly; takes priority over logoUrl
+  logoMimeType        String?
   themeColor          String? // overrides --color-ember/--color-teal
   themeColorSecondary String? // overrides --color-amber
   pages               ProductPage[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 }
 
-// One page of a product's own mini-site ("home" | "features" | "pricing" |
-// "about" | "contact" | "demo"). Mirrors Page/Block — kept as a separate
-// model (rather than a nullable Page.projectId) so a product's page slugs
-// don't collide with, or get mixed up with, the main site's Page.slug space.
+// One page of a product site ("home" | "features" | "pricing" | "about" |
+// "contact" | "demo"). Mirrors Page/Block — kept as a separate model so a
+// product site's page slugs don't collide with the main site's Page.slug space.
 model ProductPage {
-  id        String         @id @default(cuid())
-  projectId String
-  project   Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  slug      String
-  title     String
-  blocks    ProductBlock[]
-  updatedAt DateTime       @updatedAt
-  createdAt DateTime       @default(now())
+  id            String         @id @default(cuid())
+  productSiteId String
+  productSite   ProductSite    @relation(fields: [productSiteId], references: [id], onDelete: Cascade)
+  slug          String
+  title         String
+  blocks        ProductBlock[]
+  updatedAt     DateTime       @updatedAt
+  createdAt     DateTime       @default(now())
 
-  @@unique([projectId, slug])
+  @@unique([productSiteId, slug])
 }
 
 model ProductBlock {

@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { ProductNavbar } from "@/components/ProductNavbar";
 import { ProductFooter } from "@/components/ProductFooter";
-import { getProjectBySubdomain } from "@/lib/projects-data";
+import { getProductSiteBySubdomain } from "@/lib/productSites-data";
 
 type ThemeVars = CSSProperties & Record<`--${string}`, string>;
 
@@ -14,23 +14,23 @@ export default async function ProductSiteLayout({
   params: Promise<{ subdomain: string }>;
 }) {
   const { subdomain } = await params;
-  const project = await getProjectBySubdomain(subdomain);
-  if (!project) notFound();
+  const site = await getProductSiteBySubdomain(subdomain);
+  if (!site) notFound();
 
   const themeVars: ThemeVars = {};
-  if (project.themeColor) {
-    themeVars["--color-ember"] = project.themeColor;
-    themeVars["--color-teal"] = project.themeColor;
+  if (site.themeColor) {
+    themeVars["--color-ember"] = site.themeColor;
+    themeVars["--color-teal"] = site.themeColor;
   }
-  if (project.themeColorSecondary) {
-    themeVars["--color-amber"] = project.themeColorSecondary;
+  if (site.themeColorSecondary) {
+    themeVars["--color-amber"] = site.themeColorSecondary;
   }
 
   return (
     <div className="flex min-h-full flex-1 flex-col" style={themeVars}>
-      <ProductNavbar name={project.name} logoUrl={project.logoUrl} />
+      <ProductNavbar name={site.name} logoUrl={site.logoUrl} />
       <main className="flex-1">{children}</main>
-      <ProductFooter name={project.name} />
+      <ProductFooter name={site.name} />
     </div>
   );
 }
