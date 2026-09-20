@@ -170,15 +170,26 @@ body {
   animation-play-state: paused;
 }
 
-.partners-marquee-logo {
-  filter: grayscale(1) brightness(0) invert(1);
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
+/* Fixed white card behind every logo (not theme-linked) so a partner's real
+   logo colors always stay legible, whether the section around it is dark or
+   light, and however that logo was designed (dark text, colored mark, etc). */
+.partners-marquee-card {
+  background: #ffffff;
+  border: 1px solid rgba(6, 20, 38, 0.08);
+  box-shadow:
+    0 1px 2px rgba(6, 20, 38, 0.04),
+    0 8px 20px -10px rgba(6, 20, 38, 0.18);
+  padding: 0.75rem 1.25rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.partners-marquee-logo:hover {
-  filter: none;
-  opacity: 1;
+.partners-marquee-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(6, 20, 38, 0.06),
+    0 12px 24px -10px rgba(6, 20, 38, 0.24);
 }
 
 @media (prefers-reduced-motion: reduce) {
