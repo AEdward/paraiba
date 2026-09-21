@@ -155,6 +155,18 @@ couple of theme colors, with its own drag-and-drop-built pages.
   — the same CSS-custom-property trick `.paraiba-light-section`/`.paraiba-dark-section`
   already use, so every existing block renders correctly re-themed with zero
   per-component changes. Leave them unset to use Paraiba's own brand colors.
+- **Bespoke shells**: a product with real brand direction (logo concept, color palette,
+  nav wording) can get its own hand-coded nav + hero instead of the generic shared ones —
+  see `src/components/product-shells/`. Each product gets its own file (e.g.
+  `YenetaShell.tsx`) exporting a `Navbar` and a `Hero`, registered by subdomain in
+  `registry.ts`; `src/app/sites/[subdomain]/layout.tsx` and `page.tsx` look up that
+  registry and fall back to the generic `ProductNavbar`/block-based hero when a subdomain
+  isn't registered. This is a deliberate split: the nav and hero are what make a product's
+  site feel like its own website, so they're hand-coded (editing them means editing code,
+  not admin) — everything else on the site (features, pricing, about, contact, demo)
+  stays in the drag-and-drop block builder exactly as before. `ShellNavbar.tsx` holds the
+  shared structural/accessibility plumbing (mobile toggle, sticky bar) so each product's
+  file only supplies its own logo mark, nav items, and CTA styling.
 - **Routing**: `src/proxy.ts` inspects the request's `Host` header
   (`src/lib/subdomain.ts`, pure string logic — no database access from the proxy, since
   the `pg` driver adapter this app uses isn't Edge-compatible) and rewrites
