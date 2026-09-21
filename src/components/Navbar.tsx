@@ -87,8 +87,8 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b backdrop-blur-md"
-      style={{ borderColor: "var(--border-soft)", background: "color-mix(in srgb, var(--background) 85%, transparent)" }}
+      className="paraiba-light-section sticky top-0 z-50 border-b backdrop-blur-md"
+      style={{ borderColor: "var(--border-soft)", background: "color-mix(in srgb, var(--surface) 90%, transparent)" }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" onClick={() => setOpen(false)}>

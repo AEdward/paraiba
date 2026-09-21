@@ -76,19 +76,11 @@ export function HeroBlock({ data }: { data: HeroData }) {
           <FadeIn delay={0.15} className="relative">
             <div
               className="mx-auto flex max-w-md items-center justify-center rounded-3xl border p-6"
-              style={
-                data.theme === "dark"
-                  ? {
-                      borderColor: "rgba(8,124,255,0.18)",
-                      background:
-                        "radial-gradient(circle at 70% 20%, rgba(8,124,255,0.14), transparent 60%), rgba(255,255,255,0.03)",
-                    }
-                  : {
-                      borderColor: "var(--border-soft)",
-                      background: "var(--surface)",
-                      boxShadow: "0 1px 2px rgba(6,20,38,0.04), 0 24px 40px -14px rgba(6,20,38,0.18)",
-                    }
-              }
+              style={{
+                borderColor: "rgba(8,124,255,0.18)",
+                background:
+                  "radial-gradient(circle at 70% 20%, rgba(8,124,255,0.14), transparent 60%), rgba(255,255,255,0.03)",
+              }}
             >
               <Hero3D />
             </div>
