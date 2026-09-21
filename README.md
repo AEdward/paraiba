@@ -34,13 +34,15 @@ won't touch it (it skips anything that already exists) — run these once instea
 npm run db:republish-products      # replaces old placeholder products with the real catalog
 npm run db:republish-home          # replaces the Home page's blocks with the current composition
 npm run db:republish-product-sites # creates/updates the branded Product Sites (name + theme colors)
+npm run db:republish-kinin-home    # replaces Kinin's home-page blocks with its redesigned content
 ```
 
-All three are safe to re-run and only touch what they name — `db:republish-products` upserts
+All are safe to re-run and only touch what they name — `db:republish-products` upserts
 by slug (never duplicates, never touches products you've added by hand), `db:republish-home`
-only replaces the Home page's blocks, and `db:republish-product-sites` upserts by subdomain
+only replaces the Home page's blocks, `db:republish-product-sites` upserts by subdomain
 without ever touching a site's logo, so uploading a real logo file afterward is never
-overwritten by a later re-run.
+overwritten by a later re-run, and `db:republish-kinin-home` only replaces Kinin's own
+"home" `ProductPage` blocks — every other product site is untouched.
 
 Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
 `migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase

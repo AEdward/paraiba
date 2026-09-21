@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Pill, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, Pill, ShieldCheck } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
 function KininMark({ size = 36 }: { size?: number }) {
@@ -39,11 +39,12 @@ export function KininHero({ name }: { name: string }) {
             Pharmacy Management System
           </p>
           <h1 className="font-display mt-4 max-w-lg text-4xl leading-tight font-bold sm:text-5xl" style={{ color: "var(--ink)" }}>
-            Smarter Pharmacy Management for Healthier Lives
+            Smarter Pharmacy Management for Healthier Communities
           </h1>
           <p className="mt-6 max-w-md opacity-70">
-            {name} helps pharmacies and healthcare providers manage inventory, prescriptions and
-            sales — with accuracy, simplicity and confidence.
+            {name} helps pharmacies and drug stores manage inventory, prescriptions, sales, and
+            operations — all in one easy-to-use platform. Work smarter, reduce errors, and
+            deliver better care to your customers.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
@@ -51,7 +52,7 @@ export function KininHero({ name }: { name: string }) {
               className="font-display inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "linear-gradient(110deg, var(--color-ember), var(--color-amber))" }}
             >
-              Get Started <ArrowRight size={16} />
+              Get Started Free <ArrowRight size={16} />
             </Link>
             <Link
               href="#features"
@@ -63,20 +64,43 @@ export function KininHero({ name }: { name: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden rounded-[2.5rem]">
+        <div className="relative mx-auto w-full max-w-md">
+          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[2.5rem]">
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))" }}
+            />
+            <div
+              aria-hidden
+              className="absolute -top-12 -left-12 h-56 w-56 rounded-full"
+              style={{ background: "rgba(255,255,255,0.12)" }}
+            />
+            <Pill size={92} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
+          </div>
+
           <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))" }}
-          />
+            className="absolute -top-4 -right-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <CheckCircle2 size={16} style={{ color: "#10b981" }} />
+            <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+              Dispense Prescription
+            </p>
+          </div>
+
           <div
-            aria-hidden
-            className="absolute -top-12 -left-12 h-56 w-56 rounded-full"
-            style={{ background: "rgba(255,255,255,0.12)" }}
-          />
-          <Pill size={92} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
+            className="absolute top-1/3 -left-6 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <AlertTriangle size={16} style={{ color: "#f59e0b" }} />
+            <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+              Stock Alert
+            </p>
+          </div>
+
           <div
-            className="absolute right-4 bottom-4 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
+            className="absolute -right-4 bottom-6 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
             style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
           >
             <ShieldCheck size={18} style={{ color: "var(--color-ember)" }} />
