@@ -10,6 +10,7 @@ import type {
   ProductsPreviewData,
   QuoteData,
   RichTextData,
+  SectionData,
   StatsBarData,
   StatsQuoteData,
 } from "@/lib/blocks/types";
@@ -25,6 +26,7 @@ import { PartnersTrustBarBlock } from "./PartnersTrustBarBlock";
 import { OpenPositionsBlock } from "./OpenPositionsBlock";
 import { ContactPanelBlock } from "./ContactPanelBlock";
 import { ProductsGridBlock } from "./ProductsGridBlock";
+import { SectionBlock } from "./SectionBlock";
 
 export function BlockRenderer({
   block,
@@ -62,6 +64,8 @@ export function BlockRenderer({
       );
     case "productsGrid":
       return <ProductsGridBlock data={block.data as ProductsGridData} />;
+    case "section":
+      return <SectionBlock data={block.data as SectionData} />;
     default:
       return null;
   }

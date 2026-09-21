@@ -150,6 +150,17 @@ model Block {
   @@index([pageId, order])
 }
 
+// A single uploaded image referenced by id from a "section" block's freeform
+// elements (image/gallery/cover/mediaText) — mirrors the ProductSite/Partner
+// logo pattern (binary + mimeType, served via /api/media/[id]), but as its
+// own row since one section can reference many images across many elements.
+model MediaAsset {
+  id        String   @id @default(cuid())
+  data      Bytes
+  mimeType  String
+  createdAt DateTime @default(now())
+}
+
 model ContactSubmission {
   id        String   @id @default(cuid())
   name      String

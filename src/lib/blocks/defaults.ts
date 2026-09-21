@@ -1,4 +1,74 @@
-import { EMPTY_RICH_DOC, type BlockDataMap, type BlockType } from "./types";
+import { EMPTY_RICH_DOC, emptyMediaRef, type BlockDataMap, type BlockType, type SectionElement, type SectionElementDataMap, type SectionElementType } from "./types";
+
+// A fresh, stable-enough id for a new section element or media ref — good
+// enough for React keys and for naming that ref's upload <input>; never
+// needs to be globally unique across requests, only within one page's edits.
+export function newElementId(): string {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `el_${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
+}
+
+export function defaultElementData<T extends SectionElementType>(type: T): SectionElementDataMap[T] {
+  switch (type) {
+    case "heading":
+      return { level: 2, text: "New heading", align: "left" } satisfies SectionElementDataMap["heading"] as SectionElementDataMap[T];
+    case "paragraph":
+      return { text: "" } satisfies SectionElementDataMap["paragraph"] as SectionElementDataMap[T];
+    case "list":
+      return { style: "bullet", items: ["First item"] } satisfies SectionElementDataMap["list"] as SectionElementDataMap[T];
+    case "quote":
+      return { text: "A short quotation." } satisfies SectionElementDataMap["quote"] as SectionElementDataMap[T];
+    case "pullquote":
+      return { text: "A short excerpt." } satisfies SectionElementDataMap["pullquote"] as SectionElementDataMap[T];
+    case "code":
+      return { code: "" } satisfies SectionElementDataMap["code"] as SectionElementDataMap[T];
+    case "preformatted":
+      return { text: "" } satisfies SectionElementDataMap["preformatted"] as SectionElementDataMap[T];
+    case "details":
+      return { summary: "Summary", body: "" } satisfies SectionElementDataMap["details"] as SectionElementDataMap[T];
+    case "table":
+      return {
+        headers: ["Column 1", "Column 2"],
+        rows: [["", ""]],
+      } satisfies SectionElementDataMap["table"] as SectionElementDataMap[T];
+    case "image":
+      return { image: emptyMediaRef(newElementId()) } satisfies SectionElementDataMap["image"] as SectionElementDataMap[T];
+    case "gallery":
+      return { images: [emptyMediaRef(newElementId())] } satisfies SectionElementDataMap["gallery"] as SectionElementDataMap[T];
+    case "video":
+      return { url: "" } satisfies SectionElementDataMap["video"] as SectionElementDataMap[T];
+    case "audio":
+      return { url: "" } satisfies SectionElementDataMap["audio"] as SectionElementDataMap[T];
+    case "file":
+      return { url: "", label: "Download" } satisfies SectionElementDataMap["file"] as SectionElementDataMap[T];
+    case "cover":
+      return { image: emptyMediaRef(newElementId()), heading: "" } satisfies SectionElementDataMap["cover"] as SectionElementDataMap[T];
+    case "mediaText":
+      return {
+        image: emptyMediaRef(newElementId()),
+        heading: "",
+        body: "",
+        mediaPosition: "left",
+      } satisfies SectionElementDataMap["mediaText"] as SectionElementDataMap[T];
+    case "icon":
+      return { icon: "sparkles" } satisfies SectionElementDataMap["icon"] as SectionElementDataMap[T];
+    case "buttons":
+      return { buttons: [{ label: "Learn more", href: "#", style: "primary" }] } satisfies SectionElementDataMap["buttons"] as SectionElementDataMap[T];
+    case "columns":
+      return { columns: [[], []] as SectionElement[][] } satisfies SectionElementDataMap["columns"] as SectionElementDataMap[T];
+    case "separator":
+      return {} satisfies SectionElementDataMap["separator"] as SectionElementDataMap[T];
+    case "spacer":
+      return { height: "md" } satisfies SectionElementDataMap["spacer"] as SectionElementDataMap[T];
+    case "embed":
+      return { url: "" } satisfies SectionElementDataMap["embed"] as SectionElementDataMap[T];
+  }
+}
+
+export function newElement<T extends SectionElementType>(type: T): Extract<SectionElement, { type: T }> {
+  return { id: newElementId(), type, data: defaultElementData(type) } as unknown as Extract<SectionElement, { type: T }>;
+}
 
 export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] {
   switch (type) {
@@ -92,5 +162,7 @@ export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] 
         emptyMessage: "No products published yet — we're currently building.",
         theme: "light",
       } satisfies BlockDataMap["productsGrid"] as BlockDataMap[T];
+    case "section":
+      return { theme: "light", elements: [] as SectionElement[] } satisfies BlockDataMap["section"] as BlockDataMap[T];
   }
 }

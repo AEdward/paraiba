@@ -87,7 +87,7 @@ export async function updateProductBlockData(
   await requireSession();
   const block = await db.productBlock.findUnique({ where: { id: blockId } });
   if (!block) throw new Error("Block not found.");
-  const data = readBlockFormData(block.type as BlockType, formData);
+  const data = await readBlockFormData(block.type as BlockType, formData);
   await db.productBlock.update({ where: { id: blockId }, data: { data: data as Prisma.InputJsonValue } });
   await revalidateProductSitePage(productSiteId, pageSlug);
 }

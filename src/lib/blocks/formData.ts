@@ -2,7 +2,76 @@
 // builder actions and the per-product page builder actions — the block
 // types and their fields are identical either way.
 
-import type { BlockType } from "./types";
+import { db } from "@/lib/db";
+import type { BlockType, MediaRef, SectionElement, SectionElementType } from "./types";
+
+const MAX_MEDIA_BYTES = 4 * 1024 * 1024;
+
+// A section element's image slots arrive in `elementsJson` carrying only
+// whatever was already saved (assetId/url) — a newly-picked file lives in a
+// same-named <input type="file"> instead, keyed by the MediaRef's own stable
+// id (see SectionEditor.tsx), since one element (a gallery) can hold several.
+async function resolveMediaRef(ref: MediaRef, formData: FormData): Promise<MediaRef> {
+  const file = formData.get(`file-${ref.id}`);
+  if (file instanceof File && file.size > 0) {
+    if (!file.type.startsWith("image/")) throw new Error("Uploaded file must be an image.");
+    if (file.size > MAX_MEDIA_BYTES) throw new Error("Images must be smaller than 4MB.");
+    const data = Buffer.from(await file.arrayBuffer());
+    const asset = await db.mediaAsset.create({ data: { data, mimeType: file.type } });
+    return { id: ref.id, assetId: asset.id, alt: ref.alt };
+  }
+  return { id: ref.id, assetId: ref.assetId, url: ref.url, alt: ref.alt };
+}
+
+function isMediaRef(v: unknown): v is MediaRef {
+  return typeof v === "object" && v !== null && typeof (v as MediaRef).id === "string";
+}
+
+async function resolveElement(raw: unknown, formData: FormData): Promise<SectionElement | null> {
+  if (typeof raw !== "object" || raw === null) return null;
+  const el = raw as { id?: unknown; type?: unknown; data?: unknown };
+  if (typeof el.id !== "string" || typeof el.type !== "string" || typeof el.data !== "object" || el.data === null) {
+    return null;
+  }
+  const type = el.type as SectionElementType;
+  const data = { ...(el.data as Record<string, unknown>) };
+
+  switch (type) {
+    case "image":
+    case "cover":
+    case "mediaText":
+      if (isMediaRef(data.image)) data.image = await resolveMediaRef(data.image, formData);
+      break;
+    case "gallery":
+      if (Array.isArray(data.images)) {
+        data.images = await Promise.all(
+          data.images.filter(isMediaRef).map((img: MediaRef) => resolveMediaRef(img, formData)),
+        );
+      }
+      break;
+    case "columns":
+      if (Array.isArray(data.columns)) {
+        data.columns = await Promise.all(
+          data.columns.map(async (col: unknown) => {
+            if (!Array.isArray(col)) return [];
+            const resolved = await Promise.all(col.map((child) => resolveElement(child, formData)));
+            return resolved.filter((c): c is SectionElement => c !== null);
+          }),
+        );
+      }
+      break;
+    default:
+      break;
+  }
+
+  return { id: el.id, type, data } as SectionElement;
+}
+
+async function readSectionElements(formData: FormData): Promise<SectionElement[]> {
+  const raw = readJsonArray<unknown>(formData, "elementsJson");
+  const resolved = await Promise.all(raw.map((el) => resolveElement(el, formData)));
+  return resolved.filter((el): el is SectionElement => el !== null);
+}
 
 export function str(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
@@ -26,7 +95,7 @@ export function readJsonArray<T>(formData: FormData, key: string): T[] {
   }
 }
 
-export function readBlockFormData(type: BlockType, formData: FormData): unknown {
+export async function readBlockFormData(type: BlockType, formData: FormData): Promise<unknown> {
   const theme = readTheme(formData);
   switch (type) {
     case "hero":
@@ -154,5 +223,7 @@ export function readBlockFormData(type: BlockType, formData: FormData): unknown 
         emptyMessage: optStr(formData, "emptyMessage"),
         theme,
       };
+    case "section":
+      return { theme, elements: await readSectionElements(formData) };
   }
 }

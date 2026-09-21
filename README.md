@@ -106,12 +106,36 @@ Every page's content lives in the database as an ordered list of **blocks**, not
 
 - `Page` (`home` / `about` / `careers` / `contact` / `products`) has many `Block`s, each
   with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`, `statsQuote`, `quote`, `cta`,
-  `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`)
-  and a schemaless `data` JSON column shaped by that type — see
+  `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`,
+  `section`) and a schemaless `data` JSON column shaped by that type — see
   `src/lib/blocks/types.ts` for every type's exact fields. `cardGrid` also supports an
   optional "View all" link next to its heading (`viewAllLabel`/`viewAllHref`) — reused for
   the homepage's Industries and Services sections instead of building near-duplicate
   block types for what's really the same icon-grid pattern.
+- **`section`** is different from the other block types above: instead of one fixed
+  shape, it's a blank container an admin fills freely with an ordered list of small
+  **elements** — WordPress/Strapi-style, rather than picking a whole preset template.
+  Text: heading, paragraph, list, quote, pullquote, code, preformatted, details, table.
+  Media: image, gallery, video, audio, file, cover, media & text, icon. Design: buttons,
+  columns (2–3 side-by-side, each holding its own nested elements, capped at one level
+  deep), separator, spacer. Plus a generic embed (paste a YouTube/Vimeo/Instagram/
+  Spotify/SoundCloud URL). The other block types above still exist and stay useful as
+  one-click starting presets — `section` is for when none of them fit. Its elements live
+  in `src/lib/blocks/types.ts` (`SectionElementDataMap`), render via
+  `src/components/blocks/SectionElements.tsx` (`renderSectionElement`, called
+  recursively for `columns`), and are edited via
+  `src/app/admin/(dashboard)/pages/SectionEditor.tsx` — a nested version of the same
+  add/reorder/delete pattern the outer page builder uses, serialized into one hidden
+  `elementsJson` field on save (mirroring how `cardGrid`'s item list already works).
+- **Uploaded images** in a `section` (image/gallery/cover/media & text) are stored as
+  their own `MediaAsset` row (`Bytes` + `mimeType`, same pattern as a Partner/ProductSite
+  logo) and served from `/api/media/[id]`, cached forever since a re-upload creates a new
+  row rather than replacing one. Each image slot carries its own stable id so a
+  `<input type="file" name="file-<id>">` can target it even when several images live in
+  one element (a gallery); `src/lib/blocks/formData.ts`'s `resolveMediaRef()` uploads
+  whatever file arrives at save time and leaves already-saved images alone otherwise.
+  Video/audio/file elements are link-only (paste an already-hosted URL) rather than
+  another upload path — kept deliberately out of scope for now.
 - `/admin/pages` lists the five pages; `/admin/pages/[slug]` is the builder — drag blocks
   to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
   one, or delete one. Saving, adding, deleting, and reordering all go through
