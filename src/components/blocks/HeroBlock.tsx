@@ -79,7 +79,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
               style={{
                 borderColor: "rgba(8,124,255,0.18)",
                 background:
-                  "radial-gradient(circle at 70% 20%, rgba(8,124,255,0.14), transparent 60%), rgba(255,255,255,0.03)",
+                  "radial-gradient(circle at 70% 20%, rgba(8,124,255,0.22), transparent 60%), linear-gradient(160deg, #0a1c33, var(--color-indigo))",
               }}
             >
               <Hero3D />
