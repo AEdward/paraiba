@@ -14,14 +14,14 @@ export const productSitesCatalog: SeedProductSite[] = [
   {
     name: "Yeneta",
     subdomain: "yeneta",
-    themeColor: "#1E40AF", // Primary
-    themeColorSecondary: "#10B981", // Accent
+    themeColor: "#1455D9", // Primary — Deep Blue
+    themeColorSecondary: "#F9B51A", // Accent — Golden Yellow
   },
   {
     name: "Tena",
     subdomain: "tena",
-    themeColor: "#0D9488", // Primary
-    themeColorSecondary: "#06B6D4", // Accent
+    themeColor: "#079A88", // Primary — Healthcare Teal
+    themeColorSecondary: "#4DD9D0", // Accent — Bright Cyan
   },
   {
     name: "Mead",
@@ -32,7 +32,7 @@ export const productSitesCatalog: SeedProductSite[] = [
   {
     name: "Kinin",
     subdomain: "kinin",
-    themeColor: "#7C3AED", // Primary
-    themeColorSecondary: "#F472B6", // Accent
+    themeColor: "#6438D8", // Primary — Kinin Purple
+    themeColorSecondary: "#08A7A0", // Secondary — Medical Teal (used over the pink accent to land on the intended Purple/Teal pairing)
   },
 ];
