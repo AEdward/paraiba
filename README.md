@@ -31,13 +31,16 @@ If your database was seeded before the product catalog/homepage were last update
 won't touch it (it skips anything that already exists) — run these once instead:
 
 ```bash
-npm run db:republish-products   # replaces old placeholder products with the real catalog
-npm run db:republish-home       # replaces the Home page's blocks with the current composition
+npm run db:republish-products      # replaces old placeholder products with the real catalog
+npm run db:republish-home          # replaces the Home page's blocks with the current composition
+npm run db:republish-product-sites # creates/updates the branded Product Sites (name + theme colors)
 ```
 
-Both are safe to re-run and only touch what they name — `db:republish-products` upserts by
-slug (never duplicates, never touches products you've added by hand), and
-`db:republish-home` only replaces the Home page's blocks, leaving every other page alone.
+All three are safe to re-run and only touch what they name — `db:republish-products` upserts
+by slug (never duplicates, never touches products you've added by hand), `db:republish-home`
+only replaces the Home page's blocks, and `db:republish-product-sites` upserts by subdomain
+without ever touching a site's logo, so uploading a real logo file afterward is never
+overwritten by a later re-run.
 
 Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
 `migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase
