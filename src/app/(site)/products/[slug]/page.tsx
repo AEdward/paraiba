@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Lock } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
@@ -36,8 +37,14 @@ export default async function ProjectPage({
 
   // A product with its own bespoke marketing site takes over its catalog
   // slug entirely — the site is the destination, the catalog page isn't.
+  // ROOT_DOMAIN is meant to be left unset in local dev (see README) — when
+  // it's not set, fall back to the host this request actually came in on
+  // (e.g. "localhost:3000") instead of a placeholder domain that won't resolve.
   const site = await getProductSiteBySubdomain(slug);
-  if (site) redirect(getProductSiteUrl(site.subdomain, process.env.ROOT_DOMAIN || "your-domain.com"));
+  if (site) {
+    const rootDomain = process.env.ROOT_DOMAIN || (await headers()).get("host") || "localhost:3000";
+    redirect(getProductSiteUrl(site.subdomain, rootDomain));
+  }
 
   const project = await getProject(slug);
   if (!project) notFound();
