@@ -13,7 +13,7 @@ export async function OpenPositionsBlock({ data }: { data: OpenPositionsData }) 
     <SectionShell theme={data.theme} center>
       <div className="mx-auto max-w-3xl">
         <FadeIn>
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           <h2 className="font-display mt-4 text-2xl font-bold" style={{ color: "var(--ink)" }}>

@@ -8,7 +8,7 @@ export function StatsQuoteBlock({ data }: { data: StatsQuoteData }) {
       <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
         <FadeIn>
           <div>
-            <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+            <Eyebrow color="var(--color-ember)">
               {data.eyebrow}
             </Eyebrow>
             <h2

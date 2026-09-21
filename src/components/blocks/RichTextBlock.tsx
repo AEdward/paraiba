@@ -15,7 +15,7 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
         }
       >
         <FadeIn>
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           {data.heading && (

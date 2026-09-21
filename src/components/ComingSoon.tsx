@@ -21,8 +21,8 @@ export function ComingSoon({ eyebrow, heading, body }: { eyebrow: string; headin
         <p className="mt-4 opacity-65">{body}</p>
         <Link
           href="/contact"
-          className="font-display mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-[#03111f]"
-          style={{ background: "linear-gradient(110deg, var(--color-amber), var(--color-ember))" }}
+          className="font-display mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white"
+          style={{ background: "var(--color-ember)" }}
         >
           Talk to Paraiba <ArrowRight size={16} />
         </Link>

@@ -6,7 +6,7 @@ import { Hero3D } from "@/components/three/Hero3D";
 import type { HeroData } from "@/lib/blocks/types";
 
 export function HeroBlock({ data }: { data: HeroData }) {
-  const eyebrowColor = data.theme === "dark" ? "var(--color-amber)" : "var(--color-teal)";
+  const eyebrowColor = "var(--color-ember)";
 
   return (
     <section className={`${data.theme === "dark" ? "paraiba-dark-section" : "paraiba-light-section"} relative overflow-hidden`}>
@@ -52,8 +52,8 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 {data.primaryLabel && data.primaryHref && (
                   <Link
                     href={data.primaryHref}
-                    className="font-display inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-[#03111f] transition-transform hover:-translate-y-0.5"
-                    style={{ background: "linear-gradient(110deg, var(--color-amber), var(--color-ember))" }}
+                    className="font-display inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+                    style={{ background: "var(--color-ember)" }}
                   >
                     {data.primaryLabel} <ArrowRight size={16} />
                   </Link>
@@ -62,7 +62,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
                   <Link
                     href={data.secondaryHref}
                     className="font-display inline-flex items-center gap-2 rounded-xl border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
-                    style={{ borderColor: "rgba(245,250,255,0.16)", background: "rgba(255,255,255,0.03)" }}
+                    style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
                   >
                     {data.secondaryLabel}
                   </Link>
@@ -76,11 +76,19 @@ export function HeroBlock({ data }: { data: HeroData }) {
           <FadeIn delay={0.15} className="relative">
             <div
               className="mx-auto flex max-w-md items-center justify-center rounded-3xl border p-6"
-              style={{
-                borderColor: "rgba(8,220,232,0.16)",
-                background:
-                  "radial-gradient(circle at 70% 20%, rgba(8,220,232,0.12), transparent 60%), rgba(255,255,255,0.03)",
-              }}
+              style={
+                data.theme === "dark"
+                  ? {
+                      borderColor: "rgba(8,124,255,0.18)",
+                      background:
+                        "radial-gradient(circle at 70% 20%, rgba(8,124,255,0.14), transparent 60%), rgba(255,255,255,0.03)",
+                    }
+                  : {
+                      borderColor: "var(--border-soft)",
+                      background: "var(--surface)",
+                      boxShadow: "0 1px 2px rgba(6,20,38,0.04), 0 24px 40px -14px rgba(6,20,38,0.18)",
+                    }
+              }
             >
               <Hero3D />
             </div>

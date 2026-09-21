@@ -14,7 +14,7 @@ export async function ProductsPreviewBlock({ data }: { data: ProductsPreviewData
     <SectionShell theme={data.theme}>
       <div className="flex items-end justify-between gap-4">
         <FadeIn>
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           <h2 className="font-display mt-4 text-3xl font-bold" style={{ color: "var(--ink)" }}>

@@ -14,7 +14,7 @@ export function ContactPanelBlock({
   return (
     <SectionShell theme={data.theme} withMesh>
       <FadeIn>
-        <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-teal)"}>
+        <Eyebrow color="var(--color-ember)">
           {data.eyebrow}
         </Eyebrow>
         <h1 className="font-display mt-4 text-4xl font-bold" style={{ color: "var(--ink)" }}>

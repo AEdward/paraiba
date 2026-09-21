@@ -12,7 +12,7 @@ export function QuoteBlock({ data }: { data: QuoteData }) {
       <GradientMesh />
       <div className="relative mx-auto max-w-3xl px-6 py-24 text-center">
         <FadeIn>
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           {data.intro && <p className="mt-4 text-lg opacity-70">{data.intro}</p>}

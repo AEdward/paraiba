@@ -9,7 +9,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
     <SectionShell theme={data.theme} id={data.anchorId}>
       <div className="flex items-end justify-between gap-4">
         <FadeIn>
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           {data.heading && (
@@ -24,7 +24,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
             <Link
               href={data.viewAllHref}
               className="font-display hidden items-center gap-1 text-sm font-semibold sm:inline-flex"
-              style={{ color: data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)" }}
+              style={{ color: "var(--color-ember)" }}
             >
               {data.viewAllLabel} <ArrowRight size={14} />
             </Link>

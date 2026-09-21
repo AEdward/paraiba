@@ -31,7 +31,7 @@ export const homeBlocks: SeedBlock[] = [
     primaryHref: "/products",
     secondaryLabel: "Get a Free Consultation",
     secondaryHref: "/contact",
-    theme: "dark",
+    theme: "light",
     align: "left",
     showLogo3D: true,
   }),

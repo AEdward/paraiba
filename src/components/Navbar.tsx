@@ -127,8 +127,8 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
           </Link>
           <Link
             href="/contact"
-            className="font-display inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-[#03111f] transition-transform hover:-translate-y-0.5"
-            style={{ background: "linear-gradient(110deg, var(--color-amber), var(--color-ember))" }}
+            className="font-display inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+            style={{ background: "var(--color-ember)" }}
           >
             Get Started
           </Link>
@@ -183,8 +183,8 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
           <Link
             href="/contact"
             onClick={() => setOpen(false)}
-            className="font-display mt-2 inline-flex w-fit items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-[#03111f]"
-            style={{ background: "linear-gradient(110deg, var(--color-amber), var(--color-ember))" }}
+            className="font-display mt-2 inline-flex w-fit items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white"
+            style={{ background: "var(--color-ember)" }}
           >
             Get Started
           </Link>

@@ -102,7 +102,7 @@ body {
 }
 
 .paraiba-text-gradient {
-  background: linear-gradient(110deg, #ffffff, #b8fbff, var(--color-amber));
+  background: linear-gradient(110deg, #ffffff, #bfe0ff, var(--color-ember));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;

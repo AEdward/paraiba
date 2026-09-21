@@ -18,12 +18,12 @@ export function CtaBlock({ data }: { data: CtaData }) {
               ? {
                   borderColor: "var(--border-soft)",
                   background:
-                    "radial-gradient(circle at 50% 0%, rgba(8,220,232,0.15), transparent 50%), linear-gradient(145deg, #0a2038, var(--color-indigo))",
+                    "radial-gradient(circle at 50% 0%, rgba(8,124,255,0.15), transparent 50%), linear-gradient(145deg, #0a2038, var(--color-indigo))",
                 }
               : { borderColor: "var(--border-soft)", background: "var(--surface)" }
           }
         >
-          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+          <Eyebrow color="var(--color-ember)">
             {data.eyebrow}
           </Eyebrow>
           <h2 className="font-display mt-4 text-3xl font-bold sm:text-4xl" style={data.theme === "light" ? { color: "var(--ink)" } : undefined}>
@@ -34,8 +34,8 @@ export function CtaBlock({ data }: { data: CtaData }) {
           )}
           <Link
             href={data.buttonHref}
-            className="font-display mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-[#03111f] transition-transform hover:-translate-y-0.5"
-            style={{ background: "linear-gradient(110deg, var(--color-amber), var(--color-ember))" }}
+            className="font-display mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+            style={{ background: "var(--color-ember)" }}
           >
             {data.buttonLabel} <ArrowRight size={16} />
           </Link>
