@@ -37,15 +37,20 @@ npm run db:republish-product-sites # creates/updates the branded Product Sites (
 npm run db:republish-kinin-home    # replaces Kinin's home-page blocks with its redesigned content
 npm run db:republish-yeneta-home   # replaces Yeneta's home-page blocks with its redesigned content
 npm run db:republish-tena-home     # replaces Tena's home-page blocks with its redesigned content
+npm run db:republish-mead-home     # replaces Mead's home-page blocks with its redesigned content
+npm run db:republish-product-logos # sets each product site's real logo from public/product-logos/
 ```
 
 All are safe to re-run and only touch what they name — `db:republish-products` upserts
 by slug (never duplicates, never touches products you've added by hand), `db:republish-home`
 only replaces the Home page's blocks, `db:republish-product-sites` upserts by subdomain
 without ever touching a site's logo, so uploading a real logo file afterward is never
-overwritten by a later re-run, and `db:republish-kinin-home` / `db:republish-yeneta-home` /
-`db:republish-tena-home` each only replace that one product's own "home" `ProductPage`
-blocks — every other product site is untouched.
+overwritten by a later re-run, `db:republish-kinin-home` / `db:republish-yeneta-home` /
+`db:republish-tena-home` / `db:republish-mead-home` each only replace that one product's
+own "home" `ProductPage` blocks — every other product site is untouched — and
+`db:republish-product-logos` only sets `logoData`/`logoMimeType` for the four named
+products from their files in `public/product-logos/`, leaving name/subdomain/theme/pages
+alone.
 
 Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
 `migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase

@@ -17,7 +17,9 @@
     "db:republish-product-sites": "tsx prisma/republishProductSites.ts",
     "db:republish-kinin-home": "tsx prisma/republishKininHome.ts",
     "db:republish-yeneta-home": "tsx prisma/republishYenetaHome.ts",
-    "db:republish-tena-home": "tsx prisma/republishTenaHome.ts"
+    "db:republish-tena-home": "tsx prisma/republishTenaHome.ts",
+    "db:republish-mead-home": "tsx prisma/republishMeadHome.ts",
+    "db:republish-product-logos": "tsx prisma/republishProductLogos.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

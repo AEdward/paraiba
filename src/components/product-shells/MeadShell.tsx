@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChefHat } from "lucide-react";
+import { ArrowRight, ChefHat, TrendingUp } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
 function MeadMark({ size = 36 }: { size?: number }) {
@@ -39,11 +39,12 @@ export function MeadHero({ name }: { name: string }) {
             Restaurant Management System
           </p>
           <h1 className="font-display mt-4 max-w-lg text-4xl leading-tight font-bold sm:text-5xl">
-            Simple. Flexible. Powerful Restaurant Management.
+            Great Food Deserves Great Management
           </h1>
           <p className="mt-6 max-w-md opacity-70">
-            {name} helps you manage your tables, orders, staff and inventory — so you can focus
-            on what you do best: serving great food.
+            {name} is a complete restaurant management system that helps you run your
+            restaurant, café, or food business smoothly — orders, inventory, staff, and reports,
+            all in one platform.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
@@ -51,7 +52,7 @@ export function MeadHero({ name }: { name: string }) {
               className="font-display inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "linear-gradient(110deg, var(--color-ember), var(--color-amber))" }}
             >
-              Get Started <ArrowRight size={16} />
+              Get Started Free <ArrowRight size={16} />
             </Link>
             <Link
               href="#features"
@@ -63,16 +64,29 @@ export function MeadHero({ name }: { name: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden rounded-[2.5rem]">
+        <div className="relative mx-auto w-full max-w-md">
+          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[2.5rem]">
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 20%, var(--color-amber) 0%, transparent 55%), linear-gradient(135deg, var(--color-ember), #3a1005)",
+              }}
+            />
+            <ChefHat size={92} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
+          </div>
+
           <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 20%, var(--color-amber) 0%, transparent 55%), linear-gradient(135deg, var(--color-ember), #3a1005)",
-            }}
-          />
-          <ChefHat size={96} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
+            className="absolute -right-4 bottom-6 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
+            style={{ borderColor: "rgba(245,250,255,0.16)", background: "#1a0f08" }}
+          >
+            <TrendingUp size={18} style={{ color: "var(--color-amber)" }} />
+            <div>
+              <p className="text-xs font-bold text-white">Faster Service</p>
+              <p className="text-[11px] text-white/60">Happier Customers</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -45,7 +45,7 @@ export default async function ProductSiteLayout({
     <div className="flex min-h-full flex-1 flex-col" style={themeVars}>
       <Navbar name={site.name} logoUrl={site.logoUrl} homeUrl={homeUrl} />
       <main className="flex-1">{children}</main>
-      <ProductFooter name={site.name} homeUrl={homeUrl} />
+      <ProductFooter name={site.name} logoUrl={site.logoUrl} homeUrl={homeUrl} />
     </div>
   );
 }
