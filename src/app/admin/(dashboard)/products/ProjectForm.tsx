@@ -220,8 +220,8 @@ export function ProjectForm({
         />
         <p className="mt-1 text-xs opacity-50">
           Rendered as grouped cards on the project page. Use the heading button to start a
-          new group (e.g. &ldquo;Website&rdquo;, &ldquo;ERP&rdquo;), then list its items as
-          a bullet list. Leave blank to skip this section.
+          new group (e.g. &ldquo;Website&rdquo;, &ldquo;Mobile App&rdquo;), then list its items
+          as a bullet list. Leave blank to skip this section.
         </p>
       </div>
 

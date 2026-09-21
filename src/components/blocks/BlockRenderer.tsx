@@ -10,11 +10,13 @@ import type {
   ProductsPreviewData,
   QuoteData,
   RichTextData,
+  StatsBarData,
   StatsQuoteData,
 } from "@/lib/blocks/types";
 import { HeroBlock } from "./HeroBlock";
 import { RichTextBlock } from "./RichTextBlock";
 import { CardGridBlock } from "./CardGridBlock";
+import { StatsBarBlock } from "./StatsBarBlock";
 import { StatsQuoteBlock } from "./StatsQuoteBlock";
 import { QuoteBlock } from "./QuoteBlock";
 import { CtaBlock } from "./CtaBlock";
@@ -40,6 +42,8 @@ export function BlockRenderer({
       return <RichTextBlock data={block.data as RichTextData} />;
     case "cardGrid":
       return <CardGridBlock data={block.data as CardGridData} />;
+    case "statsBar":
+      return <StatsBarBlock data={block.data as StatsBarData} />;
     case "statsQuote":
       return <StatsQuoteBlock data={block.data as StatsQuoteData} />;
     case "quote":

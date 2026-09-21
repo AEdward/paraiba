@@ -3,6 +3,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { hashPassword } from "../src/lib/password";
 import { seedPages } from "./seedPages";
+import { productCatalog } from "./productCatalog";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const db = new PrismaClient({ adapter });
@@ -30,38 +31,8 @@ async function main() {
 
   const projectCount = await db.project.count();
   if (projectCount === 0) {
-    await db.project.createMany({
-      data: [
-        {
-          slug: "project-one",
-          name: "Project One",
-          tagline: "A short one-line pitch goes here.",
-          description:
-            "Replace this with a real description of what the project does, who it's for, and why it matters. A couple of sentences is plenty.",
-          status: "in-progress",
-          tags: "Product",
-        },
-        {
-          slug: "project-two",
-          name: "Project Two",
-          tagline: "A short one-line pitch goes here.",
-          description:
-            "Replace this with a real description of what the project does, who it's for, and why it matters. A couple of sentences is plenty.",
-          status: "concept",
-          tags: "Product",
-        },
-        {
-          slug: "project-three",
-          name: "Project Three",
-          tagline: "A short one-line pitch goes here.",
-          description:
-            "Replace this with a real description of what the project does, who it's for, and why it matters. A couple of sentences is plenty.",
-          status: "archived",
-          tags: "Product",
-        },
-      ],
-    });
-    console.log("Seeded placeholder projects.");
+    await db.project.createMany({ data: productCatalog });
+    console.log("Seeded product catalog.");
   }
 
   await seedPages(db);

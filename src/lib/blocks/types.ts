@@ -86,9 +86,19 @@ export type CardGridData = {
   // Lets another block's link (e.g. a hero "Explore Solutions" button) scroll
   // straight to this section via "#<anchorId>".
   anchorId?: string;
+  // Optional link shown next to the heading, e.g. "View All Services →".
+  viewAllLabel?: string;
+  viewAllHref?: string;
 };
 
 export type StatItem = { number: string; label: string };
+
+export type StatsBarItem = { icon?: IconKey; label: string; sublabel?: string };
+
+export type StatsBarData = {
+  items: StatsBarItem[];
+  theme: SectionTheme;
+};
 
 export type StatsQuoteData = {
   eyebrow?: string;
@@ -157,6 +167,7 @@ export type BlockDataMap = {
   hero: HeroData;
   richText: RichTextData;
   cardGrid: CardGridData;
+  statsBar: StatsBarData;
   statsQuote: StatsQuoteData;
   quote: QuoteData;
   cta: CtaData;
@@ -173,6 +184,7 @@ export const BLOCK_TYPES = [
   "hero",
   "richText",
   "cardGrid",
+  "statsBar",
   "statsQuote",
   "quote",
   "cta",
@@ -191,6 +203,7 @@ export const MICROSITE_BLOCK_TYPES = [
   "hero",
   "richText",
   "cardGrid",
+  "statsBar",
   "statsQuote",
   "quote",
   "cta",
@@ -201,6 +214,7 @@ export const BLOCK_LABELS: Record<BlockType, string> = {
   hero: "Hero",
   richText: "Rich text",
   cardGrid: "Card grid",
+  statsBar: "Stats strip",
   statsQuote: "Stats + quote",
   quote: "Statement / quote",
   cta: "Call to action",
@@ -215,6 +229,7 @@ export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
   hero: "Big headline section, usually at the top of a page.",
   richText: "Eyebrow, heading, and formatted body copy.",
   cardGrid: "A heading plus a row of cards (used for solutions, perks, values…).",
+  statsBar: "A row of small stats or trust signals, each with an icon and label.",
   statsQuote: "A stat grid paired with a pull-quote card, side by side.",
   quote: "A short standalone statement, optionally with a highlighted line.",
   cta: "A boxed call-to-action with a button.",

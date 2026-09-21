@@ -26,6 +26,11 @@ export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] 
         theme: "light",
         columns: 3,
       } satisfies BlockDataMap["cardGrid"] as BlockDataMap[T];
+    case "statsBar":
+      return {
+        items: [{ label: "New stat" }],
+        theme: "light",
+      } satisfies BlockDataMap["statsBar"] as BlockDataMap[T];
     case "statsQuote":
       return {
         eyebrow: "",

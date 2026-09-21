@@ -14,120 +14,97 @@ const t = (text: string, bold = false): DocText =>
 const p = (...content: DocText[]): DocNode => ({ type: "paragraph", content });
 const doc = (...content: DocNode[]): RichDoc => ({ type: "doc", content });
 
-type SeedBlock<T extends BlockType = BlockType> = { type: T; data: BlockDataMap[T] };
+export type SeedBlock<T extends BlockType = BlockType> = { type: T; data: BlockDataMap[T] };
 
 function block<T extends BlockType>(type: T, data: BlockDataMap[T]): SeedBlock<T> {
   return { type, data };
 }
 
-const homeBlocks: SeedBlock[] = [
+export const homeBlocks: SeedBlock[] = [
   block("hero", {
-    eyebrow: "Ethiopian Technology Company",
-    headline: "Technology with ",
-    headlineHighlight: "Brilliance.",
+    eyebrow: "Building a Smarter Digital Tomorrow",
+    headline: "Powering Businesses with Innovative ",
+    headlineHighlight: "Technology",
     subhead:
-      "Paraiba Technology PLC builds modern digital products and technology solutions designed to make business simpler, smarter and more connected.",
-    primaryLabel: "Start a Project",
-    primaryHref: "/contact",
-    secondaryLabel: "Explore Solutions",
-    secondaryHref: "#solutions",
+      "Paraiba Technology PLC builds powerful software products and delivers comprehensive technology services to help businesses in Ethiopia and beyond grow, modernize and achieve more.",
+    primaryLabel: "Browse Our Products",
+    primaryHref: "/products",
+    secondaryLabel: "Get a Free Consultation",
+    secondaryHref: "/contact",
     theme: "dark",
     align: "left",
     showLogo3D: true,
   }),
-  block("partnersTrustBar", { eyebrow: "Trusted by", theme: "dark" }),
-  block("cardGrid", {
-    anchorId: "solutions",
-    eyebrow: "What we build",
-    heading: "Digital solutions built for real life.",
-    body: "Our work spans across the digital ecosystem — from our own products to the systems that run other businesses.",
+  block("statsBar", {
     theme: "light",
-    columns: 3,
     items: [
-      {
-        number: "01",
-        title: "Digital Products",
-        description:
-          "We develop our own technology products and platforms designed to solve real problems and create new opportunities.",
-      },
-      {
-        number: "02",
-        title: "Websites & Digital Experiences",
-        description:
-          "From corporate websites to advanced web platforms, we create modern digital experiences that represent businesses and connect them with their customers.",
-      },
-      {
-        number: "03",
-        title: "ERP & Business Systems",
-        description:
-          "We build powerful business management systems that bring operations, finance, sales, people, inventory, and other business functions together in one connected environment.",
-      },
-      {
-        number: "04",
-        title: "Apps & Platforms",
-        description:
-          "We design and develop mobile and web applications that turn ideas into scalable digital products.",
-      },
-      {
-        number: "05",
-        title: "Bots & Automation",
-        description:
-          "We build intelligent bots and automated systems that help businesses communicate with customers, streamline operations, and reduce repetitive work.",
-      },
+      { icon: "star", label: "Trusted by Growing Businesses", sublabel: "From startups to enterprise" },
+      { icon: "compass", label: "Local Expertise", sublabel: "Built for Ethiopia, ready for the world" },
+      { icon: "shieldCheck", label: "Secure & Reliable", sublabel: "Your data, our priority" },
+      { icon: "lightbulb", label: "Ongoing Support", sublabel: "We're with you, always" },
     ],
-  }),
-  block("statsQuote", {
-    eyebrow: "The Paraiba idea",
-    heading: "Born in Ethiopia.\nBuilt for what's next.",
-    body: "Inspired by the brilliance and vivid color associated with Paraíba-type tourmaline, our identity represents precision, energy and distinction.",
-    stats: [
-      { number: "01", label: "Clarity in every product" },
-      { number: "02", label: "Design-led technology" },
-      { number: "03", label: "Built to scale" },
-      { number: "04", label: "African roots, global ambition" },
-    ],
-    quote: "Great technology should not feel complicated. It should feel natural, powerful and useful.",
-    theme: "light",
   }),
   block("productsPreview", {
-    eyebrow: "Portfolio",
-    heading: "What we're building",
-    viewAllLabel: "View all",
-    limit: 3,
+    eyebrow: "Our Products",
+    heading: "Complete Solutions for Every Industry",
+    viewAllLabel: "View All Products",
+    limit: 6,
     theme: "light",
   }),
   block("cardGrid", {
-    eyebrow: "Future ecosystem",
-    heading: "One brand. Many possibilities.",
-    body: "The Paraiba master brand can support a growing family of digital products and platforms.",
-    theme: "light",
+    eyebrow: "Industries We Serve",
+    heading: "Tailored Solutions for Every Industry",
+    body: "We understand that every industry has unique challenges. That's why we build industry-specific solutions that fit your business needs and processes.",
+    theme: "dark",
     columns: 3,
+    viewAllLabel: "View All Industries",
+    viewAllHref: "/solutions",
     items: [
-      {
-        icon: "cloud",
-        label: "Cloud",
-        title: "Paraiba Cloud",
-        description: "Infrastructure, hosting and cloud services for modern organizations.",
-      },
-      {
-        icon: "cpu",
-        label: "Business",
-        title: "Paraiba ERP",
-        description: "Business management tools designed for growing companies.",
-      },
-      {
-        icon: "sparkles",
-        label: "Intelligence",
-        title: "Paraiba AI",
-        description: "Practical AI products, automation and intelligent workflows.",
-      },
+      { icon: "lightbulb", title: "Education", description: "Schools & institutions" },
+      { icon: "shieldCheck", title: "Healthcare", description: "Clinics & hospitals" },
+      { icon: "sparkles", title: "Restaurant", description: "Restaurants & cafés" },
+      { icon: "target", title: "Pharmacy", description: "Pharmacies" },
+      { icon: "gem", title: "Hospitality", description: "Hotels & guesthouses" },
     ],
   }),
+  block("cardGrid", {
+    eyebrow: "Our Services",
+    heading: "Technology Services for Your Next Big Move",
+    body: "We offer a full range of development and IT services to help you build, scale and stay ahead in the digital world.",
+    theme: "light",
+    columns: 3,
+    viewAllLabel: "View All Services",
+    viewAllHref: "/services",
+    items: [
+      { icon: "sparkles", title: "Web Development", description: "Corporate websites, e-commerce, and web applications." },
+      { icon: "zap", title: "Mobile App Development", description: "Android, iOS, and cross-platform apps." },
+      { icon: "cpu", title: "Custom Software Development", description: "Business systems and internal tools built to fit." },
+      { icon: "gem", title: "UI/UX Design", description: "Product design, research, and prototyping." },
+      { icon: "cloud", title: "Cloud & Infrastructure", description: "Deployment, hosting, and monitoring." },
+      { icon: "target", title: "API & System Integration", description: "Payments, third-party APIs, and system integrations." },
+    ],
+  }),
+  block("cardGrid", {
+    eyebrow: "Why Paraiba",
+    heading: "Your Success Is Our Mission",
+    body: "We combine technical expertise, industry knowledge and a passion for innovation to deliver solutions that make a real difference.",
+    theme: "dark",
+    columns: 2,
+    viewAllLabel: "Learn More About Us",
+    viewAllHref: "/about",
+    items: [
+      { icon: "briefcase", title: "Expert Team", description: "Skilled professionals with real-world experience." },
+      { icon: "target", title: "Proven Track Record", description: "Successful projects across multiple industries." },
+      { icon: "rocket", title: "Innovation Driven", description: "We build for today, ready for tomorrow." },
+      { icon: "gem", title: "Client Focused", description: "Your goals are at the center of everything we do." },
+    ],
+  }),
+  block("partnersTrustBar", { eyebrow: "Growing Together with Amazing Clients", theme: "light" }),
   block("cta", {
     eyebrow: "Let's build",
-    heading: "Have an idea worth building?",
-    body: "Tell us what you want to create. Paraiba can help turn the idea into a clear digital product and technology roadmap.",
-    buttonLabel: "Talk to Paraiba",
+    heading: "Ready to Build Something Great?",
+    body: "Let's turn your idea into powerful digital solutions. Whether you need custom software, one of our products, or a full digital transformation — we're here to help.",
+    buttonLabel: "Get Started",
     buttonHref: "/contact",
     theme: "dark",
   }),

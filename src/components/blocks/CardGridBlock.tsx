@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { SectionShell, Eyebrow } from "./SectionShell";
 import { ICONS, type CardGridData } from "@/lib/blocks/types";
@@ -5,17 +7,30 @@ import { ICONS, type CardGridData } from "@/lib/blocks/types";
 export function CardGridBlock({ data }: { data: CardGridData }) {
   return (
     <SectionShell theme={data.theme} id={data.anchorId}>
-      <FadeIn>
-        <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
-          {data.eyebrow}
-        </Eyebrow>
-        {data.heading && (
-          <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
-            {data.heading}
-          </h2>
+      <div className="flex items-end justify-between gap-4">
+        <FadeIn>
+          <Eyebrow color={data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)"}>
+            {data.eyebrow}
+          </Eyebrow>
+          {data.heading && (
+            <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
+              {data.heading}
+            </h2>
+          )}
+          {data.body && <p className="mt-4 max-w-lg opacity-65">{data.body}</p>}
+        </FadeIn>
+        {data.viewAllLabel && data.viewAllHref && (
+          <FadeIn delay={0.1}>
+            <Link
+              href={data.viewAllHref}
+              className="font-display hidden items-center gap-1 text-sm font-semibold sm:inline-flex"
+              style={{ color: data.theme === "dark" ? "var(--color-amber)" : "var(--color-ember)" }}
+            >
+              {data.viewAllLabel} <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
         )}
-        {data.body && <p className="mt-4 max-w-lg opacity-65">{data.body}</p>}
-      </FadeIn>
+      </div>
       <div className={`mt-12 grid gap-5 sm:grid-cols-2 ${data.columns === 3 ? "lg:grid-cols-3" : ""}`}>
         {data.items.map((item, i) => {
           const Icon = item.icon ? ICONS[item.icon] : undefined;

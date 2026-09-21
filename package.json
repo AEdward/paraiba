@@ -11,7 +11,9 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "db:republish-products": "tsx prisma/republishProducts.ts",
+    "db:republish-home": "tsx prisma/republishHome.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

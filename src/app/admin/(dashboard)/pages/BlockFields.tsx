@@ -17,6 +17,8 @@ import {
   type QuoteData,
   type RichTextData,
   type StatItem,
+  type StatsBarData,
+  type StatsBarItem,
   type StatsQuoteData,
 } from "@/lib/blocks/types";
 
@@ -252,6 +254,77 @@ function StatsEditor({ defaultStats }: { defaultStats: StatItem[] }) {
   );
 }
 
+function StatsBarEditor({ defaultItems }: { defaultItems: StatsBarItem[] }) {
+  const [items, setItems] = useState<StatsBarItem[]>(
+    defaultItems.length > 0 ? defaultItems : [{ label: "" }],
+  );
+
+  function update(i: number, patch: Partial<StatsBarItem>) {
+    setItems((prev) => prev.map((item, idx) => (idx === i ? { ...item, ...patch } : item)));
+  }
+
+  return (
+    <div>
+      <label className={labelClass} style={{ color: "var(--ink)" }}>
+        Stats
+      </label>
+      <div className="flex flex-col gap-3">
+        {items.map((item, i) => (
+          <div key={i} className="rounded-lg border p-3" style={{ borderColor: "var(--border-soft)" }}>
+            <div className="grid grid-cols-2 gap-2">
+              <input
+                placeholder="Label — e.g. Trusted by 100+ Businesses"
+                value={item.label}
+                onChange={(e) => update(i, { label: e.target.value })}
+                className={inputClass}
+                style={inputStyle}
+              />
+              <select
+                value={item.icon ?? ""}
+                onChange={(e) => update(i, { icon: (e.target.value || undefined) as StatsBarItem["icon"] })}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="">No icon</option>
+                {ICON_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              placeholder="Sublabel — optional"
+              value={item.sublabel ?? ""}
+              onChange={(e) => update(i, { sublabel: e.target.value || undefined })}
+              className={`${inputClass} mt-2`}
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => setItems((prev) => prev.filter((_, idx) => idx !== i))}
+              disabled={items.length <= 1}
+              className="mt-2 text-xs font-medium disabled:opacity-30"
+              style={{ color: "var(--color-ember)" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setItems((prev) => [...prev, { label: "" }])}
+        className="mt-3 text-sm font-medium"
+        style={{ color: "var(--color-teal)" }}
+      >
+        + Add stat
+      </button>
+      <input type="hidden" name="itemsJson" value={JSON.stringify(items)} readOnly />
+    </div>
+  );
+}
+
 export function BlockFields({ block }: { block: BlockRecord }) {
   switch (block.type) {
     case "hero": {
@@ -342,6 +415,19 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             <Field label="Anchor id — optional" name="anchorId" defaultValue={data.anchorId} placeholder="solutions" />
             <ThemeField defaultValue={data.theme} />
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="'View all' link label — optional" name="viewAllLabel" defaultValue={data.viewAllLabel} placeholder="View All Services" />
+            <Field label="'View all' link href — optional" name="viewAllHref" defaultValue={data.viewAllHref} placeholder="/services" />
+          </div>
+        </div>
+      );
+    }
+    case "statsBar": {
+      const data = block.data as StatsBarData;
+      return (
+        <div className="flex flex-col gap-4">
+          <StatsBarEditor defaultItems={data.items} />
+          <ThemeField defaultValue={data.theme} />
         </div>
       );
     }

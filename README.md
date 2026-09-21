@@ -1,9 +1,11 @@
 # Paraiba Technology PLC
 
-Marketing site for Paraiba Technology PLC — home, about, products, careers, contact,
-and an admin dashboard backed by a real database. Every page is a drag-and-drop CMS:
-its content is an ordered list of blocks (hero, rich text, card grids, …) managed from
-`/admin/pages`, not hardcoded JSX.
+Marketing site for Paraiba Technology PLC — home, about, products, solutions, services,
+work, company, resources, careers, contact, and an admin dashboard backed by a real
+database. Every page is a drag-and-drop CMS: its content is an ordered list of blocks
+(hero, rich text, card grids, …) managed from `/admin/pages`, not hardcoded JSX.
+Solutions/Services/Work/Resources/Team currently show a "coming soon" placeholder —
+every nav link resolves to a real URL, they just don't have dedicated content yet.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma backed by
 Supabase Postgres. Brand palette, type, and the crystalline P mark come from the internal
@@ -21,9 +23,21 @@ brand guide (Midnight Navy, Paraiba Cyan, Electric Blue, Aqua Teal; Montserrat +
 npm install                 # also runs `prisma generate` via postinstall
 cp .env.example .env        # fill in DATABASE_URL, DIRECT_URL, AUTH_SECRET, ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD
 npm run db:deploy           # applies the committed migrations to your Supabase database
-npm run db:seed             # creates your first admin user, placeholder products, and all page/block content
+npm run db:seed             # creates your first admin user, the product catalog, and all page/block content
 npm run dev
 ```
+
+If your database was seeded before the product catalog/homepage were last updated, `db:seed`
+won't touch it (it skips anything that already exists) — run these once instead:
+
+```bash
+npm run db:republish-products   # replaces old placeholder products with the real catalog
+npm run db:republish-home       # replaces the Home page's blocks with the current composition
+```
+
+Both are safe to re-run and only touch what they name — `db:republish-products` upserts by
+slug (never duplicates, never touches products you've added by hand), and
+`db:republish-home` only replaces the Home page's blocks, leaving every other page alone.
 
 Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
 `migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase
@@ -45,14 +59,20 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ## Structure
 
 - `src/app/(site)` — public pages: home, `/about`, `/products`, `/products/[slug]`,
-  `/careers`, `/contact`. Every one of these except the product detail page is just a
-  thin wrapper: fetch that page's blocks, render them in order. There's no page-specific
-  layout code to touch when the content changes — only when a genuinely new kind of
-  section is needed (see "Page builder / CMS" below).
+  `/careers`, `/contact`, `/partners` (real, from the Partner catalog), plus
+  `/solutions`, `/services`, `/work`, `/resources`, `/team`, and `/legal/*`, which
+  render a shared `ComingSoon` component until they have real content. Every CMS-backed
+  page is a thin wrapper: fetch that page's blocks, render them in order. There's no
+  page-specific layout code to touch when the content changes — only when a genuinely
+  new kind of section is needed (see "Page builder / CMS" below).
+- `src/components/Navbar.tsx` / `Footer.tsx` — the mega-menu nav (Products dropdown is
+  populated live from the product catalog; Company is a static dropdown) and the
+  multi-column footer. Every link resolves to a real URL — either real content or one of
+  the coming-soon pages above.
 - `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Pages, Products,
-  Partners, Careers, Applicants, Messages, Users). Protected by `src/proxy.ts` (session
-  cookie check) plus a server-side session check in the dashboard layout as a second line
-  of defense.
+  Product Sites, Partners, Careers, Applicants, Messages, Users). Protected by
+  `src/proxy.ts` (session cookie check) plus a server-side session check in the dashboard
+  layout as a second line of defense.
 - `src/app/api/contact` — saves contact form submissions to the database
   (`ContactSubmission`), viewable/manageable at `/admin/messages`.
 - `src/lib/db.ts` — Prisma client singleton.
@@ -64,21 +84,26 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   back together — importing Prisma/pg into a client bundle breaks the build. (The model
   and these files are still named "project" internally — only the public-facing URL, nav
   label, and admin section are "Products.")
-- `prisma/schema.prisma` — `User`, `Project`, `JobPosting`, `JobApplication`, `Partner`,
-  `Page`, `Block`, `ProductPage`, `ProductBlock`, `ContactSubmission` models.
-- `prisma/seed.ts` / `prisma/seedPages.ts` — creates the first admin user, seeds
-  placeholder products, and seeds every page's block content (see below). Safe to re-run:
-  it skips anything that already exists.
+- `prisma/schema.prisma` — `User`, `Project`, `ProductSite`, `JobPosting`,
+  `JobApplication`, `Partner`, `Page`, `Block`, `ProductPage`, `ProductBlock`,
+  `ContactSubmission` models.
+- `prisma/seed.ts` / `prisma/seedPages.ts` / `prisma/productCatalog.ts` — creates the
+  first admin user, seeds the real product catalog, and seeds every page's block content
+  (see below). Safe to re-run: it skips anything that already exists (see the
+  `db:republish-*` scripts above for updating a database that's already been seeded).
 
 ## Page builder / CMS
 
 Every page's content lives in the database as an ordered list of **blocks**, not in JSX:
 
 - `Page` (`home` / `about` / `careers` / `contact` / `products`) has many `Block`s, each
-  with a `type` (`hero`, `richText`, `cardGrid`, `statsQuote`, `quote`, `cta`,
+  with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`, `statsQuote`, `quote`, `cta`,
   `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`)
   and a schemaless `data` JSON column shaped by that type — see
-  `src/lib/blocks/types.ts` for every type's exact fields.
+  `src/lib/blocks/types.ts` for every type's exact fields. `cardGrid` also supports an
+  optional "View all" link next to its heading (`viewAllLabel`/`viewAllHref`) — reused for
+  the homepage's Industries and Services sections instead of building near-duplicate
+  block types for what's really the same icon-grid pattern.
 - `/admin/pages` lists the five pages; `/admin/pages/[slug]` is the builder — drag blocks
   to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
   one, or delete one. Saving, adding, deleting, and reordering all go through

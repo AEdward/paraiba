@@ -2,14 +2,52 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { socialLinks } from "@/lib/social";
 
-export function Footer() {
+type FooterProduct = { slug: string; name: string };
+
+const solutions = ["Education", "Healthcare", "Restaurant", "Pharmacy", "Hospitality"];
+const services = [
+  "Web Development",
+  "Mobile App Development",
+  "Custom Software Development",
+  "UI/UX Design",
+  "Cloud & Infrastructure",
+  "API & System Integration",
+];
+const company = [
+  { href: "/about", label: "About Us" },
+  { href: "/team", label: "Leadership & Team" },
+  { href: "/careers", label: "Careers" },
+  { href: "/partners", label: "Partners" },
+];
+const resources = [
+  { href: "/resources", label: "Documentation" },
+  { href: "/resources", label: "FAQ" },
+];
+const legalLinks = [
+  { href: "/legal/privacy", label: "Privacy Policy" },
+  { href: "/legal/terms", label: "Terms & Conditions" },
+  { href: "/legal/cookies", label: "Cookie Policy" },
+];
+
+function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="font-display text-xs font-bold tracking-[0.16em] uppercase opacity-50" style={{ color: "var(--ink)" }}>
+        {title}
+      </p>
+      <div className="mt-4 flex flex-col gap-2.5 text-sm">{children}</div>
+    </div>
+  );
+}
+
+export function Footer({ products = [] }: { products?: FooterProduct[] }) {
   return (
     <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-12 sm:flex-row sm:items-start sm:justify-between">
-        <div>
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="sm:col-span-2 lg:col-span-1">
           <Logo size={36} />
-          <p className="mt-3 max-w-sm text-sm opacity-60">
-            Technology with Ethiopian brilliance — practical, reliable and beautiful digital
+          <p className="mt-3 max-w-xs text-sm opacity-60">
+            Innovative solutions, lasting impact — practical, reliable and beautiful digital
             products, built out of Addis Ababa.
           </p>
           <div className="mt-5 flex gap-3">
@@ -31,29 +69,76 @@ export function Footer() {
             })}
           </div>
         </div>
-        <nav
-          className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm font-medium sm:flex sm:gap-6"
-          style={{ color: "var(--ink)" }}
-        >
-          <Link href="/about" className="opacity-70 hover:opacity-100">
-            About
+
+        <FooterColumn title="Products">
+          {products.map((product) => (
+            <Link key={product.slug} href={`/products/${product.slug}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {product.name}
+            </Link>
+          ))}
+          <Link href="/products" className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+            All Products
           </Link>
-          <Link href="/products" className="opacity-70 hover:opacity-100">
-            Products
-          </Link>
-          <Link href="/careers" className="opacity-70 hover:opacity-100">
-            Careers
-          </Link>
-          <Link href="/contact" className="opacity-70 hover:opacity-100">
-            Contact
-          </Link>
-        </nav>
+        </FooterColumn>
+
+        <FooterColumn title="Solutions">
+          {solutions.map((label) => (
+            <Link key={label} href="/solutions" className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {label}
+            </Link>
+          ))}
+        </FooterColumn>
+
+        <FooterColumn title="Services">
+          {services.map((label) => (
+            <Link key={label} href="/services" className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {label}
+            </Link>
+          ))}
+        </FooterColumn>
+
+        <FooterColumn title="Company">
+          {company.map((link) => (
+            <Link key={link.href + link.label} href={link.href} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {link.label}
+            </Link>
+          ))}
+        </FooterColumn>
+
+        <div className="flex flex-col gap-8">
+          <FooterColumn title="Resources">
+            {resources.map((link) => (
+              <Link key={link.label} href={link.href} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+                {link.label}
+              </Link>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Contact">
+            <span className="opacity-70" style={{ color: "var(--ink)" }}>
+              Addis Ababa, Ethiopia
+            </span>
+            <a href="mailto:hello@paraiba.com" className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              hello@paraiba.com
+            </a>
+          </FooterColumn>
+        </div>
       </div>
+
       <div
-        className="border-t px-6 py-5 text-center text-xs opacity-50"
+        className="border-t px-6 py-5 text-xs opacity-50"
         style={{ borderColor: "var(--border-soft)" }}
       >
-        © {new Date().getFullYear()} Paraiba Technology PLC. All rights reserved.
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row">
+          <span>© {new Date().getFullYear()} Paraiba Technology PLC. All rights reserved.</span>
+          <div className="flex gap-4">
+            {legalLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="hover:opacity-80">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );

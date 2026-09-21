@@ -74,6 +74,19 @@ export function readBlockFormData(type: BlockType, formData: FormData): unknown 
         theme,
         columns: formData.get("columns") === "2" ? 2 : 3,
         anchorId: optStr(formData, "anchorId"),
+        viewAllLabel: optStr(formData, "viewAllLabel"),
+        viewAllHref: optStr(formData, "viewAllHref"),
+      };
+    case "statsBar":
+      return {
+        items: readJsonArray(formData, "itemsJson").filter(
+          (item): item is { label: string } =>
+            typeof item === "object" &&
+            item !== null &&
+            typeof (item as { label?: unknown }).label === "string" &&
+            (item as { label: string }).label.trim() !== "",
+        ),
+        theme,
       };
     case "statsQuote":
       return {
