@@ -3,13 +3,6 @@ import Image from "next/image";
 import { ArrowRight, GraduationCap } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
-const NAV_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "Features", href: "/features" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
-];
-
 function YenetaMark({ size = 36 }: { size?: number }) {
   return (
     <span
@@ -21,7 +14,7 @@ function YenetaMark({ size = 36 }: { size?: number }) {
   );
 }
 
-export function YenetaNavbar({ name, logoUrl }: { name: string; logoUrl?: string }) {
+export function YenetaNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl?: string; homeUrl: string }) {
   return (
     <ShellNavbar
       logo={
@@ -32,10 +25,7 @@ export function YenetaNavbar({ name, logoUrl }: { name: string; logoUrl?: string
         )
       }
       name={name}
-      items={NAV_ITEMS}
-      cta={{ label: "Get Started", href: "/contact" }}
-      ctaClassName="font-display inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
-      ctaStyle={{ background: "var(--color-ember)" }}
+      homeUrl={homeUrl}
     />
   );
 }
@@ -57,14 +47,14 @@ export function YenetaHero({ name }: { name: string }) {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href="#contact"
               className="font-display inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "var(--color-ember)" }}
             >
               Get Started <ArrowRight size={16} />
             </Link>
             <Link
-              href="/features"
+              href="#features"
               className="font-display inline-flex items-center gap-2 rounded-lg border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
               style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
             >

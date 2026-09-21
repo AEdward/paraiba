@@ -23,11 +23,11 @@ export default async function EditProductSitePage({ params }: { params: Promise<
           Edit product site
         </h1>
         <Link
-          href={`/admin/product-sites/${site.id}/pages`}
+          href={`/admin/product-sites/${site.id}/pages/home`}
           className="inline-flex items-center gap-1.5 text-sm font-medium"
           style={{ color: "var(--color-indigo)" }}
         >
-          Build pages <ExternalLink size={13} />
+          Build page <ExternalLink size={13} />
         </Link>
       </div>
       <div className="mt-8">

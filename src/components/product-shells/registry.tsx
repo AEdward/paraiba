@@ -4,7 +4,7 @@ import { TenaNavbar, TenaHero } from "./TenaShell";
 import { MeadNavbar, MeadHero } from "./MeadShell";
 import { KininNavbar, KininHero } from "./KininShell";
 
-export type ShellNavProps = { name: string; logoUrl?: string };
+export type ShellNavProps = { name: string; logoUrl?: string; homeUrl: string };
 export type ShellHeroProps = { name: string };
 
 export type ProductShell = {

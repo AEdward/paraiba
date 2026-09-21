@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminProductSitesPage() {
   const sites = await db.productSite.findMany({
     orderBy: { createdAt: "desc" },
-    include: { _count: { select: { pages: true } } },
+    include: { pages: { select: { _count: { select: { blocks: true } } } } },
   });
   const rootDomain = process.env.ROOT_DOMAIN || "your-domain.com";
 
@@ -42,7 +42,7 @@ export default async function AdminProductSitesPage() {
             <tr className="border-b text-left opacity-60" style={{ borderColor: "var(--border-soft)" }}>
               <th className="px-4 py-3 font-medium">Name</th>
               <th className="px-4 py-3 font-medium">Subdomain</th>
-              <th className="px-4 py-3 font-medium">Pages</th>
+              <th className="px-4 py-3 font-medium">Blocks</th>
               <th className="px-4 py-3 font-medium"></th>
             </tr>
           </thead>
@@ -55,15 +55,15 @@ export default async function AdminProductSitesPage() {
                 <td className="px-4 py-3 opacity-70">
                   {site.subdomain}.{rootDomain}
                 </td>
-                <td className="px-4 py-3 opacity-70">{site._count.pages}</td>
+                <td className="px-4 py-3 opacity-70">{site.pages[0]?._count.blocks ?? 0}</td>
                 <td className="px-4 py-3 text-right">
                   <div className="flex justify-end gap-3">
                     <Link
-                      href={`/admin/product-sites/${site.id}/pages`}
+                      href={`/admin/product-sites/${site.id}/pages/home`}
                       className="font-medium"
                       style={{ color: "var(--color-indigo)" }}
                     >
-                      Build pages
+                      Build page
                     </Link>
                     <Link
                       href={`/admin/product-sites/${site.id}`}

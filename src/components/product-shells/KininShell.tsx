@@ -3,13 +3,6 @@ import Image from "next/image";
 import { ArrowRight, Pill, ShieldCheck } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
-const NAV_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/features" },
-  { label: "Services", href: "/pricing" },
-  { label: "About", href: "/about" },
-];
-
 function KininMark({ size = 36 }: { size?: number }) {
   return (
     <span
@@ -21,7 +14,7 @@ function KininMark({ size = 36 }: { size?: number }) {
   );
 }
 
-export function KininNavbar({ name, logoUrl }: { name: string; logoUrl?: string }) {
+export function KininNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl?: string; homeUrl: string }) {
   return (
     <ShellNavbar
       logo={
@@ -32,10 +25,7 @@ export function KininNavbar({ name, logoUrl }: { name: string; logoUrl?: string 
         )
       }
       name={name}
-      items={NAV_ITEMS}
-      cta={{ label: "Get Started", href: "/contact" }}
-      ctaClassName="font-display inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
-      ctaStyle={{ background: "linear-gradient(110deg, var(--color-ember), var(--color-amber))" }}
+      homeUrl={homeUrl}
     />
   );
 }
@@ -57,14 +47,14 @@ export function KininHero({ name }: { name: string }) {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href="#contact"
               className="font-display inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "linear-gradient(110deg, var(--color-ember), var(--color-amber))" }}
             >
               Get Started <ArrowRight size={16} />
             </Link>
             <Link
-              href="/features"
+              href="#features"
               className="font-display inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
               style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
             >

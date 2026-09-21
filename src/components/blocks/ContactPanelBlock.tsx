@@ -12,7 +12,7 @@ export function ContactPanelBlock({
   initialMessage?: string;
 }) {
   return (
-    <SectionShell theme={data.theme} withMesh>
+    <SectionShell theme={data.theme} withMesh id="contact">
       <FadeIn>
         <Eyebrow color="var(--color-ember)">
           {data.eyebrow}

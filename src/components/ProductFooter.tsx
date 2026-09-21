@@ -1,4 +1,4 @@
-export function ProductFooter({ name }: { name: string }) {
+export function ProductFooter({ name, homeUrl }: { name: string; homeUrl: string }) {
   return (
     <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
       <div
@@ -8,7 +8,7 @@ export function ProductFooter({ name }: { name: string }) {
         <span>
           © {new Date().getFullYear()} {name}.
         </span>
-        <a href="https://paraiba.com" className="hover:opacity-100">
+        <a href={homeUrl} className="hover:opacity-100">
           Built by Paraiba Technology PLC
         </a>
       </div>

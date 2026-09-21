@@ -35,3 +35,10 @@ export function getProductSiteUrl(subdomain: string, rootDomain: string): string
   const protocol = rootDomain.toLowerCase().includes("localhost") ? "http" : "https";
   return `${protocol}://${subdomain}.${rootDomain}`;
 }
+
+// The absolute URL for the main Paraiba site itself, for a product site's
+// "back to Paraiba" link. Same http/https rule as getProductSiteUrl.
+export function getRootSiteUrl(rootDomain: string): string {
+  const protocol = rootDomain.toLowerCase().includes("localhost") ? "http" : "https";
+  return `${protocol}://${rootDomain}`;
+}

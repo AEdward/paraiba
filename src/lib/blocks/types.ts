@@ -261,15 +261,13 @@ export const PAGE_TITLES: Record<PageSlug, string> = {
   products: "Products",
 };
 
-// The fixed set of pages every product's own mini-site gets.
-export const PRODUCT_PAGE_SLUGS = ["home", "features", "pricing", "about", "contact", "demo"] as const;
+// A product's own site is a single scrolling page — no separate
+// Features/Pricing/About/Contact routes. Kept as a one-item tuple (rather
+// than a plain string) so ProductPage/ProductBlock's existing slug-based
+// storage doesn't need a schema change.
+export const PRODUCT_PAGE_SLUGS = ["home"] as const;
 export type ProductPageSlug = (typeof PRODUCT_PAGE_SLUGS)[number];
 
 export const PRODUCT_PAGE_TITLES: Record<ProductPageSlug, string> = {
   home: "Home",
-  features: "Features",
-  pricing: "Pricing",
-  about: "About",
-  contact: "Contact",
-  demo: "Demo",
 };

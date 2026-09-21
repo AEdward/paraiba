@@ -149,31 +149,39 @@ couple of theme colors, with its own drag-and-drop-built pages.
   reachable at `temari.<ROOT_DOMAIN>`), and optionally a **logo** (upload a file — same
   2MB-limit, `Bytes`-column pattern as Partners — or paste a URL) and a **theme color** /
   **secondary color** (hex).
-- Each site gets the same fixed set of pages as before — Home, Features, Pricing,
-  About, Contact, Demo (`ProductPageSlug` in `src/lib/blocks/types.ts`) — built from
-  **`/admin/product-sites/[id]/pages`** with the exact same drag-and-drop block builder
-  as the main site (`src/app/admin/(dashboard)/pages/PageBuilder.tsx`), just stored in
-  `ProductPage`/`ProductBlock` rows keyed by `productSiteId` instead of `Page`/`Block`.
-  The "Add block" menu there only offers `MICROSITE_BLOCK_TYPES` — a product site has no
-  products catalog, partners, or job postings of its own, so those live-data blocks
-  (products preview, partners trust bar, open positions, products grid) are hidden.
+- A product site is a **single scrolling page**, not a multi-page site — there's one
+  `"home"` `ProductPageSlug` (`src/lib/blocks/types.ts`), built from
+  **`/admin/product-sites/[id]/pages/home`** with the exact same drag-and-drop block
+  builder as the main site (`src/app/admin/(dashboard)/pages/PageBuilder.tsx`), just
+  stored in `ProductPage`/`ProductBlock` rows keyed by `productSiteId` instead of
+  `Page`/`Block`. "Features," "Pricing," etc. are sections on that one page, not separate
+  routes — use `cardGrid`'s `anchorId` (e.g. `"features"`) so a hero button can link to
+  `#features` and scroll to it. The "Add block" menu there only offers
+  `MICROSITE_BLOCK_TYPES` — a product site has no products catalog, partners, or job
+  postings of its own, so those live-data blocks (products preview, partners trust bar,
+  open positions, products grid) are hidden.
 - The theme color and secondary color override `--color-ember`/`--color-teal` and
   `--color-amber` for that site's pages only (see `src/app/sites/[subdomain]/layout.tsx`)
   — the same CSS-custom-property trick `.paraiba-light-section`/`.paraiba-dark-section`
   already use, so every existing block renders correctly re-themed with zero
   per-component changes. Leave them unset to use Paraiba's own brand colors.
-- **Bespoke shells**: a product with real brand direction (logo concept, color palette,
-  nav wording) can get its own hand-coded nav + hero instead of the generic shared ones —
-  see `src/components/product-shells/`. Each product gets its own file (e.g.
+- **Nav**: since a product site is a single page, its nav has nothing to link to except
+  back to Paraiba's own site — `ProductNavbar`/`ShellNavbar` render just the product's
+  logo and a "Back to Paraiba" link, no page links, no mobile menu. The link target is
+  computed per-request in `src/app/sites/[subdomain]/layout.tsx` via `getRootSiteUrl()`
+  (`src/lib/subdomain.ts`) — it uses `ROOT_DOMAIN` if set, or falls back to the current
+  request's own host (stripping the subdomain) so it still resolves correctly in local dev.
+- **Bespoke shells**: a product with real brand direction (logo concept, color palette)
+  can get its own hand-coded nav + hero instead of the generic shared ones — see
+  `src/components/product-shells/`. Each product gets its own file (e.g.
   `YenetaShell.tsx`) exporting a `Navbar` and a `Hero`, registered by subdomain in
   `registry.ts`; `src/app/sites/[subdomain]/layout.tsx` and `page.tsx` look up that
   registry and fall back to the generic `ProductNavbar`/block-based hero when a subdomain
-  isn't registered. This is a deliberate split: the nav and hero are what make a product's
-  site feel like its own website, so they're hand-coded (editing them means editing code,
-  not admin) — everything else on the site (features, pricing, about, contact, demo)
-  stays in the drag-and-drop block builder exactly as before. `ShellNavbar.tsx` holds the
-  shared structural/accessibility plumbing (mobile toggle, sticky bar) so each product's
-  file only supplies its own logo mark, nav items, and CTA styling.
+  isn't registered. This is a deliberate split: the hero is what makes a product's site
+  feel like its own website, so it's hand-coded (editing it means editing code, not
+  admin) — everything else on the page stays in the drag-and-drop block builder exactly
+  as before. `ShellNavbar.tsx` holds the shared nav structure so each product's file only
+  supplies its own logo mark.
 - **Routing**: `src/proxy.ts` inspects the request's `Host` header
   (`src/lib/subdomain.ts`, pure string logic — no database access from the proxy, since
   the `pg` driver adapter this app uses isn't Edge-compatible) and rewrites
