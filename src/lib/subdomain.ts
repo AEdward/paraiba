@@ -26,3 +26,12 @@ export function getProductSubdomain(host: string | null, rootDomain: string): st
   if (!sub || sub.includes(".") || RESERVED_SUBDOMAINS.has(sub)) return null;
   return sub;
 }
+
+// The inverse of getProductSubdomain — builds the absolute URL for a
+// product site given its subdomain, e.g. for linking/redirecting to it
+// from the main site. "<rootDomain>" containing "localhost" (any port)
+// always resolves over http, matching local dev; anything else is https.
+export function getProductSiteUrl(subdomain: string, rootDomain: string): string {
+  const protocol = rootDomain.toLowerCase().includes("localhost") ? "http" : "https";
+  return `${protocol}://${subdomain}.${rootDomain}`;
+}

@@ -137,6 +137,13 @@ Products catalog (`/admin/products`) entirely. A product site has no tagline,
 description, status, or GitHub link; it's just a name, a subdomain, a logo, and a
 couple of theme colors, with its own drag-and-drop-built pages.
 
+- **Catalog linkage**: `Project` (the catalog) and `ProductSite` are unrelated models —
+  they're only connected by convention when a product's catalog `slug` matches a
+  product site's `subdomain`. When that match exists, visiting that product's catalog
+  page (`/products/<slug>`) redirects straight to its bespoke site
+  (`<subdomain>.<ROOT_DOMAIN>`, via `getProductSiteUrl()` in `src/lib/subdomain.ts`) —
+  the catalog page is effectively superseded once a product has its own site. A product
+  without a matching site still shows its normal catalog page.
 - Manage them from **`/admin/product-sites`** — a standalone admin section, not part of
   editing a product. Create a site with a **name**, a **subdomain** (e.g. `temari`,
   reachable at `temari.<ROOT_DOMAIN>`), and optionally a **logo** (upload a file — same

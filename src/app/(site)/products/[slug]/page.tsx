@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Lock } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { DeviceMockup } from "@/components/DeviceMockup";
@@ -11,6 +11,8 @@ import { CaseStudySections } from "@/components/CaseStudySections";
 import { LiveBrowserPreview } from "@/components/LiveBrowserPreview";
 import { getEmbedLabel, getEmbedUrl, getShowcaseGradient, statusColor } from "@/lib/projects";
 import { getProject } from "@/lib/projects-data";
+import { getProductSiteBySubdomain } from "@/lib/productSites-data";
+import { getProductSiteUrl } from "@/lib/subdomain";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +33,12 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // A product with its own bespoke marketing site takes over its catalog
+  // slug entirely — the site is the destination, the catalog page isn't.
+  const site = await getProductSiteBySubdomain(slug);
+  if (site) redirect(getProductSiteUrl(site.subdomain, process.env.ROOT_DOMAIN || "your-domain.com"));
+
   const project = await getProject(slug);
   if (!project) notFound();
 
