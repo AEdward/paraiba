@@ -21,6 +21,19 @@ export async function getProductSites() {
   return db.productSite.findMany({ orderBy: { createdAt: "desc" } });
 }
 
+// Keyed by subdomain, resolved logo + theme color only — for cards elsewhere
+// (the homepage's "Our Products" preview, the /products grid) that want to
+// show a catalog Project's real brand mark when one exists, without a
+// per-card database round trip.
+export async function getProductSitesBySubdomain(): Promise<
+  Record<string, { logoUrl?: string; themeColor?: string }>
+> {
+  const rows = await db.productSite.findMany();
+  return Object.fromEntries(
+    rows.map((row) => [row.subdomain, { logoUrl: productSiteLogoSrc(row) ?? undefined, themeColor: row.themeColor ?? undefined }]),
+  );
+}
+
 export async function getProductSiteRow(id: string) {
   return db.productSite.findUnique({ where: { id } });
 }

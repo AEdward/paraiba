@@ -120,13 +120,6 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
         <div className="hidden items-center gap-4 lg:flex">
           <Link
             href="/contact"
-            className="font-display text-sm font-semibold opacity-80 transition-opacity hover:opacity-100"
-            style={{ color: "var(--ink)" }}
-          >
-            Contact
-          </Link>
-          <Link
-            href="/contact"
             className="font-display inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
             style={{ background: "var(--color-ember)" }}
           >
@@ -172,14 +165,6 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
             </Link>
           ))}
           <MobileGroup label="Company" links={companyLinks} onNavigate={() => setOpen(false)} />
-          <Link
-            href="/contact"
-            onClick={() => setOpen(false)}
-            className="font-display py-2 text-sm font-medium"
-            style={{ color: "var(--ink)" }}
-          >
-            Contact
-          </Link>
           <Link
             href="/contact"
             onClick={() => setOpen(false)}

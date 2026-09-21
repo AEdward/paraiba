@@ -3,10 +3,11 @@ import { GradientMesh } from "@/components/GradientMesh";
 import { FeaturedProject } from "@/components/FeaturedProject";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { getProjects } from "@/lib/projects-data";
+import { getProductSitesBySubdomain } from "@/lib/productSites-data";
 import type { ProductsGridData } from "@/lib/blocks/types";
 
 export async function ProductsGridBlock({ data }: { data: ProductsGridData }) {
-  const products = await getProjects();
+  const [products, productSites] = await Promise.all([getProjects(), getProductSitesBySubdomain()]);
   const featured = products.find((p) => p.featured);
   const rest = featured ? products.filter((p) => p.id !== featured.id) : products;
 
@@ -34,7 +35,7 @@ export async function ProductsGridBlock({ data }: { data: ProductsGridData }) {
         )}
 
         <div className="mt-14">
-          <ProjectsGrid projects={rest} emptyMessage={data.emptyMessage} />
+          <ProjectsGrid projects={rest} productSites={productSites} emptyMessage={data.emptyMessage} />
         </div>
       </div>
     </section>

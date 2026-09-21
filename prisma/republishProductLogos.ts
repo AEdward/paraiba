@@ -15,10 +15,10 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const db = new PrismaClient({ adapter });
 
 const LOGOS: { subdomain: string; file: string; mimeType: string }[] = [
-  { subdomain: "kinin", file: "kinin.webp", mimeType: "image/webp" },
+  { subdomain: "kinin", file: "kinin.png", mimeType: "image/png" },
   { subdomain: "yeneta", file: "yeneta.png", mimeType: "image/png" },
-  { subdomain: "tena", file: "tena.webp", mimeType: "image/webp" },
-  { subdomain: "mead", file: "mead.webp", mimeType: "image/webp" },
+  { subdomain: "tena", file: "tena.png", mimeType: "image/png" },
+  { subdomain: "mead", file: "mead.png", mimeType: "image/png" },
 ];
 
 async function main() {

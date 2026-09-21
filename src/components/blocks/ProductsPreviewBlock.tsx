@@ -4,10 +4,14 @@ import { FadeIn } from "@/components/FadeIn";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SectionShell, Eyebrow } from "./SectionShell";
 import { getProjects } from "@/lib/projects-data";
+import { getProductSitesBySubdomain } from "@/lib/productSites-data";
 import type { ProductsPreviewData } from "@/lib/blocks/types";
 
 export async function ProductsPreviewBlock({ data }: { data: ProductsPreviewData }) {
-  const products = (await getProjects()).slice(0, data.limit);
+  const [products, productSites] = await Promise.all([
+    getProjects().then((all) => all.slice(0, data.limit)),
+    getProductSitesBySubdomain(),
+  ]);
   if (products.length === 0) return null;
 
   return (
@@ -36,7 +40,11 @@ export async function ProductsPreviewBlock({ data }: { data: ProductsPreviewData
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product, i) => (
           <FadeIn key={product.slug} delay={i * 0.08}>
-            <ProjectCard project={product} />
+            <ProjectCard
+              project={product}
+              logoUrl={productSites[product.slug]?.logoUrl}
+              accentColor={productSites[product.slug]?.themeColor}
+            />
           </FadeIn>
         ))}
       </div>

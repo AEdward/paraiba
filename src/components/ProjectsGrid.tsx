@@ -7,9 +7,11 @@ import type { Project } from "@/lib/projects";
 
 export function ProjectsGrid({
   projects,
+  productSites,
   emptyMessage = "No projects yet.",
 }: {
   projects: Project[];
+  productSites?: Record<string, { logoUrl?: string; themeColor?: string }>;
   emptyMessage?: string;
 }) {
   const tags = useMemo(
@@ -61,7 +63,11 @@ export function ProjectsGrid({
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((project, i) => (
           <FadeIn key={project.slug} delay={i * 0.06}>
-            <ProjectCard project={project} />
+            <ProjectCard
+              project={project}
+              logoUrl={productSites?.[project.slug]?.logoUrl}
+              accentColor={productSites?.[project.slug]?.themeColor}
+            />
           </FadeIn>
         ))}
       </div>
