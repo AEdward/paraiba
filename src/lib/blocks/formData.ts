@@ -3,7 +3,7 @@
 // types and their fields are identical either way.
 
 import { db } from "@/lib/db";
-import type { BlockType, MediaRef, SectionElement, SectionElementType } from "./types";
+import type { BlockType, MediaRef, SectionElement, SectionElementType, TechStackItem } from "./types";
 
 const MAX_MEDIA_BYTES = 4 * 1024 * 1024;
 
@@ -225,5 +225,20 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
       };
     case "section":
       return { theme, elements: await readSectionElements(formData) };
+    case "techStack":
+      return {
+        eyebrow: optStr(formData, "eyebrow"),
+        heading: optStr(formData, "heading"),
+        body: optStr(formData, "body"),
+        items: readJsonArray<TechStackItem>(formData, "itemsJson").filter(
+          (item): item is TechStackItem =>
+            typeof item === "object" &&
+            item !== null &&
+            typeof item.icon === "string" &&
+            typeof item.label === "string" &&
+            item.label.trim() !== "",
+        ),
+        theme,
+      };
   }
 }

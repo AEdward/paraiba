@@ -17,6 +17,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import type { TechIconKey } from "@/lib/techIcons";
 
 export type SectionTheme = "dark" | "light";
 
@@ -160,6 +161,19 @@ export type ProductsGridData = {
   heading: string;
   body?: string;
   emptyMessage?: string;
+  theme: SectionTheme;
+};
+
+// Real per-technology brand logos (see lib/techIcons.ts) — distinct from
+// IconKey above, which is the generic abstract-glyph set used by
+// cardGrid/statsBar/icon.
+export type TechStackItem = { icon: TechIconKey; label: string };
+
+export type TechStackData = {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  items: TechStackItem[];
   theme: SectionTheme;
 };
 
@@ -351,6 +365,7 @@ export type BlockDataMap = {
   contactPanel: ContactPanelData;
   productsGrid: ProductsGridData;
   section: SectionData;
+  techStack: TechStackData;
 };
 
 export type BlockType = keyof BlockDataMap;
@@ -369,6 +384,7 @@ export const BLOCK_TYPES = [
   "contactPanel",
   "productsGrid",
   "section",
+  "techStack",
 ] as const satisfies readonly BlockType[];
 
 // The subset that makes sense on a standalone product site — the others
@@ -401,6 +417,7 @@ export const BLOCK_LABELS: Record<BlockType, string> = {
   contactPanel: "Contact info + form",
   productsGrid: "Products grid (live)",
   section: "Section (build your own)",
+  techStack: "Tech stack",
 };
 
 export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
@@ -417,6 +434,7 @@ export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
   contactPanel: "Contact details next to the live contact form.",
   productsGrid: "The full products listing, including the featured showcase.",
   section: "A blank container — add text, image, video, gallery, and other elements freely.",
+  techStack: "A grid of programming languages, frameworks, and tools, each with its real logo.",
 };
 
 // A generic block row shape both the DB layer and the renderer agree on —
@@ -429,7 +447,7 @@ export type BlockRecord<T extends BlockType = BlockType> = {
   data: BlockDataMap[T];
 };
 
-export const PAGE_SLUGS = ["home", "about", "careers", "contact", "products", "solutions"] as const;
+export const PAGE_SLUGS = ["home", "about", "careers", "contact", "products", "solutions", "services"] as const;
 export type PageSlug = (typeof PAGE_SLUGS)[number];
 
 export const PAGE_TITLES: Record<PageSlug, string> = {
@@ -439,6 +457,7 @@ export const PAGE_TITLES: Record<PageSlug, string> = {
   contact: "Contact",
   products: "Products",
   solutions: "Solutions",
+  services: "Services",
 };
 
 // A product's own site is a single scrolling page — no separate

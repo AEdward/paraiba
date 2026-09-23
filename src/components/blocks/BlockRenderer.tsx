@@ -13,6 +13,7 @@ import type {
   SectionData,
   StatsBarData,
   StatsQuoteData,
+  TechStackData,
 } from "@/lib/blocks/types";
 import { HeroBlock } from "./HeroBlock";
 import { RichTextBlock } from "./RichTextBlock";
@@ -27,6 +28,7 @@ import { OpenPositionsBlock } from "./OpenPositionsBlock";
 import { ContactPanelBlock } from "./ContactPanelBlock";
 import { ProductsGridBlock } from "./ProductsGridBlock";
 import { SectionBlock } from "./SectionBlock";
+import { TechStackBlock } from "./TechStackBlock";
 
 export function BlockRenderer({
   block,
@@ -66,6 +68,8 @@ export function BlockRenderer({
       return <ProductsGridBlock data={block.data as ProductsGridData} />;
     case "section":
       return <SectionBlock data={block.data as SectionData} />;
+    case "techStack":
+      return <TechStackBlock data={block.data as TechStackData} />;
     default:
       return null;
   }

@@ -346,6 +346,137 @@ const solutionsBlocks: SeedBlock[] = [
   }),
 ];
 
+const servicesBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Services",
+    headline: "A Full-Service Technology Partner",
+    subhead:
+      "From a first idea to a live, scaled product — web, mobile, custom software, design, cloud, and everything in between. We build it, and we build it to last.",
+    theme: "dark",
+    align: "center",
+  }),
+  block("cardGrid", {
+    eyebrow: "What We Do",
+    heading: "Everything You Need to Build and Ship",
+    body: "Whether you need a single feature or a full product built from scratch, our team covers the full stack of what it takes to get there.",
+    theme: "light",
+    columns: 3,
+    anchorId: "services",
+    items: [
+      {
+        icon: "sparkles",
+        title: "Web Development",
+        description:
+          "Corporate websites, e-commerce, and web applications — built fast, accessible, and easy for your team to maintain.",
+      },
+      {
+        icon: "zap",
+        title: "Mobile App Development",
+        description:
+          "Native and cross-platform apps for Android and iOS, from a first prototype to an app-store release.",
+      },
+      {
+        icon: "cpu",
+        title: "Custom Software Development",
+        description:
+          "Internal tools, business systems, and workflows built around how your team actually operates — not a generic template.",
+      },
+      {
+        icon: "gem",
+        title: "UI/UX Design",
+        description:
+          "Product design, user research, and prototyping that make complex products feel simple to use.",
+      },
+      {
+        icon: "cloud",
+        title: "Cloud & Infrastructure",
+        description:
+          "Deployment, hosting, monitoring, and scaling — so your product stays fast and reliable as it grows.",
+      },
+      {
+        icon: "target",
+        title: "API & System Integration",
+        description:
+          "Payments, third-party APIs, and system-to-system integrations that connect the tools your business already runs on.",
+      },
+    ],
+  }),
+  block("richText", {
+    eyebrow: "How We Work",
+    heading: "A Process Built for Real Products",
+    theme: "dark",
+    body: doc(
+      p(
+        t(
+          "We don't hand off a proposal and disappear until launch day. Every engagement starts with understanding the actual problem, moves through short, visible iterations, and stays in close contact with you the whole way.",
+        ),
+      ),
+      p(
+        t("Discover", true),
+        t(" — we learn your business, your users, and what success actually looks like."),
+      ),
+      p(
+        t("Build", true),
+        t(" — working software, shipped in stages, not a single big reveal at the end."),
+      ),
+      p(t("Support", true), t(" — we stay involved after launch, not just until the invoice is paid.")),
+    ),
+  }),
+  block("techStack", {
+    eyebrow: "Our Toolkit",
+    heading: "Technologies We Work With",
+    body: "The languages, frameworks, and platforms our team uses to build, ship, and run real products.",
+    theme: "light",
+    items: [
+      { icon: "javascript", label: "JavaScript" },
+      { icon: "typescript", label: "TypeScript" },
+      { icon: "python", label: "Python" },
+      { icon: "php", label: "PHP" },
+      { icon: "kotlin", label: "Kotlin" },
+      { icon: "swift", label: "Swift" },
+      { icon: "dart", label: "Dart" },
+      { icon: "go", label: "Go" },
+      { icon: "csharp", label: "C#" },
+      { icon: "cplusplus", label: "C++" },
+      { icon: "react", label: "React" },
+      { icon: "nextjs", label: "Next.js" },
+      { icon: "vuejs", label: "Vue.js" },
+      { icon: "angular", label: "Angular" },
+      { icon: "tailwindcss", label: "Tailwind CSS" },
+      { icon: "html5", label: "HTML5" },
+      { icon: "css", label: "CSS" },
+      { icon: "flutter", label: "Flutter" },
+      { icon: "android", label: "Android" },
+      { icon: "nodejs", label: "Node.js" },
+      { icon: "express", label: "Express" },
+      { icon: "django", label: "Django" },
+      { icon: "laravel", label: "Laravel" },
+      { icon: "dotnet", label: ".NET" },
+      { icon: "nestjs", label: "NestJS" },
+      { icon: "postgresql", label: "PostgreSQL" },
+      { icon: "mysql", label: "MySQL" },
+      { icon: "mongodb", label: "MongoDB" },
+      { icon: "redis", label: "Redis" },
+      { icon: "docker", label: "Docker" },
+      { icon: "kubernetes", label: "Kubernetes" },
+      { icon: "aws", label: "AWS" },
+      { icon: "googlecloud", label: "Google Cloud" },
+      { icon: "vercel", label: "Vercel" },
+      { icon: "git", label: "Git" },
+      { icon: "graphql", label: "GraphQL" },
+      { icon: "firebase", label: "Firebase" },
+    ],
+  }),
+  block("cta", {
+    eyebrow: "Let's build",
+    heading: "Have a Project in Mind?",
+    body: "Tell us what you're trying to build — we'll tell you honestly whether we're the right fit, and how we'd approach it.",
+    buttonLabel: "Get a Free Consultation",
+    buttonHref: "/contact",
+    theme: "dark",
+  }),
+];
+
 const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
   home: homeBlocks,
   about: aboutBlocks,
@@ -353,6 +484,7 @@ const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
   contact: contactBlocks,
   products: productsBlocks,
   solutions: solutionsBlocks,
+  services: servicesBlocks,
 };
 
 const PAGE_TITLES: Record<PageSlug, string> = {
@@ -362,6 +494,7 @@ const PAGE_TITLES: Record<PageSlug, string> = {
   contact: "Contact",
   products: "Products",
   solutions: "Solutions",
+  services: "Services",
 };
 
 export async function seedPages(db: PrismaClient) {

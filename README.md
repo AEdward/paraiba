@@ -72,10 +72,10 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ## Structure
 
 - `src/app/(site)` — public pages: home, `/about`, `/products`, `/products/[slug]`,
-  `/careers`, `/contact`, `/partners` (real, from the Partner catalog), plus
-  `/solutions`, `/services`, `/work`, `/resources`, `/team`, and `/legal/*`, which
-  render a shared `ComingSoon` component until they have real content. Every CMS-backed
-  page is a thin wrapper: fetch that page's blocks, render them in order. There's no
+  `/careers`, `/contact`, `/partners` (real, from the Partner catalog), `/solutions`,
+  `/services`, plus `/work`, `/resources`, `/team`, and `/legal/*`, which still render
+  a shared `ComingSoon` component until they have real content. Every CMS-backed page
+  is a thin wrapper: fetch that page's blocks, render them in order. There's no
   page-specific layout code to touch when the content changes — only when a genuinely
   new kind of section is needed (see "Page builder / CMS" below).
 - `src/components/Navbar.tsx` / `Footer.tsx` — the mega-menu nav (Products dropdown is
@@ -109,10 +109,11 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 Every page's content lives in the database as an ordered list of **blocks**, not in JSX:
 
-- `Page` (`home` / `about` / `careers` / `contact` / `products` / `solutions`) has many `Block`s, each
-  with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`, `statsQuote`, `quote`, `cta`,
-  `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`,
-  `section`) and a schemaless `data` JSON column shaped by that type — see
+- `Page` (`home` / `about` / `careers` / `contact` / `products` / `solutions` / `services`)
+  has many `Block`s, each with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`,
+  `statsQuote`, `quote`, `cta`, `productsPreview`, `partnersTrustBar`, `openPositions`,
+  `contactPanel`, `productsGrid`, `section`, `techStack`) and a schemaless `data` JSON
+  column shaped by that type — see
   `src/lib/blocks/types.ts` for every type's exact fields. `cardGrid` also supports an
   optional "View all" link next to its heading (`viewAllLabel`/`viewAllHref`) — reused for
   the homepage's Industries and Services sections instead of building near-duplicate
@@ -141,7 +142,14 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   whatever file arrives at save time and leaves already-saved images alone otherwise.
   Video/audio/file elements are link-only (paste an already-hosted URL) rather than
   another upload path — kept deliberately out of scope for now.
-- `/admin/pages` lists the six pages; `/admin/pages/[slug]` is the builder — drag blocks
+- **`techStack`** shows a grid of programming languages, frameworks, and tools, each with
+  its real brand logo — not the generic `IconKey` set (`ICONS` in `blocks/types.ts`, used
+  by `cardGrid`/`statsBar`), which only has abstract UI glyphs. Logos come from
+  `src/lib/techIcons.ts` (`TECH_ICONS`, mostly [Simple Icons](https://simpleicons.org) via
+  `react-icons/si`, plus `react-icons/di` for the couple Simple Icons omits for trademark
+  reasons, like AWS) — every key was verified to exist in the installed `react-icons`
+  version before use. Used on `/services`; add more logos by adding a key there.
+- `/admin/pages` lists the seven pages; `/admin/pages/[slug]` is the builder — drag blocks
   to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
   one, or delete one. Saving, adding, deleting, and reordering all go through
   `src/app/admin/(dashboard)/pages/actions.ts` and take effect immediately on the live

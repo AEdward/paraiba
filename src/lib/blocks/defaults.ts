@@ -164,5 +164,11 @@ export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] 
       } satisfies BlockDataMap["productsGrid"] as BlockDataMap[T];
     case "section":
       return { theme: "light", elements: [] as SectionElement[] } satisfies BlockDataMap["section"] as BlockDataMap[T];
+    case "techStack":
+      return {
+        heading: "Technologies We Work With",
+        items: [{ icon: "react", label: "React" }],
+        theme: "light",
+      } satisfies BlockDataMap["techStack"] as BlockDataMap[T];
   }
 }

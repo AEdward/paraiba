@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import { BlockRenderer } from "@/components/blocks/BlockRenderer";
+import { getPageBlocks } from "@/lib/blocks/data";
 
-export const metadata: Metadata = { title: "Services" };
+export const metadata: Metadata = {
+  title: "Services",
+  description: "Web, mobile, and custom software development, UI/UX design, cloud infrastructure, and system integrations.",
+};
 
-export default function ServicesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ServicesPage() {
+  const blocks = await getPageBlocks("services");
   return (
-    <ComingSoon
-      eyebrow="Services"
-      heading="Our services page is coming soon."
-      body="Web and mobile development, custom software, design, cloud, and integrations — full details are on the way. Reach out and we'll talk through what you need in the meantime."
-    />
+    <>
+      {blocks.map((block) => (
+        <BlockRenderer key={block.id} block={block} />
+      ))}
+    </>
   );
 }

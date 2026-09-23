@@ -21,7 +21,10 @@ import {
   type StatsBarData,
   type StatsBarItem,
   type StatsQuoteData,
+  type TechStackData,
+  type TechStackItem,
 } from "@/lib/blocks/types";
+import { TECH_ICON_KEYS, TECH_ICON_LABELS } from "@/lib/techIcons";
 import { SectionEditor } from "./SectionEditor";
 import { Field, TextAreaField, ThemeField, inputClass, inputStyle, labelClass } from "./formFields";
 
@@ -234,6 +237,70 @@ function StatsBarEditor({ defaultItems }: { defaultItems: StatsBarItem[] }) {
         style={{ color: "var(--color-teal)" }}
       >
         + Add stat
+      </button>
+      <input type="hidden" name="itemsJson" value={JSON.stringify(items)} readOnly />
+    </div>
+  );
+}
+
+function TechStackEditor({ defaultItems }: { defaultItems: TechStackItem[] }) {
+  const [items, setItems] = useState<TechStackItem[]>(
+    defaultItems.length > 0 ? defaultItems : [{ icon: "react", label: "React" }],
+  );
+
+  function update(i: number, patch: Partial<TechStackItem>) {
+    setItems((prev) => prev.map((item, idx) => (idx === i ? { ...item, ...patch } : item)));
+  }
+
+  return (
+    <div>
+      <label className={labelClass} style={{ color: "var(--ink)" }}>
+        Technologies
+      </label>
+      <div className="flex flex-col gap-2">
+        {items.map((item, i) => (
+          <div key={i} className="flex gap-2">
+            <select
+              value={item.icon}
+              onChange={(e) => {
+                const icon = e.target.value as TechStackItem["icon"];
+                update(i, { icon, label: item.label || TECH_ICON_LABELS[icon] });
+              }}
+              className={inputClass}
+              style={{ ...inputStyle, maxWidth: "12rem" }}
+            >
+              {TECH_ICON_KEYS.map((key) => (
+                <option key={key} value={key}>
+                  {TECH_ICON_LABELS[key]}
+                </option>
+              ))}
+            </select>
+            <input
+              placeholder="Label"
+              value={item.label}
+              onChange={(e) => update(i, { label: e.target.value })}
+              className={inputClass}
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => setItems((prev) => prev.filter((_, idx) => idx !== i))}
+              disabled={items.length <= 1}
+              className="shrink-0 text-xs font-medium disabled:opacity-30"
+              style={{ color: "var(--color-ember)" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setItems((prev) => [...prev, { icon: "javascript", label: TECH_ICON_LABELS.javascript }])}
+        className="mt-2 text-sm font-medium"
+        style={{ color: "var(--color-teal)" }}
+      >
+        + Add technology
       </button>
       <input type="hidden" name="itemsJson" value={JSON.stringify(items)} readOnly />
     </div>
@@ -466,6 +533,18 @@ export function BlockFields({ block }: { block: BlockRecord }) {
     }
     case "section":
       return <SectionEditor data={block.data as SectionData} />;
+    case "techStack": {
+      const data = block.data as TechStackData;
+      return (
+        <div className="flex flex-col gap-4">
+          <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
+          <Field label="Heading — optional" name="heading" defaultValue={data.heading} />
+          <TextAreaField label="Intro text — optional" name="body" defaultValue={data.body} rows={2} />
+          <TechStackEditor defaultItems={data.items} />
+          <ThemeField defaultValue={data.theme} />
+        </div>
+      );
+    }
     default:
       return null;
   }
