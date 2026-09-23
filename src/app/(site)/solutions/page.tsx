@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import { BlockRenderer } from "@/components/blocks/BlockRenderer";
+import { getPageBlocks } from "@/lib/blocks/data";
 
-export const metadata: Metadata = { title: "Solutions" };
+export const metadata: Metadata = {
+  title: "Solutions",
+  description: "Dedicated, industry-specific software for education, healthcare, pharmacy, restaurants, and hospitality.",
+};
 
-export default function SolutionsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function SolutionsPage() {
+  const blocks = await getPageBlocks("solutions");
   return (
-    <ComingSoon
-      eyebrow="Solutions"
-      heading="Industry solutions, coming soon."
-      body="Dedicated pages for each industry we serve — education, healthcare, hospitality, and more — are on the way. In the meantime, take a look at our products or get in touch to talk about your industry."
-    />
+    <>
+      {blocks.map((block) => (
+        <BlockRenderer key={block.id} block={block} />
+      ))}
+    </>
   );
 }

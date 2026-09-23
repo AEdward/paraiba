@@ -287,12 +287,72 @@ const productsBlocks: SeedBlock[] = [
   }),
 ];
 
+const solutionsBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Solutions",
+    headline: "Software Built for Your Industry",
+    subhead:
+      "Paraiba doesn't build one tool that tries to do everything — we build dedicated software for each industry we serve, so it actually fits how that business runs.",
+    theme: "dark",
+    align: "center",
+  }),
+  block("cta", {
+    eyebrow: "Education",
+    heading: "School Management, Simplified",
+    body: "Yeneta helps schools manage students, academics, attendance, and communication with parents — all in one place, built for how schools actually operate.",
+    buttonLabel: "Explore Yeneta",
+    buttonHref: "/products/yeneta",
+    theme: "light",
+  }),
+  block("cta", {
+    eyebrow: "Healthcare",
+    heading: "Quality Care, Better Managed",
+    body: "Tena helps hospitals, clinics, and healthcare providers coordinate patient records, scheduling, and billing — so care teams can focus on patients, not paperwork.",
+    buttonLabel: "Explore Tena",
+    buttonHref: "/products/tena",
+    theme: "dark",
+  }),
+  block("cta", {
+    eyebrow: "Pharmacy",
+    heading: "Smarter Pharmacy Operations",
+    body: "Kinin helps pharmacies and drug stores manage inventory, prescriptions, and sales — reducing errors and keeping shelves stocked with what customers need.",
+    buttonLabel: "Explore Kinin",
+    buttonHref: "/products/kinin",
+    theme: "light",
+  }),
+  block("cta", {
+    eyebrow: "Restaurant",
+    heading: "From Kitchen to Counter",
+    body: "Mead helps restaurants, cafés, and food businesses manage orders, tables, staff, and inventory — so teams can focus on serving great food.",
+    buttonLabel: "Explore Mead",
+    buttonHref: "/products/mead",
+    theme: "dark",
+  }),
+  block("cta", {
+    eyebrow: "Hospitality",
+    heading: "Guest Experience, from Booking to Checkout",
+    body: "Enegeda (እንግዳ — \"guest\") manages bookings, rooms, housekeeping, and billing for hotels and guesthouses. Currently in development.",
+    buttonLabel: "Learn More",
+    buttonHref: "/products/enegeda",
+    theme: "light",
+  }),
+  block("contactPanel", {
+    eyebrow: "Don't see your industry?",
+    heading: "Let's Talk About Your Business",
+    body: "Every business has its own workflow. If your industry isn't listed here, tell us about it — we'd love to see if we can help.",
+    email: "hello@paraiba.com",
+    location: "Addis Ababa, Ethiopia",
+    theme: "light",
+  }),
+];
+
 const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
   home: homeBlocks,
   about: aboutBlocks,
   careers: careersBlocks,
   contact: contactBlocks,
   products: productsBlocks,
+  solutions: solutionsBlocks,
 };
 
 const PAGE_TITLES: Record<PageSlug, string> = {
@@ -301,6 +361,7 @@ const PAGE_TITLES: Record<PageSlug, string> = {
   careers: "Careers",
   contact: "Contact",
   products: "Products",
+  solutions: "Solutions",
 };
 
 export async function seedPages(db: PrismaClient) {

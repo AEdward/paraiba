@@ -429,7 +429,7 @@ export type BlockRecord<T extends BlockType = BlockType> = {
   data: BlockDataMap[T];
 };
 
-export const PAGE_SLUGS = ["home", "about", "careers", "contact", "products"] as const;
+export const PAGE_SLUGS = ["home", "about", "careers", "contact", "products", "solutions"] as const;
 export type PageSlug = (typeof PAGE_SLUGS)[number];
 
 export const PAGE_TITLES: Record<PageSlug, string> = {
@@ -438,6 +438,7 @@ export const PAGE_TITLES: Record<PageSlug, string> = {
   careers: "Careers",
   contact: "Contact",
   products: "Products",
+  solutions: "Solutions",
 };
 
 // A product's own site is a single scrolling page — no separate

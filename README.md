@@ -109,7 +109,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 Every page's content lives in the database as an ordered list of **blocks**, not in JSX:
 
-- `Page` (`home` / `about` / `careers` / `contact` / `products`) has many `Block`s, each
+- `Page` (`home` / `about` / `careers` / `contact` / `products` / `solutions`) has many `Block`s, each
   with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`, `statsQuote`, `quote`, `cta`,
   `productsPreview`, `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`,
   `section`) and a schemaless `data` JSON column shaped by that type — see
@@ -141,7 +141,7 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   whatever file arrives at save time and leaves already-saved images alone otherwise.
   Video/audio/file elements are link-only (paste an already-hosted URL) rather than
   another upload path — kept deliberately out of scope for now.
-- `/admin/pages` lists the five pages; `/admin/pages/[slug]` is the builder — drag blocks
+- `/admin/pages` lists the six pages; `/admin/pages/[slug]` is the builder — drag blocks
   to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
   one, or delete one. Saving, adding, deleting, and reordering all go through
   `src/app/admin/(dashboard)/pages/actions.ts` and take effect immediately on the live
