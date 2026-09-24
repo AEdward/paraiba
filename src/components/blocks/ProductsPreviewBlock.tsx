@@ -15,7 +15,7 @@ export async function ProductsPreviewBlock({ data }: { data: ProductsPreviewData
   if (products.length === 0) return null;
 
   return (
-    <SectionShell theme={data.theme}>
+    <SectionShell theme={data.theme} tightTop>
       <div className="flex items-end justify-between gap-4">
         <FadeIn>
           <Eyebrow color="var(--color-ember)">

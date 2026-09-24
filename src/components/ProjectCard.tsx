@@ -42,16 +42,16 @@ export function ProjectCard({
         <div className="relative">
           <div className="flex items-center justify-between gap-3">
             <div
-              className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border"
+              className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border p-2"
               style={{
                 borderColor: "var(--border-soft)",
                 background: logoUrl ? "#ffffff" : `color-mix(in srgb, ${accent} 14%, transparent)`,
               }}
             >
               {logoUrl ? (
-                <Image src={logoUrl} alt="" width={32} height={32} style={{ objectFit: "contain" }} unoptimized />
+                <Image src={logoUrl} alt="" width={48} height={48} style={{ objectFit: "contain", width: "100%", height: "100%" }} unoptimized />
               ) : (
-                <span className="font-display text-lg font-bold" style={{ color: accent }}>
+                <span className="font-display text-2xl font-bold" style={{ color: accent }}>
                   {project.name.charAt(0)}
                 </span>
               )}
