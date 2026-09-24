@@ -590,11 +590,11 @@ export function BlockFields({ block }: { block: BlockRecord }) {
               Photo card
             </p>
             <p className="mt-1 text-xs opacity-60">
-              Paste a path under <code>public/</code> (e.g. <code>/addis-ababa-skyline.webp</code>) or a full
+              Paste a path under <code>public/</code> (e.g. <code>/addis-ababa-park-sunset.webp</code>) or a full
               image URL.
             </p>
             <div className="mt-3 flex flex-col gap-3">
-              <Field label="Image" name="photoUrl" defaultValue={data.photoUrl} placeholder="/addis-ababa-skyline.webp" />
+              <Field label="Image" name="photoUrl" defaultValue={data.photoUrl} placeholder="/addis-ababa-park-sunset.webp" />
               <Field
                 label="Overlay heading — optional"
                 name="photoHeading"

@@ -71,7 +71,7 @@ export const homeBlocks: SeedBlock[] = [
       { icon: "target", label: "Pharmacy" },
       { icon: "gem", label: "Hospitality" },
     ],
-    photoUrl: "/addis-ababa-skyline.webp",
+    photoUrl: "/addis-ababa-park-sunset.webp",
     photoHeading: "Built for Ethiopia, Ready for the World",
     theme: "dark",
   }),
