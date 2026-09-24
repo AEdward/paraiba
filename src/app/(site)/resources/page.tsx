@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import { BlockRenderer } from "@/components/blocks/BlockRenderer";
+import { getPageBlocks } from "@/lib/blocks/data";
 
 export const metadata: Metadata = { title: "Resources" };
+export const dynamic = "force-dynamic";
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const blocks = await getPageBlocks("resources");
   return (
-    <ComingSoon
-      eyebrow="Resources"
-      heading="Documentation and FAQs are on the way."
-      body="Product guides, brochures, and answers to common questions will live here. Have a question now? Just get in touch."
-    />
+    <>
+      {blocks.map((block) => (
+        <BlockRenderer key={block.id} block={block} />
+      ))}
+    </>
   );
 }

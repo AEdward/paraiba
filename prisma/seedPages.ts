@@ -477,6 +477,44 @@ const servicesBlocks: SeedBlock[] = [
   }),
 ];
 
+const workBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Work",
+    headline: "Our portfolio is coming soon.",
+    subhead:
+      "A full showcase of projects and case studies is on the way. Until then, our Products page is the best look at what we're building.",
+    primaryLabel: "Talk to Paraiba",
+    primaryHref: "/contact",
+    theme: "light",
+    align: "center",
+  }),
+];
+
+const resourcesBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Resources",
+    headline: "Documentation and FAQs are on the way.",
+    subhead:
+      "Product guides, brochures, and answers to common questions will live here. Have a question now? Just get in touch.",
+    primaryLabel: "Talk to Paraiba",
+    primaryHref: "/contact",
+    theme: "light",
+    align: "center",
+  }),
+];
+
+const teamBlocks: SeedBlock[] = [
+  block("hero", {
+    eyebrow: "Company",
+    headline: "Meet the team — page coming soon.",
+    subhead: "We're putting together a proper introduction to the people behind Paraiba. Check back soon.",
+    primaryLabel: "Talk to Paraiba",
+    primaryHref: "/contact",
+    theme: "light",
+    align: "center",
+  }),
+];
+
 const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
   home: homeBlocks,
   about: aboutBlocks,
@@ -485,6 +523,9 @@ const PAGE_SEEDS: Record<PageSlug, SeedBlock[]> = {
   products: productsBlocks,
   solutions: solutionsBlocks,
   services: servicesBlocks,
+  work: workBlocks,
+  resources: resourcesBlocks,
+  team: teamBlocks,
 };
 
 const PAGE_TITLES: Record<PageSlug, string> = {
@@ -495,6 +536,9 @@ const PAGE_TITLES: Record<PageSlug, string> = {
   products: "Products",
   solutions: "Solutions",
   services: "Services",
+  work: "Work",
+  resources: "Resources",
+  team: "Team",
 };
 
 export async function seedPages(db: PrismaClient) {

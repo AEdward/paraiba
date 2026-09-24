@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import { BlockRenderer } from "@/components/blocks/BlockRenderer";
+import { getPageBlocks } from "@/lib/blocks/data";
 
 export const metadata: Metadata = { title: "Leadership & Team" };
+export const dynamic = "force-dynamic";
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const blocks = await getPageBlocks("team");
   return (
-    <ComingSoon
-      eyebrow="Company"
-      heading="Meet the team — page coming soon."
-      body="We're putting together a proper introduction to the people behind Paraiba. Check back soon."
-    />
+    <>
+      {blocks.map((block) => (
+        <BlockRenderer key={block.id} block={block} />
+      ))}
+    </>
   );
 }

@@ -1,11 +1,12 @@
 # Paraiba Technology PLC
 
 Marketing site for Paraiba Technology PLC — home, about, products, solutions, services,
-work, company, resources, careers, contact, and an admin dashboard backed by a real
+work, team, resources, careers, contact, and an admin dashboard backed by a real
 database. Every page is a drag-and-drop CMS: its content is an ordered list of blocks
 (hero, rich text, card grids, …) managed from `/admin/pages`, not hardcoded JSX.
-Solutions/Services/Work/Resources/Team currently show a "coming soon" placeholder —
-every nav link resolves to a real URL, they just don't have dedicated content yet.
+Work/Resources/Team start out as a simple "coming soon" hero (matching their old
+static copy) but, like every other page, are fully editable from the admin — add,
+remove, or reorder blocks any time to give them real content.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, and Prisma backed by
 Supabase Postgres. Brand palette, type, and the crystalline P mark come from the internal
@@ -73,15 +74,14 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 - `src/app/(site)` — public pages: home, `/about`, `/products`, `/products/[slug]`,
   `/careers`, `/contact`, `/partners` (real, from the Partner catalog), `/solutions`,
-  `/services`, plus `/work`, `/resources`, `/team`, and `/legal/*`, which still render
-  a shared `ComingSoon` component until they have real content. Every CMS-backed page
-  is a thin wrapper: fetch that page's blocks, render them in order. There's no
-  page-specific layout code to touch when the content changes — only when a genuinely
-  new kind of section is needed (see "Page builder / CMS" below).
+  `/services`, `/work`, `/resources`, `/team`, plus `/legal/*`, which is static (terms,
+  privacy, cookies) rather than CMS-backed. Every CMS-backed page is a thin wrapper:
+  fetch that page's blocks, render them in order. There's no page-specific layout code
+  to touch when the content changes — only when a genuinely new kind of section is
+  needed (see "Page builder / CMS" below).
 - `src/components/Navbar.tsx` / `Footer.tsx` — the mega-menu nav (Products dropdown is
   populated live from the product catalog; Company is a static dropdown) and the
-  multi-column footer. Every link resolves to a real URL — either real content or one of
-  the coming-soon pages above.
+  multi-column footer. Every link resolves to a real URL.
 - `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Pages, Products,
   Product Sites, Partners, Careers, Applicants, Messages, Users). Protected by
   `src/proxy.ts` (session cookie check) plus a server-side session check in the dashboard
@@ -149,7 +149,7 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   `react-icons/si`, plus `react-icons/di` for the couple Simple Icons omits for trademark
   reasons, like AWS) — every key was verified to exist in the installed `react-icons`
   version before use. Used on `/services`; add more logos by adding a key there.
-- `/admin/pages` lists the seven pages; `/admin/pages/[slug]` is the builder — drag blocks
+- `/admin/pages` lists all ten pages; `/admin/pages/[slug]` is the builder — drag blocks
   to reorder (`@dnd-kit`), click one to expand its edit form, "Add block" to insert a new
   one, or delete one. Saving, adding, deleting, and reordering all go through
   `src/app/admin/(dashboard)/pages/actions.ts` and take effect immediately on the live
