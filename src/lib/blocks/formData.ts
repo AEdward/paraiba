@@ -216,6 +216,8 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         body: optStr(formData, "body"),
         buttonLabel: str(formData, "buttonLabel"),
         buttonHref: str(formData, "buttonHref"),
+        secondaryLabel: optStr(formData, "secondaryLabel"),
+        secondaryHref: optStr(formData, "secondaryHref"),
         theme,
       };
     case "productsPreview":

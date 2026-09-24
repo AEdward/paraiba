@@ -44,7 +44,7 @@ export function Footer({
   const socialLinks = getSocialLinks(settings);
   return (
     <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-7">
         <div className="sm:col-span-2 lg:col-span-1">
           <Logo size={36} />
           <p className="mt-3 max-w-xs text-sm opacity-60">
@@ -116,37 +116,35 @@ export function Footer({
           </FooterColumn>
         ))}
 
-        <div className="flex flex-col gap-8">
-          {nav.links.length > 0 && (
-            <FooterColumn title="More">
-              {nav.links.map((link) => (
-                <Link
-                  key={link.id}
-                  href={link.href}
-                  className="opacity-70 hover:opacity-100"
-                  style={{ color: "var(--ink)" }}
-                  {...(link.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </FooterColumn>
-          )}
-
-          <FooterColumn title="Contact">
-            <span className="opacity-70" style={{ color: "var(--ink)" }}>
-              {settings.officeLocation}
-            </span>
-            {settings.phone && (
-              <a href={`tel:${settings.phone}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
-                {settings.phone}
-              </a>
-            )}
-            <a href={`mailto:${settings.email}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
-              {settings.email}
-            </a>
+        {nav.links.length > 0 && (
+          <FooterColumn title="More">
+            {nav.links.map((link) => (
+              <Link
+                key={link.id}
+                href={link.href}
+                className="opacity-70 hover:opacity-100"
+                style={{ color: "var(--ink)" }}
+                {...(link.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
+                {link.label}
+              </Link>
+            ))}
           </FooterColumn>
-        </div>
+        )}
+
+        <FooterColumn title="Contact">
+          <span className="opacity-70" style={{ color: "var(--ink)" }}>
+            {settings.officeLocation}
+          </span>
+          {settings.phone && (
+            <a href={`tel:${settings.phone}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {settings.phone}
+            </a>
+          )}
+          <a href={`mailto:${settings.email}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+            {settings.email}
+          </a>
+        </FooterColumn>
       </div>
 
       <div

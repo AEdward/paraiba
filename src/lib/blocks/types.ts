@@ -156,6 +156,9 @@ export type CtaData = {
   body?: string;
   buttonLabel: string;
   buttonHref: string;
+  // Optional second, outline-style button next to the primary one.
+  secondaryLabel?: string;
+  secondaryHref?: string;
   theme: SectionTheme;
 };
 

@@ -113,9 +113,11 @@ export const homeBlocks: SeedBlock[] = [
   block("cta", {
     eyebrow: "Let's build",
     heading: "Ready to Build Something Great?",
-    body: "Let's turn your idea into powerful digital solutions. Whether you need custom software, one of our products, or a full digital transformation — we're here to help.",
+    body: "Let's turn your idea into powerful digital solutions. Partner with Paraiba Technology PLC and take your business to the next level.",
     buttonLabel: "Get Started",
     buttonHref: "/contact",
+    secondaryLabel: "Contact Us",
+    secondaryHref: "/contact",
     theme: "dark",
   }),
 ];

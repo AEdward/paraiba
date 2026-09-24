@@ -662,6 +662,10 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             <Field label="Button label" name="buttonLabel" defaultValue={data.buttonLabel} required />
             <Field label="Button link" name="buttonHref" defaultValue={data.buttonHref} required />
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Second button label — optional" name="secondaryLabel" defaultValue={data.secondaryLabel} />
+            <Field label="Second button link — optional" name="secondaryHref" defaultValue={data.secondaryHref} />
+          </div>
           <ThemeField defaultValue={data.theme} />
         </div>
       );
