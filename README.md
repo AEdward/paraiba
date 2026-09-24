@@ -40,6 +40,7 @@ npm run db:republish-yeneta-home   # replaces Yeneta's home-page blocks with its
 npm run db:republish-tena-home     # replaces Tena's home-page blocks with its redesigned content
 npm run db:republish-mead-home     # replaces Mead's home-page blocks with its redesigned content
 npm run db:republish-product-logos # sets each product site's real logo from public/product-logos/
+npm run db:republish-products-page # replaces the Products page's blocks with the current composition
 ```
 
 All are safe to re-run and only touch what they name — `db:republish-products` upserts
@@ -48,10 +49,14 @@ only replaces the Home page's blocks, `db:republish-product-sites` upserts by su
 without ever touching a site's logo, so uploading a real logo file afterward is never
 overwritten by a later re-run, `db:republish-kinin-home` / `db:republish-yeneta-home` /
 `db:republish-tena-home` / `db:republish-mead-home` each only replace that one product's
-own "home" `ProductPage` blocks — every other product site is untouched — and
+own "home" `ProductPage` blocks — every other product site is untouched —
 `db:republish-product-logos` only sets `logoData`/`logoMimeType` for the four named
 products from their files in `public/product-logos/`, leaving name/subdomain/theme/pages
-alone.
+alone, and `db:republish-products-page` only replaces the Products page's own blocks.
+
+The header/footer menu is seeded once by the regular `npm run db:seed` (it creates the
+default `NavItem` rows only if none exist yet — same skip-if-present rule as everything
+else `db:seed` does) — no separate republish script needed for it.
 
 Use `db:deploy` (`prisma migrate deploy`), not `db:migrate` (`prisma migrate dev`), against Supabase.
 `migrate dev` needs a temporary "shadow database" to validate new migrations, and Supabase
@@ -79,9 +84,10 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
   fetch that page's blocks, render them in order. There's no page-specific layout code
   to touch when the content changes — only when a genuinely new kind of section is
   needed (see "Page builder / CMS" below).
-- `src/components/Navbar.tsx` / `Footer.tsx` — the mega-menu nav (Products dropdown is
-  populated live from the product catalog; Company is a static dropdown) and the
-  multi-column footer. Every link resolves to a real URL.
+- `src/components/Navbar.tsx` / `Footer.tsx` — the mega-menu nav and multi-column footer.
+  The Products dropdown is always populated live from the product catalog; every other
+  link (Solutions/Services/Work/Resources, the Company dropdown/column, the footer's
+  Resources column) comes from the admin-managed `NavItem` table — see "Menu" below.
 - `src/app/admin` — the admin dashboard (`/admin/login`, then Overview, Pages, Products,
   Product Sites, Partners, Careers, Applicants, Messages, Users). Protected by
   `src/proxy.ts` (session cookie check) plus a server-side session check in the dashboard
@@ -252,15 +258,27 @@ requirement so far is "me + a few teammates." Add teammates from `/admin/users` 
 you're logged in.
 
 - **Pages** (`/admin/pages`) — the drag-and-drop builder for every page's content. See
-  "Page builder / CMS" above for how it works.
+  "Page builder / CMS" above for how it works. This includes `/products` itself — its
+  live product grid is just one block among any others you add (hero, rich text, a
+  freeform "Section" with images/galleries, a closing CTA, …), exactly like Solutions
+  or Services.
+- **Menu** (`/admin/menu`) — every header/footer nav link except the Products dropdown
+  (always live from the catalog) and the Footer's Contact block (from Settings). Each
+  link picks where it shows (header only / footer only / both), an optional `order`, and
+  an optional `group` — links sharing a group name combine into one dropdown (header) or
+  column (footer), e.g. the built-in "Company" and "Resources" groups. A link pointing at
+  an unpublished CMS page (see Pages' publish toggle) hides itself automatically — no
+  manual cleanup needed when you unpublish something.
 - **Products** (`/admin/products`) — replaces manually editing `src/lib/projects.ts`.
   Paraiba only publishes its own products now (no client-project section) — set a
   product's status to `archived` to show it as "Built · not published" (still visible, no
   live link) instead of `live`. Each product's device mockup can show, in priority order:
   (1) a **GitHub repo** (`owner/repo`) — boots and renders the app live from source via
   StackBlitz, no deployment needed, best for JS/web-stack projects; (2) a **live link**
-  rendered in an iframe, if the target site allows framing; (3) a static **screenshot
-  URL**; (4) a placeholder if none of the above are set.
+  rendered in an iframe, if the target site allows framing; (3) an uploaded **screenshot**
+  image (stored the same way as a Partner logo — bytes in Postgres, served through
+  `/api/products/[id]/screenshot`) or a pasted URL as a fallback; (4) a placeholder if
+  none of the above are set.
   - Mark one product **featured** to show it in a large showcase hero above the grid on
     `/products`.
   - **What We Built** and **Case Study** are optional fields edited with a small WYSIWYG

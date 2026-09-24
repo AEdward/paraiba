@@ -3,6 +3,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { hashPassword } from "../src/lib/password";
 import { seedPages } from "./seedPages";
+import { seedNavItems } from "./seedNavItems";
 import { productCatalog } from "./productCatalog";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
@@ -36,6 +37,7 @@ async function main() {
   }
 
   await seedPages(db);
+  await seedNavItems(db);
 }
 
 main()

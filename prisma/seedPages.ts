@@ -275,13 +275,21 @@ const contactBlocks: SeedBlock[] = [
   }),
 ];
 
-const productsBlocks: SeedBlock[] = [
+export const productsBlocks: SeedBlock[] = [
   block("productsGrid", {
     eyebrow: "Portfolio",
     heading: "Products",
     body: "The products we're building — from first sketch to shipped software.",
     emptyMessage: "No products published yet — we're currently building.",
     theme: "light",
+  }),
+  block("cta", {
+    eyebrow: "Don't see what you need?",
+    heading: "We Also Build Custom Software",
+    body: "If none of our products fit your business, we can build something that does — from a first sketch through to a shipped, supported product.",
+    buttonLabel: "Talk to Us",
+    buttonHref: "/contact",
+    theme: "dark",
   }),
 ];
 

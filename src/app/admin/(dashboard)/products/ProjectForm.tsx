@@ -19,6 +19,9 @@ export function ProjectForm({
   action: (formData: FormData) => void;
   submitLabel: string;
 }) {
+  const currentScreenshotSrc = project?.screenshotData
+    ? `/api/products/${project.id}/screenshot?v=${project.updatedAt.getTime()}`
+    : (project?.screenshot ?? null);
   return (
     <form action={action} className="flex max-w-xl flex-col gap-5">
       <div>
@@ -192,8 +195,47 @@ export function ProjectForm({
       </div>
 
       <div>
+        <label className={labelClass} style={{ color: "var(--ink)" }}>
+          Screenshot (optional)
+        </label>
+        <p className="mb-2 text-xs opacity-50">
+          Used when neither preview option above is set. Leave blank to show the
+          placeholder device mockup.
+        </p>
+
+        {currentScreenshotSrc && (
+          <div className="mb-3 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={currentScreenshotSrc}
+              alt={project?.name ?? "Screenshot"}
+              className="h-20 w-auto max-w-[200px] rounded border object-contain p-1.5"
+              style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+            />
+            <label className="flex items-center gap-2 text-xs opacity-70">
+              <input type="checkbox" name="removeScreenshot" value="on" />
+              Remove current screenshot
+            </label>
+          </div>
+        )}
+
+        <input
+          id="screenshotFile"
+          name="screenshotFile"
+          type="file"
+          accept="image/*"
+          className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:px-3 file:py-1.5 file:text-xs file:font-semibold`}
+          style={inputStyle}
+        />
+        <p className="mt-1.5 text-xs opacity-50">
+          Upload an image file (PNG/JPG/WebP, up to 4MB).
+          {currentScreenshotSrc ? " Uploading a new file replaces the current screenshot." : ""}
+        </p>
+      </div>
+
+      <div>
         <label htmlFor="screenshot" className={labelClass} style={{ color: "var(--ink)" }}>
-          Screenshot URL (optional)
+          Or screenshot URL
         </label>
         <input
           id="screenshot"
@@ -203,10 +245,7 @@ export function ProjectForm({
           className={inputClass}
           style={inputStyle}
         />
-        <p className="mt-1 text-xs opacity-50">
-          Used when neither preview option above is set. Leave blank to show the
-          placeholder device mockup.
-        </p>
+        <p className="mt-1 text-xs opacity-50">Only used when no file has been uploaded above.</p>
       </div>
 
       <div>

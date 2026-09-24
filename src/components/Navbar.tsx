@@ -4,23 +4,14 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
+import type { NavData } from "@/lib/nav";
 
-type NavLink = { href: string; label: string };
+type NavLink = { href: string; label: string; newTab?: boolean };
 type NavProduct = { slug: string; name: string };
 
-const companyLinks: NavLink[] = [
-  { href: "/about", label: "About Us" },
-  { href: "/team", label: "Leadership & Team" },
-  { href: "/careers", label: "Careers" },
-  { href: "/partners", label: "Partners" },
-];
-
-const simpleLinks: NavLink[] = [
-  { href: "/solutions", label: "Solutions" },
-  { href: "/services", label: "Services" },
-  { href: "/work", label: "Work" },
-  { href: "/resources", label: "Resources" },
-];
+function linkTargetProps(newTab?: boolean) {
+  return newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
+}
 
 function NavDropdown({ label, links }: { label: string; links: NavLink[] }) {
   const [open, setOpen] = useState(false);
@@ -67,6 +58,7 @@ function NavDropdown({ label, links }: { label: string; links: NavLink[] }) {
               onClick={() => setOpen(false)}
               className="block rounded-lg px-3 py-2 text-sm font-medium opacity-80 transition-opacity hover:opacity-100"
               style={{ color: "var(--ink)" }}
+              {...linkTargetProps(link.newTab)}
             >
               {link.label}
             </Link>
@@ -77,7 +69,7 @@ function NavDropdown({ label, links }: { label: string; links: NavLink[] }) {
   );
 }
 
-export function Navbar({ products = [] }: { products?: NavProduct[] }) {
+export function Navbar({ products = [], nav }: { products?: NavProduct[]; nav: NavData }) {
   const [open, setOpen] = useState(false);
 
   const productLinks: NavLink[] = [
@@ -104,17 +96,20 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
             Home
           </Link>
           <NavDropdown label="Products" links={productLinks} />
-          {simpleLinks.map((link) => (
+          {nav.links.map((link) => (
             <Link
-              key={link.href}
+              key={link.id}
               href={link.href}
               className="font-display text-sm font-medium tracking-wide opacity-80 transition-opacity hover:opacity-100"
               style={{ color: "var(--ink)" }}
+              {...linkTargetProps(link.newTab)}
             >
               {link.label}
             </Link>
           ))}
-          <NavDropdown label="Company" links={companyLinks} />
+          {nav.groups.map((group) => (
+            <NavDropdown key={group.label} label={group.label} links={group.links} />
+          ))}
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
@@ -153,18 +148,21 @@ export function Navbar({ products = [] }: { products?: NavProduct[] }) {
             Home
           </Link>
           <MobileGroup label="Products" links={productLinks} onNavigate={() => setOpen(false)} />
-          {simpleLinks.map((link) => (
+          {nav.links.map((link) => (
             <Link
-              key={link.href}
+              key={link.id}
               href={link.href}
               onClick={() => setOpen(false)}
               className="font-display py-2 text-sm font-medium"
               style={{ color: "var(--ink)" }}
+              {...linkTargetProps(link.newTab)}
             >
               {link.label}
             </Link>
           ))}
-          <MobileGroup label="Company" links={companyLinks} onNavigate={() => setOpen(false)} />
+          {nav.groups.map((group) => (
+            <MobileGroup key={group.label} label={group.label} links={group.links} onNavigate={() => setOpen(false)} />
+          ))}
           <Link
             href="/contact"
             onClick={() => setOpen(false)}
@@ -201,6 +199,7 @@ function MobileGroup({ label, links, onNavigate }: { label: string; links: NavLi
               onClick={onNavigate}
               className="py-1.5 text-sm opacity-75"
               style={{ color: "var(--ink)" }}
+              {...linkTargetProps(link.newTab)}
             >
               {link.label}
             </Link>

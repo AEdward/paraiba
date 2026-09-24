@@ -8,11 +8,27 @@ import { getRichSections } from "@/lib/richDoc";
 
 const STATUSES = ["live", "in-progress", "concept", "archived"];
 const GITHUB_REPO_PATTERN = /^[\w.-]+\/[\w.-]+$/;
+const MAX_SCREENSHOT_BYTES = 4 * 1024 * 1024;
 
 async function requireSession() {
   const session = await getSession();
   if (!session) redirect("/admin/login");
   return session;
+}
+
+async function readUploadedScreenshot(formData: FormData) {
+  const file = formData.get("screenshotFile");
+  if (!(file instanceof File) || file.size === 0) return undefined;
+
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Screenshot must be an image file.");
+  }
+  if (file.size > MAX_SCREENSHOT_BYTES) {
+    throw new Error("Screenshot must be smaller than 4MB.");
+  }
+
+  const screenshotData = new Uint8Array(await file.arrayBuffer());
+  return { screenshotData, screenshotMimeType: file.type };
 }
 
 function readProjectForm(formData: FormData) {
@@ -70,12 +86,19 @@ function readProjectForm(formData: FormData) {
     featured,
     deliverables,
     caseStudy,
+    screenshotData: undefined as Uint8Array<ArrayBuffer> | null | undefined,
+    screenshotMimeType: undefined as string | null | undefined,
   };
 }
 
 export async function createProject(formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
+  const uploaded = await readUploadedScreenshot(formData);
+  if (uploaded) {
+    data.screenshotData = uploaded.screenshotData;
+    data.screenshotMimeType = uploaded.screenshotMimeType;
+  }
   const project = await db.project.create({ data });
   revalidatePath("/admin/products");
   // A brand-new project doesn't have an edit page to "stay on" yet — send the
@@ -86,6 +109,17 @@ export async function createProject(formData: FormData) {
 export async function updateProject(id: string, formData: FormData) {
   await requireSession();
   const data = readProjectForm(formData);
+  const uploaded = await readUploadedScreenshot(formData);
+  const removeScreenshot = formData.get("removeScreenshot") === "on";
+
+  if (uploaded) {
+    data.screenshotData = uploaded.screenshotData;
+    data.screenshotMimeType = uploaded.screenshotMimeType;
+  } else if (removeScreenshot) {
+    data.screenshotData = null;
+    data.screenshotMimeType = null;
+  }
+
   await db.project.update({ where: { id }, data });
   revalidatePath("/admin/products");
   revalidatePath(`/admin/products/${id}`);

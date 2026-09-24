@@ -27,7 +27,9 @@ model Project {
   status       String // "live" | "in-progress" | "concept" | "archived"
   tags         String // comma-separated
   link         String?
-  screenshot   String?
+  screenshot   String? // used when no file was uploaded — a link to an already-hosted image
+  screenshotData     Bytes? // set when the admin uploads a file directly; takes priority over `screenshot`
+  screenshotMimeType String?
   embedLive    Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
   githubRepo   String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
   featured     Boolean  @default(false) // shown in the large showcase hero above the /projects grid
@@ -203,4 +205,23 @@ model SiteSettings {
   youtubeUrl     String?
   linkedinUrl    String?
   updatedAt      DateTime @updatedAt
+}
+
+// A navigation link the admin manages from /admin/menu — shown in the
+// header nav, the footer, or both. `group` optionally clusters items into
+// a labeled dropdown (header) or column (footer) — e.g. several items with
+// group "Company" render together. Ungrouped items render as flat links.
+// When `href` points at a CMS Page (e.g. "/solutions"), that page's
+// `published` flag is checked at render time and the link is hidden if
+// it's unpublished — never a manual admin step.
+model NavItem {
+  id        String   @id @default(cuid())
+  label     String
+  href      String
+  location  String   @default("both") // "header" | "footer" | "both"
+  group     String? // e.g. "Company" — clusters items into one dropdown/column
+  order     Int      @default(0)
+  newTab    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

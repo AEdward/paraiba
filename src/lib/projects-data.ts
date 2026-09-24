@@ -13,7 +13,9 @@ function toProject(row: ProjectRow): Project {
     status: row.status as ProjectStatus,
     tags: row.tags ? row.tags.split(",").filter(Boolean) : [],
     link: row.link ?? undefined,
-    screenshot: row.screenshot ?? undefined,
+    screenshot: row.screenshotData
+      ? `/api/products/${row.id}/screenshot?v=${row.updatedAt.getTime()}`
+      : (row.screenshot ?? undefined),
     embedLive: row.embedLive,
     githubRepo: row.githubRepo ?? undefined,
     featured: row.featured,

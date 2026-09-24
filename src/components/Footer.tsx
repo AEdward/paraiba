@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { getSocialLinks } from "@/lib/social";
 import type { SiteSettingsData } from "@/lib/site-settings";
+import type { NavData } from "@/lib/nav";
 
 type FooterProduct = { slug: string; name: string };
 
@@ -13,16 +14,6 @@ const services = [
   "UI/UX Design",
   "Cloud & Infrastructure",
   "API & System Integration",
-];
-const company = [
-  { href: "/about", label: "About Us" },
-  { href: "/team", label: "Leadership & Team" },
-  { href: "/careers", label: "Careers" },
-  { href: "/partners", label: "Partners" },
-];
-const resources = [
-  { href: "/resources", label: "Documentation" },
-  { href: "/resources", label: "FAQ" },
 ];
 const legalLinks = [
   { href: "/legal/privacy", label: "Privacy Policy" },
@@ -44,9 +35,11 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
 export function Footer({
   products = [],
   settings,
+  nav,
 }: {
   products?: FooterProduct[];
   settings: SiteSettingsData;
+  nav: NavData;
 }) {
   const socialLinks = getSocialLinks(settings);
   return (
@@ -107,22 +100,38 @@ export function Footer({
           ))}
         </FooterColumn>
 
-        <FooterColumn title="Company">
-          {company.map((link) => (
-            <Link key={link.href + link.label} href={link.href} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
-              {link.label}
-            </Link>
-          ))}
-        </FooterColumn>
-
-        <div className="flex flex-col gap-8">
-          <FooterColumn title="Resources">
-            {resources.map((link) => (
-              <Link key={link.label} href={link.href} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+        {nav.groups.map((group) => (
+          <FooterColumn key={group.label} title={group.label}>
+            {group.links.map((link) => (
+              <Link
+                key={link.id}
+                href={link.href}
+                className="opacity-70 hover:opacity-100"
+                style={{ color: "var(--ink)" }}
+                {...(link.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 {link.label}
               </Link>
             ))}
           </FooterColumn>
+        ))}
+
+        <div className="flex flex-col gap-8">
+          {nav.links.length > 0 && (
+            <FooterColumn title="More">
+              {nav.links.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  className="opacity-70 hover:opacity-100"
+                  style={{ color: "var(--ink)" }}
+                  {...(link.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </FooterColumn>
+          )}
 
           <FooterColumn title="Contact">
             <span className="opacity-70" style={{ color: "var(--ink)" }}>
