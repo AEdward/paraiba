@@ -92,7 +92,7 @@ body {
    a section in this class re-themes everything inside it to light, with no
    per-component changes needed. */
 .paraiba-light-section {
-  --background: var(--color-cream);
+  --background: #ffffff;
   --foreground: var(--color-slate);
   --surface: #ffffff;
   --border-soft: rgba(6, 20, 38, 0.12);
