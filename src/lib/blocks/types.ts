@@ -102,6 +102,23 @@ export type CardGridData = {
   viewAllHref?: string;
 };
 
+export type IndustriesShowcaseItem = { icon?: IconKey; label: string };
+
+// A compact 3-column band: text + CTA, a small icon grid, and a photo card
+// — used for "industries we serve"-style summaries where the tall
+// one-card-per-industry layout (cardGrid) reads as too long.
+export type IndustriesShowcaseData = {
+  eyebrow?: string;
+  heading: string;
+  body?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
+  items: IndustriesShowcaseItem[];
+  photoUrl?: string;
+  photoHeading?: string;
+  theme: SectionTheme;
+};
+
 export type StatItem = { number: string; label: string };
 
 export type StatsBarItem = { icon?: IconKey; label: string; sublabel?: string };
@@ -366,6 +383,7 @@ export type BlockDataMap = {
   hero: HeroData;
   richText: RichTextData;
   cardGrid: CardGridData;
+  industriesShowcase: IndustriesShowcaseData;
   statsBar: StatsBarData;
   statsQuote: StatsQuoteData;
   quote: QuoteData;
@@ -385,6 +403,7 @@ export const BLOCK_TYPES = [
   "hero",
   "richText",
   "cardGrid",
+  "industriesShowcase",
   "statsBar",
   "statsQuote",
   "quote",
@@ -418,6 +437,7 @@ export const BLOCK_LABELS: Record<BlockType, string> = {
   hero: "Hero",
   richText: "Rich text",
   cardGrid: "Card grid",
+  industriesShowcase: "Industries showcase",
   statsBar: "Stats strip",
   statsQuote: "Stats + quote",
   quote: "Statement / quote",
@@ -435,6 +455,7 @@ export const BLOCK_DESCRIPTIONS: Record<BlockType, string> = {
   hero: "Big headline section, usually at the top of a page.",
   richText: "Eyebrow, heading, and formatted body copy.",
   cardGrid: "A heading plus a row of cards (used for solutions, perks, values…).",
+  industriesShowcase: "A compact band: text + button, a small icon grid, and a photo card.",
   statsBar: "A row of small stats or trust signals, each with an icon and label.",
   statsQuote: "A stat grid paired with a pull-quote card, side by side.",
   quote: "A short standalone statement, optionally with a highlighted line.",

@@ -116,14 +116,16 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 Every page's content lives in the database as an ordered list of **blocks**, not in JSX:
 
 - `Page` (`home` / `about` / `careers` / `contact` / `products` / `solutions` / `services`)
-  has many `Block`s, each with a `type` (`hero`, `richText`, `cardGrid`, `statsBar`,
-  `statsQuote`, `quote`, `cta`, `productsPreview`, `partnersTrustBar`, `openPositions`,
-  `contactPanel`, `productsGrid`, `section`, `techStack`) and a schemaless `data` JSON
-  column shaped by that type — see
+  has many `Block`s, each with a `type` (`hero`, `richText`, `cardGrid`,
+  `industriesShowcase`, `statsBar`, `statsQuote`, `quote`, `cta`, `productsPreview`,
+  `partnersTrustBar`, `openPositions`, `contactPanel`, `productsGrid`, `section`,
+  `techStack`) and a schemaless `data` JSON column shaped by that type — see
   `src/lib/blocks/types.ts` for every type's exact fields. `cardGrid` also supports an
   optional "View all" link next to its heading (`viewAllLabel`/`viewAllHref`) — reused for
-  the homepage's Industries and Services sections instead of building near-duplicate
-  block types for what's really the same icon-grid pattern.
+  the homepage's Services section instead of building a near-duplicate block type for
+  what's really the same icon-grid pattern. `industriesShowcase` is a shorter, 3-column
+  alternative (text + button | small icon grid | photo card) used for the homepage's
+  Industries section, where a tall one-card-per-industry `cardGrid` read as too long.
 - **`section`** is different from the other block types above: instead of one fixed
   shape, it's a blank container an admin fills freely with an ordered list of small
   **elements** — WordPress/Strapi-style, rather than picking a whole preset template.

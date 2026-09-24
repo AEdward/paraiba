@@ -11,6 +11,8 @@ import {
   type CtaData,
   type HeroData,
   type HeroSideListItem,
+  type IndustriesShowcaseData,
+  type IndustriesShowcaseItem,
   type OpenPositionsData,
   type PartnersTrustBarData,
   type ProductsGridData,
@@ -315,6 +317,68 @@ function HeroSideListEditor({ defaultItems }: { defaultItems: HeroSideListItem[]
   );
 }
 
+function IndustriesShowcaseItemsEditor({ defaultItems }: { defaultItems: IndustriesShowcaseItem[] }) {
+  const [items, setItems] = useState<IndustriesShowcaseItem[]>(
+    defaultItems.length > 0 ? defaultItems : [{ label: "" }],
+  );
+
+  function update(i: number, patch: Partial<IndustriesShowcaseItem>) {
+    setItems((prev) => prev.map((item, idx) => (idx === i ? { ...item, ...patch } : item)));
+  }
+
+  return (
+    <div>
+      <label className={labelClass} style={{ color: "var(--ink)" }}>
+        Industries
+      </label>
+      <div className="flex flex-col gap-2">
+        {items.map((item, i) => (
+          <div key={i} className="flex gap-2">
+            <select
+              value={item.icon ?? ""}
+              onChange={(e) => update(i, { icon: (e.target.value || undefined) as IndustriesShowcaseItem["icon"] })}
+              className={inputClass}
+              style={{ ...inputStyle, maxWidth: "10rem" }}
+            >
+              <option value="">No icon</option>
+              {ICON_KEYS.map((key) => (
+                <option key={key} value={key}>
+                  {key}
+                </option>
+              ))}
+            </select>
+            <input
+              placeholder="Label — e.g. Healthcare"
+              value={item.label}
+              onChange={(e) => update(i, { label: e.target.value })}
+              className={inputClass}
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => setItems((prev) => prev.filter((_, idx) => idx !== i))}
+              disabled={items.length <= 1}
+              className="shrink-0 text-xs font-medium disabled:opacity-30"
+              style={{ color: "var(--color-ember)" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setItems((prev) => [...prev, { label: "" }])}
+        className="mt-2 text-sm font-medium"
+        style={{ color: "var(--color-teal)" }}
+      >
+        + Add industry
+      </button>
+      <input type="hidden" name="itemsJson" value={JSON.stringify(items)} readOnly />
+    </div>
+  );
+}
+
 function TechStackEditor({ defaultItems }: { defaultItems: TechStackItem[] }) {
   const [items, setItems] = useState<TechStackItem[]>(
     defaultItems.length > 0 ? defaultItems : [{ icon: "react", label: "React" }],
@@ -489,6 +553,40 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             <Field label="'View all' link label — optional" name="viewAllLabel" defaultValue={data.viewAllLabel} placeholder="View All Services" />
             <Field label="'View all' link href — optional" name="viewAllHref" defaultValue={data.viewAllHref} placeholder="/services" />
           </div>
+        </div>
+      );
+    }
+    case "industriesShowcase": {
+      const data = block.data as IndustriesShowcaseData;
+      return (
+        <div className="flex flex-col gap-4">
+          <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
+          <Field label="Heading" name="heading" defaultValue={data.heading} required />
+          <TextAreaField label="Intro text — optional" name="body" defaultValue={data.body} rows={2} />
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Button label — optional" name="buttonLabel" defaultValue={data.buttonLabel} />
+            <Field label="Button link — optional" name="buttonHref" defaultValue={data.buttonHref} />
+          </div>
+          <IndustriesShowcaseItemsEditor defaultItems={data.items} />
+          <div className="rounded-lg border p-4" style={{ borderColor: "var(--border-soft)" }}>
+            <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+              Photo card
+            </p>
+            <p className="mt-1 text-xs opacity-60">
+              Paste a path under <code>public/</code> (e.g. <code>/addis-ababa-skyline.webp</code>) or a full
+              image URL.
+            </p>
+            <div className="mt-3 flex flex-col gap-3">
+              <Field label="Image" name="photoUrl" defaultValue={data.photoUrl} placeholder="/addis-ababa-skyline.webp" />
+              <Field
+                label="Overlay heading — optional"
+                name="photoHeading"
+                defaultValue={data.photoHeading}
+                placeholder="Built for Ethiopia, Ready for the World"
+              />
+            </div>
+          </div>
+          <ThemeField defaultValue={data.theme} />
         </div>
       );
     }

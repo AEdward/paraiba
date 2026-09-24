@@ -151,6 +151,24 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         viewAllLabel: optStr(formData, "viewAllLabel"),
         viewAllHref: optStr(formData, "viewAllHref"),
       };
+    case "industriesShowcase":
+      return {
+        eyebrow: optStr(formData, "eyebrow"),
+        heading: str(formData, "heading"),
+        body: optStr(formData, "body"),
+        buttonLabel: optStr(formData, "buttonLabel"),
+        buttonHref: optStr(formData, "buttonHref"),
+        items: readJsonArray(formData, "itemsJson").filter(
+          (item): item is { label: string } =>
+            typeof item === "object" &&
+            item !== null &&
+            typeof (item as { label?: unknown }).label === "string" &&
+            (item as { label: string }).label.trim() !== "",
+        ),
+        photoUrl: optStr(formData, "photoUrl"),
+        photoHeading: optStr(formData, "photoHeading"),
+        theme,
+      };
     case "statsBar":
       return {
         items: readJsonArray(formData, "itemsJson").filter(

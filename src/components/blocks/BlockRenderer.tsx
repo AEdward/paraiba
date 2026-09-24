@@ -4,6 +4,7 @@ import type {
   ContactPanelData,
   CtaData,
   HeroData,
+  IndustriesShowcaseData,
   OpenPositionsData,
   PartnersTrustBarData,
   ProductsGridData,
@@ -18,6 +19,7 @@ import type {
 import { HeroBlock } from "./HeroBlock";
 import { RichTextBlock } from "./RichTextBlock";
 import { CardGridBlock } from "./CardGridBlock";
+import { IndustriesShowcaseBlock } from "./IndustriesShowcaseBlock";
 import { StatsBarBlock } from "./StatsBarBlock";
 import { StatsQuoteBlock } from "./StatsQuoteBlock";
 import { QuoteBlock } from "./QuoteBlock";
@@ -46,6 +48,8 @@ export function BlockRenderer({
       return <RichTextBlock data={block.data as RichTextData} />;
     case "cardGrid":
       return <CardGridBlock data={block.data as CardGridData} />;
+    case "industriesShowcase":
+      return <IndustriesShowcaseBlock data={block.data as IndustriesShowcaseData} />;
     case "statsBar":
       return <StatsBarBlock data={block.data as StatsBarData} />;
     case "statsQuote":
