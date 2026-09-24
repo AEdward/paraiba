@@ -98,6 +98,7 @@ export const homeBlocks: SeedBlock[] = [
     heading: "Your Success Is Our Mission",
     body: "We combine technical expertise, industry knowledge and a passion for innovation to deliver solutions that make a real difference.",
     theme: "dark",
+    layout: "split",
     columns: 2,
     viewAllLabel: "Learn More About Us",
     viewAllHref: "/about",

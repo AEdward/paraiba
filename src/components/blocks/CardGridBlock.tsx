@@ -56,7 +56,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
 
   if (data.layout === "split") {
     return (
-      <SectionShell theme={data.theme} id={data.anchorId}>
+      <SectionShell theme={data.theme} id={data.anchorId} compact>
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.4fr] lg:gap-12">
           <div>
             {eyebrowAndHeading}

@@ -9,6 +9,7 @@ export function SectionShell({
   center = false,
   id,
   tightTop = false,
+  compact = false,
 }: {
   theme: SectionTheme;
   children: ReactNode;
@@ -19,7 +20,16 @@ export function SectionShell({
   // visually dense block (e.g. the hero or stats bar) and the usual amount
   // of breathing room reads as a big empty gap instead.
   tightTop?: boolean;
+  // Cuts padding on both top and bottom — for sections whose content is
+  // already dense/compact (e.g. a split text+card-grid layout), where the
+  // usual full padding reads as oversized relative to the content.
+  compact?: boolean;
 }) {
+  const padding = compact
+    ? "py-14 sm:py-16"
+    : tightTop
+      ? "pt-10 pb-20 sm:pt-12 sm:pb-24"
+      : "py-20 sm:py-24";
   return (
     <section
       id={id}
@@ -27,9 +37,7 @@ export function SectionShell({
       style={{ borderColor: "var(--border-soft)", scrollMarginTop: id ? "90px" : undefined }}
     >
       {withMesh && <GradientMesh />}
-      <div
-        className={`relative mx-auto max-w-6xl px-6 ${tightTop ? "pt-10 pb-20 sm:pt-12 sm:pb-24" : "py-20 sm:py-24"} ${center ? "text-center" : ""}`}
-      >
+      <div className={`relative mx-auto max-w-6xl px-6 ${padding} ${center ? "text-center" : ""}`}>
         {children}
       </div>
     </section>
