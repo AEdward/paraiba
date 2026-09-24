@@ -20,7 +20,8 @@
     "db:republish-tena-home": "tsx prisma/republishTenaHome.ts",
     "db:republish-mead-home": "tsx prisma/republishMeadHome.ts",
     "db:republish-product-logos": "tsx prisma/republishProductLogos.ts",
-    "db:republish-products-page": "tsx prisma/republishProductsPage.ts"
+    "db:republish-products-page": "tsx prisma/republishProductsPage.ts",
+    "db:republish-about": "tsx prisma/republishAbout.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

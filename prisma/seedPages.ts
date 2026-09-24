@@ -33,7 +33,14 @@ export const homeBlocks: SeedBlock[] = [
     secondaryHref: "/contact",
     theme: "light",
     align: "left",
-    showLogo3D: true,
+    mockupImage: "/hero-dashboard-mockup.webp",
+    sideList: [
+      { icon: "sparkles", title: "Web Development", subtitle: "Websites & web apps" },
+      { icon: "zap", title: "Mobile Apps", subtitle: "iOS & Android" },
+      { icon: "cpu", title: "Custom Software", subtitle: "Built to fit your business" },
+      { icon: "cloud", title: "Cloud & Infrastructure", subtitle: "Secure & scalable" },
+      { icon: "gem", title: "UI/UX Design", subtitle: "Product design & prototyping" },
+    ],
   }),
   block("statsBar", {
     theme: "light",
@@ -110,12 +117,13 @@ export const homeBlocks: SeedBlock[] = [
   }),
 ];
 
-const aboutBlocks: SeedBlock[] = [
+export const aboutBlocks: SeedBlock[] = [
   block("hero", {
     eyebrow: "About Us",
     headline: "A new discovery from Ethiopia.",
     theme: "light",
     align: "left",
+    showLogo3D: true,
   }),
   block("richText", {
     theme: "light",

@@ -10,6 +10,7 @@ import {
   type ContactPanelData,
   type CtaData,
   type HeroData,
+  type HeroSideListItem,
   type OpenPositionsData,
   type PartnersTrustBarData,
   type ProductsGridData,
@@ -243,6 +244,77 @@ function StatsBarEditor({ defaultItems }: { defaultItems: StatsBarItem[] }) {
   );
 }
 
+function HeroSideListEditor({ defaultItems }: { defaultItems: HeroSideListItem[] }) {
+  const [items, setItems] = useState<HeroSideListItem[]>(
+    defaultItems.length > 0 ? defaultItems : [{ title: "" }],
+  );
+
+  function update(i: number, patch: Partial<HeroSideListItem>) {
+    setItems((prev) => prev.map((item, idx) => (idx === i ? { ...item, ...patch } : item)));
+  }
+
+  return (
+    <div>
+      <label className={labelClass} style={{ color: "var(--ink)" }}>
+        Floating list beside the image — optional
+      </label>
+      <div className="flex flex-col gap-3">
+        {items.map((item, i) => (
+          <div key={i} className="rounded-lg border p-3" style={{ borderColor: "var(--border-soft)" }}>
+            <div className="grid grid-cols-2 gap-2">
+              <input
+                placeholder="Title — e.g. Web Development"
+                value={item.title}
+                onChange={(e) => update(i, { title: e.target.value })}
+                className={inputClass}
+                style={inputStyle}
+              />
+              <select
+                value={item.icon ?? ""}
+                onChange={(e) => update(i, { icon: (e.target.value || undefined) as HeroSideListItem["icon"] })}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="">No icon</option>
+                {ICON_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              placeholder="Subtitle — optional"
+              value={item.subtitle ?? ""}
+              onChange={(e) => update(i, { subtitle: e.target.value || undefined })}
+              className={`${inputClass} mt-2`}
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => setItems((prev) => prev.filter((_, idx) => idx !== i))}
+              disabled={items.length <= 1}
+              className="mt-2 text-xs font-medium disabled:opacity-30"
+              style={{ color: "var(--color-ember)" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setItems((prev) => [...prev, { title: "" }])}
+        className="mt-3 text-sm font-medium"
+        style={{ color: "var(--color-teal)" }}
+      >
+        + Add item
+      </button>
+      <input type="hidden" name="sideListJson" value={JSON.stringify(items)} readOnly />
+    </div>
+  );
+}
+
 function TechStackEditor({ defaultItems }: { defaultItems: TechStackItem[] }) {
   const [items, setItems] = useState<TechStackItem[]>(
     defaultItems.length > 0 ? defaultItems : [{ icon: "react", label: "React" }],
@@ -345,6 +417,22 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             <input type="checkbox" name="showLogo3D" value="on" defaultChecked={data.showLogo3D} />
             Show the spinning 3D logo (2-column layout)
           </label>
+          <div className="rounded-lg border p-4" style={{ borderColor: "var(--border-soft)" }}>
+            <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+              Or: device mockup image
+            </p>
+            <p className="mt-1 text-xs opacity-60">
+              An alternative to the 3D logo above — if both are set, the 3D logo wins. Paste a
+              path under <code>public/</code> (e.g. <code>/hero-dashboard-mockup.webp</code>) or a
+              full image URL.
+            </p>
+            <div className="mt-3">
+              <Field label="Image" name="mockupImage" defaultValue={data.mockupImage} placeholder="/hero-dashboard-mockup.webp" />
+            </div>
+            <div className="mt-4">
+              <HeroSideListEditor defaultItems={data.sideList ?? []} />
+            </div>
+          </div>
         </div>
       );
     }

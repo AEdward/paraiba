@@ -45,6 +45,10 @@ export type RichDoc = { type: "doc"; content?: unknown[] };
 
 export const EMPTY_RICH_DOC: RichDoc = { type: "doc", content: [{ type: "paragraph" }] };
 
+// One row of the floating list shown beside the hero's device mockup image
+// (e.g. "Web Development — Websites & web apps").
+export type HeroSideListItem = { icon?: IconKey; title: string; subtitle?: string };
+
 export type HeroData = {
   eyebrow?: string;
   headline: string;
@@ -58,7 +62,13 @@ export type HeroData = {
   secondaryHref?: string;
   theme: SectionTheme;
   align: "left" | "center";
+  // Mutually exclusive visual for the right-hand column: the spinning 3D
+  // logo card, or a static device-mockup image with an optional floating
+  // list of items beside it. Neither set falls back to a single centered
+  // text column (no right-hand visual at all).
   showLogo3D?: boolean;
+  mockupImage?: string;
+  sideList?: HeroSideListItem[];
 };
 
 export type RichTextData = {

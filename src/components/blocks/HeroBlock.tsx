@@ -3,17 +3,18 @@ import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { GradientMesh } from "@/components/GradientMesh";
 import { Hero3D } from "@/components/three/Hero3D";
-import type { HeroData } from "@/lib/blocks/types";
+import { ICONS, type HeroData } from "@/lib/blocks/types";
 
 export function HeroBlock({ data }: { data: HeroData }) {
   const eyebrowColor = "var(--color-ember)";
+  const hasVisual = Boolean(data.showLogo3D || data.mockupImage);
 
   return (
     <section className={`${data.theme === "dark" ? "paraiba-dark-section" : "paraiba-light-section"} relative overflow-hidden`}>
       <GradientMesh />
       <div
         className={
-          data.showLogo3D
+          hasVisual
             ? "relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-20 sm:pt-16 lg:grid-cols-2 lg:gap-16 lg:pb-28"
             : `relative mx-auto max-w-4xl px-6 py-20 sm:py-28 ${data.align === "center" ? "text-center" : ""}`
         }
@@ -28,7 +29,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
           )}
           <FadeIn delay={0.1}>
             <h1
-              className={`font-display mt-4 text-4xl leading-tight font-bold sm:text-5xl ${data.showLogo3D ? "max-w-xl leading-[0.98] sm:text-7xl" : "mx-auto max-w-2xl"}`}
+              className={`font-display mt-4 text-4xl leading-tight font-bold sm:text-5xl ${hasVisual ? "max-w-xl leading-[0.98] sm:text-7xl" : "mx-auto max-w-2xl"}`}
               style={data.theme === "light" ? { color: "var(--ink)" } : undefined}
             >
               {data.headline}
@@ -41,14 +42,14 @@ export function HeroBlock({ data }: { data: HeroData }) {
           </FadeIn>
           {data.subhead && (
             <FadeIn delay={0.2}>
-              <p className={`mt-6 text-lg opacity-70 ${data.showLogo3D ? "max-w-lg" : "mx-auto max-w-xl"}`}>
+              <p className={`mt-6 text-lg opacity-70 ${hasVisual ? "max-w-lg" : "mx-auto max-w-xl"}`}>
                 {data.subhead}
               </p>
             </FadeIn>
           )}
           {(data.primaryLabel || data.secondaryLabel) && (
             <FadeIn delay={0.3}>
-              <div className={`mt-10 flex flex-wrap gap-3 ${data.showLogo3D ? "" : "justify-center"}`}>
+              <div className={`mt-10 flex flex-wrap gap-3 ${hasVisual ? "" : "justify-center"}`}>
                 {data.primaryLabel && data.primaryHref && (
                   <Link
                     href={data.primaryHref}
@@ -85,6 +86,40 @@ export function HeroBlock({ data }: { data: HeroData }) {
               <Hero3D />
             </div>
             <p className="mt-3 text-center text-xs opacity-40">Drag to spin the mark</p>
+          </FadeIn>
+        )}
+
+        {!data.showLogo3D && data.mockupImage && (
+          <FadeIn delay={0.15} className="relative">
+            <div className="flex items-center gap-4 sm:gap-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={data.mockupImage} alt="" className="min-w-0 flex-1 object-contain" />
+              {data.sideList && data.sideList.length > 0 && (
+                <div className="hidden shrink-0 flex-col gap-5 sm:flex sm:w-40 lg:w-44">
+                  {data.sideList.map((item, i) => {
+                    const Icon = item.icon ? ICONS[item.icon] : null;
+                    return (
+                      <div key={i} className="flex items-start gap-2.5">
+                        {Icon && (
+                          <span
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                            style={{ background: "rgba(8,124,255,0.1)" }}
+                          >
+                            <Icon size={15} style={{ color: "var(--color-ember)" }} />
+                          </span>
+                        )}
+                        <div>
+                          <p className="text-sm font-bold" style={{ color: "var(--ink)" }}>
+                            {item.title}
+                          </p>
+                          {item.subtitle && <p className="text-xs opacity-55">{item.subtitle}</p>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </FadeIn>
         )}
       </div>

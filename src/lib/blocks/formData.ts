@@ -98,7 +98,9 @@ export function readJsonArray<T>(formData: FormData, key: string): T[] {
 export async function readBlockFormData(type: BlockType, formData: FormData): Promise<unknown> {
   const theme = readTheme(formData);
   switch (type) {
-    case "hero":
+    case "hero": {
+      const sideList = readJsonArray<{ icon?: string; title?: string; subtitle?: string }>(formData, "sideListJson")
+        .filter((item) => typeof item.title === "string" && item.title.trim() !== "");
       return {
         eyebrow: optStr(formData, "eyebrow"),
         headline: str(formData, "headline"),
@@ -111,7 +113,10 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         theme,
         align: formData.get("align") === "center" ? "center" : "left",
         showLogo3D: formData.get("showLogo3D") === "on",
+        mockupImage: optStr(formData, "mockupImage"),
+        sideList: sideList.length > 0 ? sideList : undefined,
       };
+    }
     case "richText": {
       const bodyRaw = str(formData, "body");
       let body;
