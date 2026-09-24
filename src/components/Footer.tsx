@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { socialLinks } from "@/lib/social";
+import { getSocialLinks } from "@/lib/social";
+import type { SiteSettingsData } from "@/lib/site-settings";
 
 type FooterProduct = { slug: string; name: string };
 
@@ -40,7 +41,14 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
   );
 }
 
-export function Footer({ products = [] }: { products?: FooterProduct[] }) {
+export function Footer({
+  products = [],
+  settings,
+}: {
+  products?: FooterProduct[];
+  settings: SiteSettingsData;
+}) {
+  const socialLinks = getSocialLinks(settings);
   return (
     <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-6">
@@ -50,6 +58,7 @@ export function Footer({ products = [] }: { products?: FooterProduct[] }) {
             Innovative solutions, lasting impact — practical, reliable and beautiful digital
             products, built out of Addis Ababa.
           </p>
+          {socialLinks.length > 0 && (
           <div className="mt-5 flex gap-3">
             {socialLinks.map((social) => {
               const Icon = social.icon;
@@ -68,6 +77,7 @@ export function Footer({ products = [] }: { products?: FooterProduct[] }) {
               );
             })}
           </div>
+          )}
         </div>
 
         <FooterColumn title="Products">
@@ -116,10 +126,15 @@ export function Footer({ products = [] }: { products?: FooterProduct[] }) {
 
           <FooterColumn title="Contact">
             <span className="opacity-70" style={{ color: "var(--ink)" }}>
-              Addis Ababa, Ethiopia
+              {settings.officeLocation}
             </span>
-            <a href="mailto:hello@paraiba.com" className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
-              hello@paraiba.com
+            {settings.phone && (
+              <a href={`tel:${settings.phone}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+                {settings.phone}
+              </a>
+            )}
+            <a href={`mailto:${settings.email}`} className="opacity-70 hover:opacity-100" style={{ color: "var(--ink)" }}>
+              {settings.email}
             </a>
           </FooterColumn>
         </div>

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Briefcase, FolderKanban, Globe, Handshake, Layers, Mail, UserCheck, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Briefcase, FolderKanban, Globe, Handshake, Layers, Mail, Settings, UserCheck, Users, LogOut } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { getSession } from "@/lib/auth";
 import { logout } from "./actions";
@@ -16,6 +16,7 @@ const navLinks = [
   { href: "/admin/applicants", label: "Applicants", icon: UserCheck },
   { href: "/admin/messages", label: "Messages", icon: Mail },
   { href: "/admin/users", label: "Users", icon: Users },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {

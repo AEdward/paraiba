@@ -1,6 +1,14 @@
 import type { ComponentType } from "react";
-import { X } from "lucide-react";
-import { FacebookIcon, InstagramIcon, LinkedinIcon, type IconProps } from "@/components/icons/SocialIcons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  TelegramIcon,
+  TiktokIcon,
+  YoutubeIcon,
+  type IconProps,
+} from "@/components/icons/SocialIcons";
+import type { SiteSettingsData, SocialLinkKey } from "@/lib/site-settings";
 
 export type SocialLink = {
   icon: ComponentType<IconProps>;
@@ -8,10 +16,28 @@ export type SocialLink = {
   href: string;
 };
 
-// Placeholder handles — swap in the real profile URLs when they exist.
-export const socialLinks: SocialLink[] = [
-  { icon: FacebookIcon, label: "Facebook", href: "https://facebook.com/paraiba" },
-  { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/paraiba" },
-  { icon: LinkedinIcon, label: "LinkedIn", href: "https://linkedin.com/company/paraiba" },
-  { icon: X, label: "X", href: "https://x.com/paraiba" },
-];
+const SOCIAL_ICONS: Record<SocialLinkKey, ComponentType<IconProps>> = {
+  telegramUrl: TelegramIcon,
+  tiktokUrl: TiktokIcon,
+  instagramUrl: InstagramIcon,
+  facebookUrl: FacebookIcon,
+  youtubeUrl: YoutubeIcon,
+  linkedinUrl: LinkedinIcon,
+};
+
+const SOCIAL_LABELS: Record<SocialLinkKey, string> = {
+  telegramUrl: "Telegram",
+  tiktokUrl: "TikTok",
+  instagramUrl: "Instagram",
+  facebookUrl: "Facebook",
+  youtubeUrl: "YouTube",
+  linkedinUrl: "LinkedIn",
+};
+
+// Only platforms with a URL set in Admin → Settings are shown — nothing
+// fabricated or placeholder.
+export function getSocialLinks(settings: SiteSettingsData): SocialLink[] {
+  return (Object.keys(SOCIAL_ICONS) as SocialLinkKey[])
+    .filter((key) => settings[key])
+    .map((key) => ({ icon: SOCIAL_ICONS[key], label: SOCIAL_LABELS[key], href: settings[key]! }));
+}

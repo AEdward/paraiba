@@ -37,7 +37,10 @@ export default async function AdminApplicantsPage({
             }
           : {}),
       },
-      include: { job: { select: { title: true } } },
+      include: {
+        job: { select: { title: true } },
+        documents: { select: { id: true, fileName: true }, orderBy: { createdAt: "asc" } },
+      },
       orderBy: { createdAt: "desc" },
     }),
   ]);
@@ -135,13 +138,27 @@ export default async function AdminApplicantsPage({
                     className="text-sm font-medium"
                     style={{ color: "var(--color-teal)" }}
                   >
-                    Resume
+                    Resume link
                   </a>
                 )}
                 <StatusSelect id={app.id} status={app.status} />
                 <DeleteButton action={deleteApplication} id={app.id} label="application" />
               </div>
             </div>
+            {app.documents.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {app.documents.map((doc) => (
+                  <a
+                    key={doc.id}
+                    href={`/api/admin/documents/${doc.id}`}
+                    className="rounded-full border px-3 py-1 text-xs font-medium"
+                    style={{ borderColor: "var(--border-soft)", color: "var(--color-teal)" }}
+                  >
+                    {doc.fileName}
+                  </a>
+                ))}
+              </div>
+            )}
             {app.coverLetter && (
               <p className="mt-3 text-sm whitespace-pre-wrap opacity-80">{app.coverLetter}</p>
             )}

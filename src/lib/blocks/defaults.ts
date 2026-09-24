@@ -150,8 +150,6 @@ export function defaultBlockData<T extends BlockType>(type: T): BlockDataMap[T] 
         eyebrow: "Get in touch",
         heading: "Let's build something new.",
         body: "",
-        email: "hello@paraiba.com",
-        location: "Addis Ababa, Ethiopia",
         theme: "light",
       } satisfies BlockDataMap["contactPanel"] as BlockDataMap[T];
     case "productsGrid":

@@ -98,16 +98,31 @@ model JobPosting {
 }
 
 model JobApplication {
-  id          String     @id @default(cuid())
+  id          String                @id @default(cuid())
   jobId       String
-  job         JobPosting @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  job         JobPosting            @relation(fields: [jobId], references: [id], onDelete: Cascade)
   name        String
   email       String
   phone       String?
   coverLetter String?
-  resumeUrl   String?
-  status      String     @default("new") // "new" | "reviewed" | "shortlisted" | "rejected" | "hired"
-  createdAt   DateTime   @default(now())
+  resumeUrl   String? // legacy — kept for applications submitted before file upload existed
+  documents   ApplicationDocument[]
+  status      String                @default("new") // "new" | "reviewed" | "shortlisted" | "rejected" | "hired"
+  createdAt   DateTime              @default(now())
+}
+
+// An uploaded file (resume/CV, portfolio, cover letter, etc.) attached to a
+// job application. Stored as bytes directly (not via MediaAsset) since these
+// are private applicant documents, never served by the public /api/media
+// route — only the admin-only applicants download route can read them.
+model ApplicationDocument {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  fileName         String
+  mimeType         String
+  data             Bytes
+  createdAt        DateTime       @default(now())
 }
 
 model Partner {
@@ -169,4 +184,23 @@ model ContactSubmission {
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+// Single-row table (id is always "singleton") holding the site-wide contact
+// details and social links shown on the Contact page and in the Footer —
+// one place to edit them from /admin/settings instead of duplicating the
+// same fields in multiple blocks.
+model SiteSettings {
+  id             String   @id @default("singleton")
+  officeLocation String   @default("Addis Ababa, Ethiopia")
+  phone          String?
+  email          String   @default("hello@paraiba.com")
+  mapEmbedUrl    String? // a Google Maps "Embed a map" iframe src URL
+  facebookUrl    String?
+  instagramUrl   String?
+  tiktokUrl      String?
+  telegramUrl    String?
+  youtubeUrl     String?
+  linkedinUrl    String?
+  updatedAt      DateTime @updatedAt
 }

@@ -271,8 +271,6 @@ const contactBlocks: SeedBlock[] = [
     eyebrow: "Get in touch",
     heading: "Let's build something new.",
     body: "Have a project, partnership, or investment idea in mind? We'd love to hear about it.",
-    email: "hello@paraiba.com",
-    location: "Addis Ababa, Ethiopia",
     theme: "light",
   }),
 ];
@@ -340,8 +338,6 @@ const solutionsBlocks: SeedBlock[] = [
     eyebrow: "Don't see your industry?",
     heading: "Let's Talk About Your Business",
     body: "Every business has its own workflow. If your industry isn't listed here, tell us about it — we'd love to see if we can help.",
-    email: "hello@paraiba.com",
-    location: "Addis Ababa, Ethiopia",
     theme: "light",
   }),
 ];

@@ -88,8 +88,6 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     eyebrow: "Get in touch",
     heading: "Ready to Get Started?",
     body: "Tell us about your school and we'll help you get set up.",
-    email: "hello@paraiba.com",
-    location: "Addis Ababa, Ethiopia",
     theme: "light",
   }),
   block("cta", {

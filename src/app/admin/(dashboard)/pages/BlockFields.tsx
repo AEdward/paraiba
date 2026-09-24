@@ -509,12 +509,11 @@ export function BlockFields({ block }: { block: BlockRecord }) {
           <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
           <Field label="Heading" name="heading" defaultValue={data.heading} required />
           <TextAreaField label="Body — optional" name="body" defaultValue={data.body} rows={2} />
-          <div className="grid grid-cols-2 gap-4">
-            <Field label="Email" name="email" defaultValue={data.email} required />
-            <Field label="Location" name="location" defaultValue={data.location} required />
-          </div>
           <ThemeField defaultValue={data.theme} />
-          <p className="text-xs opacity-50">The contact form itself is always shown next to this.</p>
+          <p className="text-xs opacity-50">
+            The contact form, plus office location, phone, email, map, and social links, are
+            always shown next to this — edit those at Admin → Settings.
+          </p>
         </div>
       );
     }

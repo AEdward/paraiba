@@ -46,3 +46,30 @@ export function LinkedinIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function TelegramIcon(props: IconProps) {
+  return (
+    <svg {...iconAttrs(props)}>
+      <path d="m22 2-7 20-4-9-9-4Z" />
+      <path d="M22 2 11 13" />
+    </svg>
+  );
+}
+
+export function TiktokIcon(props: IconProps) {
+  return (
+    <svg {...iconAttrs(props)}>
+      <path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5" />
+      <path d="M15 3a5 5 0 0 0 5 5" />
+    </svg>
+  );
+}
+
+export function YoutubeIcon(props: IconProps) {
+  return (
+    <svg {...iconAttrs(props)}>
+      <rect x="2" y="5" width="20" height="14" rx="4" />
+      <path d="M10 9v6l5-3-5-3Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

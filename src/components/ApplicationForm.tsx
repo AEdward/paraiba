@@ -23,14 +23,11 @@ export function ApplicationForm({ jobId, jobTitle }: { jobId: string; jobTitle: 
     setError("");
 
     const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const formData = new FormData(form);
+    formData.set("jobId", jobId);
 
     try {
-      const res = await fetch("/api/applications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, jobId }),
-      });
+      const res = await fetch("/api/applications", { method: "POST", body: formData });
       if (!res.ok) throw new Error();
       setStatus("success");
       form.reset();
@@ -85,26 +82,11 @@ export function ApplicationForm({ jobId, jobTitle }: { jobId: string; jobTitle: 
           />
         </div>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor={`phone-${jobId}`} className="mb-1.5 block text-xs font-medium" style={{ color: "var(--ink)" }}>
-            Phone (optional)
-          </label>
-          <input id={`phone-${jobId}`} name="phone" className={inputClass} style={inputStyle} />
-        </div>
-        <div>
-          <label htmlFor={`resume-${jobId}`} className="mb-1.5 block text-xs font-medium" style={{ color: "var(--ink)" }}>
-            Resume link (optional)
-          </label>
-          <input
-            id={`resume-${jobId}`}
-            name="resumeUrl"
-            type="url"
-            placeholder="https://…"
-            className={inputClass}
-            style={inputStyle}
-          />
-        </div>
+      <div>
+        <label htmlFor={`phone-${jobId}`} className="mb-1.5 block text-xs font-medium" style={{ color: "var(--ink)" }}>
+          Phone (optional)
+        </label>
+        <input id={`phone-${jobId}`} name="phone" className={inputClass} style={inputStyle} />
       </div>
       <div>
         <label htmlFor={`cover-${jobId}`} className="mb-1.5 block text-xs font-medium" style={{ color: "var(--ink)" }}>
@@ -117,6 +99,23 @@ export function ApplicationForm({ jobId, jobTitle }: { jobId: string; jobTitle: 
           className={inputClass}
           style={inputStyle}
         />
+      </div>
+      <div>
+        <label htmlFor={`documents-${jobId}`} className="mb-1.5 block text-xs font-medium" style={{ color: "var(--ink)" }}>
+          Upload documents (optional)
+        </label>
+        <input
+          id={`documents-${jobId}`}
+          name="documents"
+          type="file"
+          multiple
+          accept=".pdf,.doc,.docx,image/*"
+          className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:px-3 file:py-1.5 file:text-xs file:font-semibold`}
+          style={inputStyle}
+        />
+        <p className="mt-1.5 text-xs opacity-50">
+          Resume/CV, portfolio, certificates — PDF, Word, or image files, up to 8MB each.
+        </p>
       </div>
 
       {status === "error" && <p className="text-xs text-(--color-ember)">{error}</p>}

@@ -211,8 +211,6 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         eyebrow: optStr(formData, "eyebrow"),
         heading: str(formData, "heading"),
         body: optStr(formData, "body"),
-        email: str(formData, "email"),
-        location: str(formData, "location"),
         theme,
       };
     case "productsGrid":

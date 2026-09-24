@@ -292,10 +292,21 @@ you're logged in.
   it's empty. Each posting shows its applicant count, linking into Applicants pre-filtered
   to that job.
 - **Applicants** (`/admin/applicants`) — applications submitted from a job's inline "Apply"
-  form on `/careers` (name, email, phone, cover letter, resume link — all optional except
-  name/email). Filter by job, status, or search name/email; change an applicant's status
-  (`new` / `reviewed` / `shortlisted` / `rejected` / `hired`) inline.
+  form on `/careers` (name, email, phone, cover letter, uploaded documents — all optional
+  except name/email). Filter by job, status, or search name/email; change an applicant's
+  status (`new` / `reviewed` / `shortlisted` / `rejected` / `hired`) inline.
+  - **Documents**: applicants can upload multiple files (resume/CV, portfolio,
+    certificates — PDF, Word, or image, up to 8MB each), stored as `ApplicationDocument`
+    rows (`Bytes` + `mimeType` + original `fileName`). Each shows as a download pill on
+    the applicant's card, served through `/api/admin/documents/[id]` — unlike the public
+    `/api/media` route, this always requires an admin session, since these files can
+    contain personal data.
 - **Messages** (`/admin/messages`) — contact form submissions, mark read/unread.
+- **Settings** (`/admin/settings`) — the site's office location, phone, email, a Google
+  Maps embed URL, and social links (Facebook, Instagram, TikTok, Telegram, YouTube,
+  LinkedIn) — one place that feeds both the Contact page and the Footer, stored as a
+  single-row `SiteSettings` table (`id: "singleton"`). Leaving a social field empty hides
+  that platform's icon everywhere rather than showing a dead link.
 - **Users** (`/admin/users`) — add or remove teammate accounts. You can't delete your own
   account while logged in as it.
 - **Overview** (`/admin`) — live counts pulled from the database. This is not visitor

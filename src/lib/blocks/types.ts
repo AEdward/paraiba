@@ -147,12 +147,13 @@ export type OpenPositionsData = {
   theme: SectionTheme;
 };
 
+// Email/location/phone/map come from the site-wide SiteSettings row
+// (edited at /admin/settings), not from this block — one place to edit
+// contact details that's shared between the Contact page and the Footer.
 export type ContactPanelData = {
   eyebrow?: string;
   heading: string;
   body?: string;
-  email: string;
-  location: string;
   theme: SectionTheme;
 };
 
