@@ -150,6 +150,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         anchorId: optStr(formData, "anchorId"),
         viewAllLabel: optStr(formData, "viewAllLabel"),
         viewAllHref: optStr(formData, "viewAllHref"),
+        layout: formData.get("layout") === "split" ? "split" : "grid",
       };
     case "industriesShowcase":
       return {

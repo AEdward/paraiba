@@ -80,6 +80,7 @@ export const homeBlocks: SeedBlock[] = [
     heading: "Technology Services for Your Next Big Move",
     body: "We offer a full range of development and IT services to help you build, scale and stay ahead in the digital world.",
     theme: "light",
+    layout: "split",
     columns: 3,
     viewAllLabel: "View All Services",
     viewAllHref: "/services",

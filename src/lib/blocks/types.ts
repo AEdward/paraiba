@@ -100,6 +100,10 @@ export type CardGridData = {
   // Optional link shown next to the heading, e.g. "View All Services →".
   viewAllLabel?: string;
   viewAllHref?: string;
+  // "grid" (default): the usual full-width heading + row of tall cards.
+  // "split": a narrower text+button column beside a compact card grid —
+  // for a shorter, denser section (e.g. a services overview).
+  layout?: "grid" | "split";
 };
 
 export type IndustriesShowcaseItem = { icon?: IconKey; label: string };

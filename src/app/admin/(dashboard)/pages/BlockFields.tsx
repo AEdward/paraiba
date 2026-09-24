@@ -530,7 +530,22 @@ export function BlockFields({ block }: { block: BlockRecord }) {
           <Field label="Heading — optional" name="heading" defaultValue={data.heading} />
           <TextAreaField label="Intro text — optional" name="body" defaultValue={data.body} rows={2} />
           <ItemsEditor defaultItems={data.items} />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="layout" className={labelClass} style={{ color: "var(--ink)" }}>
+                Layout
+              </label>
+              <select
+                id="layout"
+                name="layout"
+                defaultValue={data.layout ?? "grid"}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="grid">Full-width heading + row of cards</option>
+                <option value="split">Text column beside a compact card grid</option>
+              </select>
+            </div>
             <div>
               <label htmlFor="columns" className={labelClass} style={{ color: "var(--ink)" }}>
                 Columns
@@ -546,6 +561,8 @@ export function BlockFields({ block }: { block: BlockRecord }) {
                 <option value="3">3</option>
               </select>
             </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
             <Field label="Anchor id — optional" name="anchorId" defaultValue={data.anchorId} placeholder="solutions" />
             <ThemeField defaultValue={data.theme} />
           </div>
