@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { db } from "@/lib/db";
 import { PAGE_SLUGS, PAGE_TITLES, type BlockRecord, type BlockType, type PageSlug } from "@/lib/blocks/types";
 import { PageBuilder, type PageBuilderActions } from "../PageBuilder";
-import { addBlock, deleteBlock, reorderBlocks, updateBlockData } from "../actions";
+import { addBlock, deleteBlock, reorderBlocks, updateBlockData, togglePagePublished } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -55,24 +55,50 @@ export default async function PageBuilderPage({ params }: { params: Promise<{ sl
     updateBlockAction: updateBlockData.bind(null, slug),
   };
 
+  const toggleAction = togglePagePublished.bind(null, slug, !page.published);
+
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
-          {PAGE_TITLES[slug]}
-        </h1>
-        <Link
-          href={publicPath(slug)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium"
-          style={{ color: "var(--color-teal)" }}
-        >
-          View live page <ExternalLink size={13} />
-        </Link>
+        <div className="flex items-center gap-3">
+          <h1 className="font-display text-2xl font-bold" style={{ color: "var(--ink)" }}>
+            {PAGE_TITLES[slug]}
+          </h1>
+          <span
+            className="rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide uppercase"
+            style={
+              page.published
+                ? { background: "rgba(16,185,129,0.12)", color: "#10b981" }
+                : { background: "rgba(8,124,255,0.1)", color: "var(--color-ember)" }
+            }
+          >
+            {page.published ? "Published" : "Unpublished"}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <form action={toggleAction}>
+            <button
+              type="submit"
+              className="rounded-lg border px-3 py-1.5 text-sm font-medium"
+              style={{ borderColor: "var(--border-soft)", color: "var(--ink)" }}
+            >
+              {page.published ? "Unpublish" : "Publish"}
+            </button>
+          </form>
+          <Link
+            href={publicPath(slug)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium"
+            style={{ color: "var(--color-teal)" }}
+          >
+            View live page <ExternalLink size={13} />
+          </Link>
+        </div>
       </div>
       <p className="mt-1 text-sm opacity-60">
         Drag to reorder, click a block to edit it, or add a new one below.
+        {!page.published && " This page is unpublished — visitors see a 404 until you publish it."}
       </p>
 
       <div className="mt-8">

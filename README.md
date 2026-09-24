@@ -154,6 +154,12 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   one, or delete one. Saving, adding, deleting, and reordering all go through
   `src/app/admin/(dashboard)/pages/actions.ts` and take effect immediately on the live
   site (`revalidatePath`).
+- **Publish / Unpublish**: every `Page` has a `published` flag (`true` by default) —
+  toggle it from the "Publish"/"Unpublish" button in `/admin/pages/[slug]`, or see its
+  status at a glance as an "Unpublished" badge in the `/admin/pages` list. Unpublishing
+  makes the public route (`getPageBlocks()` in `src/lib/blocks/data.ts`) return a real
+  404 to visitors; the admin builder reads the `Page` row directly and stays fully
+  editable regardless, so you can build a page out before it's ready to go live.
 - `src/components/blocks/*.tsx` render each block type on the public site;
   `BlockRenderer.tsx` is the switch that dispatches `type` → component. A handful of
   block types (`productsPreview`, `partnersTrustBar`, `openPositions`, `productsGrid`)

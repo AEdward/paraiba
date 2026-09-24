@@ -129,6 +129,7 @@ model Page {
   id        String   @id @default(cuid())
   slug      String   @unique
   title     String // internal label shown in the admin, not rendered on the site
+  published Boolean  @default(true) // when false, the public route 404s; the admin builder is unaffected
   blocks    Block[]
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

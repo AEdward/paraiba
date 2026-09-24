@@ -24,6 +24,16 @@ function revalidatePage(slug: PageSlug) {
   revalidatePath(publicPath(slug));
 }
 
+export async function togglePagePublished(pageSlug: PageSlug, published: boolean) {
+  await requireSession();
+  await db.page.upsert({
+    where: { slug: pageSlug },
+    update: { published },
+    create: { slug: pageSlug, title: pageSlug, published },
+  });
+  revalidatePage(pageSlug);
+}
+
 export async function addBlock(pageSlug: PageSlug, type: BlockType) {
   await requireSession();
   if (!PAGE_SLUGS.includes(pageSlug) || !BLOCK_TYPES.includes(type)) {

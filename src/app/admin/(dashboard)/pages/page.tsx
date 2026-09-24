@@ -24,6 +24,7 @@ export default async function AdminPagesListPage() {
         {PAGE_SLUGS.map((slug) => {
           const page = bySlug.get(slug);
           const count = page?._count.blocks ?? 0;
+          const published = page?.published ?? true;
           return (
             <Link
               key={slug}
@@ -31,9 +32,19 @@ export default async function AdminPagesListPage() {
               className="rounded-2xl border p-5 transition-shadow hover:shadow-md"
               style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
             >
-              <p className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
-                {PAGE_TITLES[slug]}
-              </p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
+                  {PAGE_TITLES[slug]}
+                </p>
+                {!published && (
+                  <span
+                    className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase"
+                    style={{ background: "rgba(8,124,255,0.1)", color: "var(--color-ember)" }}
+                  >
+                    Unpublished
+                  </span>
+                )}
+              </div>
               <p className="mt-1 text-sm opacity-60">
                 {count} block{count === 1 ? "" : "s"}
               </p>
