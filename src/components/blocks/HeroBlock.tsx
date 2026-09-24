@@ -20,7 +20,11 @@ export function HeroBlock({ data }: { data: HeroData }) {
       <div
         className={
           hasVisual
-            ? `relative mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-16 ${mockupVariant ? "py-14 sm:py-16" : "pt-14 pb-20 sm:pt-16 lg:pb-28"}`
+            ? `relative mx-auto grid max-w-6xl gap-10 px-6 lg:gap-12 ${
+                mockupVariant
+                  ? "items-start py-10 sm:py-12 lg:grid-cols-[1fr_1.3fr]"
+                  : "items-center pt-14 pb-20 sm:pt-16 lg:grid-cols-2 lg:pb-28"
+              }`
             : `relative mx-auto max-w-4xl px-6 py-20 sm:py-28 ${data.align === "center" ? "text-center" : ""}`
         }
       >
@@ -34,8 +38,10 @@ export function HeroBlock({ data }: { data: HeroData }) {
           )}
           <FadeIn delay={0.1}>
             <h1
-              className={`font-display mt-4 text-4xl leading-tight font-bold sm:text-5xl ${
-                hasVisual ? (mockupVariant ? "max-w-xl lg:text-6xl" : "max-w-xl leading-[0.98] sm:text-7xl") : "mx-auto max-w-2xl"
+              className={`font-display leading-tight font-bold ${
+                mockupVariant
+                  ? "mt-3 max-w-lg text-3xl sm:text-4xl lg:text-5xl"
+                  : `mt-4 text-4xl sm:text-5xl ${hasVisual ? "max-w-xl leading-[0.98] sm:text-7xl" : "mx-auto max-w-2xl"}`
               }`}
               style={data.theme === "light" ? { color: "var(--ink)" } : undefined}
             >
@@ -52,18 +58,18 @@ export function HeroBlock({ data }: { data: HeroData }) {
           </FadeIn>
           {data.subhead && (
             <FadeIn delay={0.2}>
-              <p className={`mt-6 text-lg opacity-70 ${hasVisual ? "max-w-lg" : "mx-auto max-w-xl"}`}>
+              <p className={`opacity-70 ${mockupVariant ? "mt-3 max-w-md text-sm sm:text-base" : `mt-6 text-lg ${hasVisual ? "max-w-lg" : "mx-auto max-w-xl"}`}`}>
                 {data.subhead}
               </p>
             </FadeIn>
           )}
           {(data.primaryLabel || data.secondaryLabel) && (
             <FadeIn delay={0.3}>
-              <div className={`mt-10 flex flex-wrap gap-3 ${hasVisual ? "" : "justify-center"}`}>
+              <div className={`flex flex-wrap gap-3 ${mockupVariant ? "mt-6" : "mt-10"} ${hasVisual ? "" : "justify-center"}`}>
                 {data.primaryLabel && data.primaryHref && (
                   <Link
                     href={data.primaryHref}
-                    className="font-display inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+                    className={`font-display inline-flex items-center gap-2 rounded-xl text-sm font-bold text-white transition-transform hover:-translate-y-0.5 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
                     style={{ background: "var(--color-ember)" }}
                   >
                     {data.primaryLabel} <ArrowRight size={16} />
@@ -72,7 +78,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 {data.secondaryLabel && data.secondaryHref && (
                   <Link
                     href={data.secondaryHref}
-                    className="font-display inline-flex items-center gap-2 rounded-xl border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
+                    className={`font-display inline-flex items-center gap-2 rounded-xl border text-sm font-bold transition-transform hover:-translate-y-0.5 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
                     style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
                   >
                     {data.secondaryLabel}
@@ -105,7 +111,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={data.mockupImage} alt="" className="min-w-0 flex-1 object-contain" />
               {data.sideList && data.sideList.length > 0 && (
-                <div className="hidden shrink-0 flex-col gap-5 sm:flex sm:w-40 lg:w-44">
+                <div className="hidden shrink-0 flex-col gap-5 sm:flex sm:w-36 lg:w-40">
                   {data.sideList.map((item, i) => {
                     const Icon = item.icon ? ICONS[item.icon] : null;
                     return (
