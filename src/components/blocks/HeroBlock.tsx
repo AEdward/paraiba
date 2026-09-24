@@ -8,6 +8,11 @@ import { ICONS, type HeroData } from "@/lib/blocks/types";
 export function HeroBlock({ data }: { data: HeroData }) {
   const eyebrowColor = "var(--color-ember)";
   const hasVisual = Boolean(data.showLogo3D || data.mockupImage);
+  // The 3D logo card is tall/square and can carry a big, heavily-wrapped
+  // headline; the device-mockup image is shorter, so its headline stays
+  // closer to the no-visual size to keep the two columns balanced and the
+  // whole hero within one viewport.
+  const mockupVariant = !data.showLogo3D && Boolean(data.mockupImage);
 
   return (
     <section className={`${data.theme === "dark" ? "paraiba-dark-section" : "paraiba-light-section"} relative overflow-hidden`}>
@@ -15,7 +20,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
       <div
         className={
           hasVisual
-            ? "relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-20 sm:pt-16 lg:grid-cols-2 lg:gap-16 lg:pb-28"
+            ? `relative mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-16 ${mockupVariant ? "py-14 sm:py-16" : "pt-14 pb-20 sm:pt-16 lg:pb-28"}`
             : `relative mx-auto max-w-4xl px-6 py-20 sm:py-28 ${data.align === "center" ? "text-center" : ""}`
         }
       >
@@ -29,14 +34,19 @@ export function HeroBlock({ data }: { data: HeroData }) {
           )}
           <FadeIn delay={0.1}>
             <h1
-              className={`font-display mt-4 text-4xl leading-tight font-bold sm:text-5xl ${hasVisual ? "max-w-xl leading-[0.98] sm:text-7xl" : "mx-auto max-w-2xl"}`}
+              className={`font-display mt-4 text-4xl leading-tight font-bold sm:text-5xl ${
+                hasVisual ? (mockupVariant ? "max-w-xl lg:text-6xl" : "max-w-xl leading-[0.98] sm:text-7xl") : "mx-auto max-w-2xl"
+              }`}
               style={data.theme === "light" ? { color: "var(--ink)" } : undefined}
             >
-              {data.headline}
+              {data.headline.trimEnd()}
               {data.headlineHighlight && (
-                <span className={data.theme === "dark" ? "paraiba-text-gradient" : ""} style={data.theme === "light" ? { color: "var(--color-ember)" } : undefined}>
-                  {data.headlineHighlight}
-                </span>
+                <>
+                  {" "}
+                  <span className={data.theme === "dark" ? "paraiba-text-gradient" : ""} style={data.theme === "light" ? { color: "var(--color-ember)" } : undefined}>
+                    {data.headlineHighlight}
+                  </span>
+                </>
               )}
             </h1>
           </FadeIn>
