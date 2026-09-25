@@ -38,15 +38,6 @@ const operationsDoc: RichDoc = {
 };
 
 export const yenetaHomeBlocks: SeedBlock[] = [
-  block("statsBar", {
-    theme: "light",
-    items: [
-      { icon: "zap", label: "Save Time", sublabel: "Automate routine tasks" },
-      { icon: "compass", label: "Improve Communication", sublabel: "Keep everyone connected" },
-      { icon: "lightbulb", label: "Better Learning", sublabel: "Support student success" },
-      { icon: "target", label: "Data-Driven Decisions", sublabel: "Make informed choices" },
-    ],
-  }),
   block("cardGrid", {
     eyebrow: "Why Yeneta",
     heading: "Everything You Need to Manage Your School",

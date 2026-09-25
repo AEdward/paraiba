@@ -1,7 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, GraduationCap, Sparkles, UserCheck } from "lucide-react";
+import { ArrowRight, BarChart3, Clock, GraduationCap, MessageCircle, PlayCircle } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
+
+const heroFeatures = [
+  { icon: Clock, title: "Save Time", subtitle: "Automate routine tasks" },
+  { icon: MessageCircle, title: "Improve Communication", subtitle: "Keep everyone connected" },
+  { icon: GraduationCap, title: "Better Learning", subtitle: "Support student success" },
+  { icon: BarChart3, title: "Data-Driven Decisions", subtitle: "Make informed choices" },
+];
 
 function YenetaMark({ size = 36 }: { size?: number }) {
   return (
@@ -33,78 +40,66 @@ export function YenetaNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl
 export function YenetaHero({ name }: { name: string }) {
   return (
     <section className="paraiba-light-section relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-6 py-10 sm:py-12 lg:grid-cols-2 lg:gap-10">
         <div>
           <p className="font-display text-xs font-semibold tracking-[0.3em] uppercase" style={{ color: "var(--color-ember)" }}>
-            School Management System
+            Modern School Management System
           </p>
-          <h1 className="font-display mt-4 max-w-lg text-4xl leading-tight font-bold sm:text-5xl" style={{ color: "var(--ink)" }}>
-            Smarter Schools. Brighter Futures.
+          <h1 className="font-display mt-3 max-w-lg text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl" style={{ color: "var(--ink)" }}>
+            Smarter Schools.{" "}
+            <span style={{ color: "var(--color-ember)" }}>Brighter Futures.</span>
           </h1>
-          <p className="mt-6 max-w-md opacity-70">
+          <p className="mt-4 max-w-md text-sm opacity-65 sm:text-base">
             {name} is a comprehensive school management system that simplifies daily operations,
             connects your school community, and helps every student reach their full potential.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href="#contact"
-              className="font-display inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+              className="font-display inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "var(--color-ember)" }}
             >
               Get Started Free <ArrowRight size={16} />
             </Link>
             <Link
               href="#features"
-              className="font-display inline-flex items-center gap-2 rounded-lg border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
+              className="font-display inline-flex items-center gap-2 rounded-lg border px-6 py-3 text-sm font-bold transition-transform hover:-translate-y-0.5"
               style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
             >
-              See How It Works
+              <PlayCircle size={16} /> Watch Video
             </Link>
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4">
+            {heroFeatures.map(({ icon: Icon, title, subtitle }) => (
+              <div key={title} className="flex items-start gap-2.5">
+                <span
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                  style={{ background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" }}
+                >
+                  <Icon size={15} style={{ color: "var(--color-ember)" }} />
+                </span>
+                <div>
+                  <p className="text-xs font-bold leading-tight" style={{ color: "var(--ink)" }}>
+                    {title}
+                  </p>
+                  <p className="mt-0.5 text-[11px] opacity-55">{subtitle}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md">
-          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[2.5rem]">
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))" }}
-            />
-            <div
-              aria-hidden
-              className="absolute -top-10 -right-10 h-56 w-56 rounded-full"
-              style={{ background: "rgba(255,255,255,0.14)" }}
-            />
-            <div
-              aria-hidden
-              className="absolute -bottom-16 -left-10 h-64 w-64 rounded-full"
-              style={{ background: "rgba(255,255,255,0.1)" }}
-            />
-            <GraduationCap size={96} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
-          </div>
-
-          <div
-            className="absolute -top-4 -right-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
-            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
-          >
-            <UserCheck size={16} style={{ color: "#10b981" }} />
-            <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
-              Attendance Tracked
-            </p>
-          </div>
-
-          <div
-            className="absolute -right-4 bottom-6 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
-            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
-          >
-            <Sparkles size={18} style={{ color: "var(--color-ember)" }} />
-            <div>
-              <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
-                Better Education
-              </p>
-              <p className="text-[11px] opacity-60">Brighter Tomorrow</p>
-            </div>
-          </div>
+        <div className="relative mx-auto w-full">
+          <Image
+            src="/yeneta-hero.webp"
+            alt=""
+            width={339}
+            height={264}
+            className="w-full rounded-[2rem] object-cover"
+            priority
+            unoptimized
+          />
         </div>
       </div>
     </section>
