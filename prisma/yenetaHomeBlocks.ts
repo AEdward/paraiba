@@ -43,6 +43,8 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     heading: "Everything You Need to Manage Your School",
     body: "Yeneta brings together all the essential tools you need to run your school — from students and academics to attendance and reporting. Designed for schools of all sizes, it's simple to use, powerful, and built to grow with you.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     anchorId: "features",
     viewAllLabel: "Explore All Features",
@@ -67,6 +69,8 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     heading: "More Than a System. A Partner in Education.",
     body: "We're building Yeneta alongside the schools that use it, so it keeps getting better at solving the problems they actually have.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 2,
     items: [
       { icon: "compass", title: "Local Support In Your Language" },
