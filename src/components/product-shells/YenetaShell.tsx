@@ -1,6 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BarChart3, Clock, GraduationCap, MessageCircle, PlayCircle } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  BarChart3,
+  Clock,
+  ClipboardCheck,
+  DoorOpen,
+  GraduationCap,
+  LayoutDashboard,
+  MessageCircle,
+  PlayCircle,
+  Users,
+} from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
 const heroFeatures = [
@@ -8,6 +20,15 @@ const heroFeatures = [
   { icon: MessageCircle, title: "Improve Communication", subtitle: "Keep everyone connected" },
   { icon: GraduationCap, title: "Better Learning", subtitle: "Support student success" },
   { icon: BarChart3, title: "Data-Driven Decisions", subtitle: "Make informed choices" },
+];
+
+const dashboardNavItems = [
+  { icon: LayoutDashboard, label: "Dashboard", active: true },
+  { icon: Users, label: "Students" },
+  { icon: Users, label: "Teachers" },
+  { icon: DoorOpen, label: "Classes" },
+  { icon: Award, label: "Grades" },
+  { icon: ClipboardCheck, label: "Attendance" },
 ];
 
 function YenetaMark({ size = 36 }: { size?: number }) {
@@ -94,12 +115,59 @@ export function YenetaHero({ name }: { name: string }) {
           <Image
             src="/yeneta-hero.webp"
             alt=""
-            width={339}
-            height={264}
+            width={1167}
+            height={944}
             className="w-full rounded-[2rem] object-cover"
             priority
             unoptimized
           />
+
+          <div
+            className="absolute top-4 right-2 w-44 rounded-2xl border p-2.5 shadow-lg sm:right-4 sm:w-48"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <div className="flex items-center gap-1.5 border-b px-1 pb-2" style={{ borderColor: "var(--border-soft)" }}>
+              <YenetaMark size={18} />
+              <p className="font-display text-xs font-bold" style={{ color: "var(--ink)" }}>
+                Yeneta
+              </p>
+            </div>
+            <div className="mt-1.5 flex flex-col gap-0.5">
+              {dashboardNavItems.map(({ icon: Icon, label, active }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-2 rounded-lg px-1.5 py-1"
+                  style={active ? { background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" } : undefined}
+                >
+                  <Icon size={12} style={{ color: active ? "var(--color-ember)" : "var(--ink)", opacity: active ? 1 : 0.5 }} />
+                  <p
+                    className="text-[11px] font-semibold"
+                    style={{ color: active ? "var(--color-ember)" : "var(--ink)", opacity: active ? 1 : 0.65 }}
+                  >
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className="absolute right-2 bottom-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg sm:right-4"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <span
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: "var(--color-ember)" }}
+            >
+              <GraduationCap size={16} style={{ color: "#ffffff" }} />
+            </span>
+            <div>
+              <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+                Better education
+              </p>
+              <p className="text-[11px] opacity-60">for a brighter tomorrow</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
