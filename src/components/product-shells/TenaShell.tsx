@@ -63,18 +63,26 @@ export function TenaHero({ name }: { name: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto flex aspect-square w-full max-w-sm items-center justify-center">
-          <div
-            aria-hidden
-            className="absolute inset-0 rounded-full"
-            style={{ background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))" }}
+        <div className="relative mx-auto w-full">
+          <Image
+            src="/tena-hero.webp"
+            alt=""
+            width={1686}
+            height={933}
+            className="w-full rounded-[2rem] object-cover"
+            priority
+            unoptimized
           />
-          <Stethoscope size={110} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
           <div
-            className="absolute bottom-4 left-4 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
+            className="absolute bottom-4 left-4 flex items-center gap-2.5 rounded-2xl border px-4 py-3 shadow-lg"
             style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
           >
-            <HeartPulse size={18} style={{ color: "var(--color-ember)" }} />
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: "var(--color-ember)" }}
+            >
+              <HeartPulse size={17} style={{ color: "#ffffff" }} />
+            </span>
             <div>
               <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
                 Healthier People
