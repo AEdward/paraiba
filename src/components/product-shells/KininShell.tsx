@@ -33,7 +33,7 @@ export function KininNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl?
 export function KininHero({ name }: { name: string }) {
   return (
     <section className="paraiba-light-section relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:py-24 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
         <div>
           <p className="font-display text-xs font-semibold tracking-[0.3em] uppercase" style={{ color: "var(--color-ember)" }}>
             Pharmacy Management System
@@ -64,13 +64,27 @@ export function KininHero({ name }: { name: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md">
+        <div className="relative mx-auto w-full">
+          <div
+            aria-hidden
+            className="absolute -inset-10 -z-10"
+            style={{
+              background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))",
+              borderRadius: "58% 42% 44% 56% / 54% 46% 60% 40%",
+              filter: "blur(50px)",
+              opacity: 0.6,
+            }}
+          />
           <Image
             src="/kinin-hero.webp"
             alt=""
             width={1658}
             height={949}
             className="w-full rounded-[2.5rem] object-cover"
+            style={{
+              maskImage: "radial-gradient(ellipse closest-side at 50% 50%, black 58%, transparent 100%)",
+              WebkitMaskImage: "radial-gradient(ellipse closest-side at 50% 50%, black 58%, transparent 100%)",
+            }}
             priority
             unoptimized
           />
