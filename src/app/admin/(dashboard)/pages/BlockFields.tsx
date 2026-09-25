@@ -562,6 +562,23 @@ export function BlockFields({ block }: { block: BlockRecord }) {
               </select>
             </div>
           </div>
+          {data.layout === "split" && (
+            <div>
+              <label htmlFor="cardStyle" className={labelClass} style={{ color: "var(--ink)" }}>
+                Card style
+              </label>
+              <select
+                id="cardStyle"
+                name="cardStyle"
+                defaultValue={data.cardStyle ?? "bordered"}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="bordered">Bordered card with icon badge</option>
+                <option value="tinted">Borderless, color-washed card with a plain icon</option>
+              </select>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <Field label="Anchor id — optional" name="anchorId" defaultValue={data.anchorId} placeholder="solutions" />
             <ThemeField defaultValue={data.theme} />

@@ -4,8 +4,34 @@ import { FadeIn } from "@/components/FadeIn";
 import { SectionShell, Eyebrow } from "./SectionShell";
 import { ICONS, type CardGridData } from "@/lib/blocks/types";
 
-function CompactCard({ item, delay }: { item: CardGridData["items"][number]; delay: number }) {
+function CompactCard({
+  item,
+  delay,
+  cardStyle,
+}: {
+  item: CardGridData["items"][number];
+  delay: number;
+  cardStyle: "bordered" | "tinted";
+}) {
   const Icon = item.icon ? ICONS[item.icon] : undefined;
+
+  if (cardStyle === "tinted") {
+    return (
+      <FadeIn delay={delay}>
+        <div
+          className="h-full rounded-2xl p-5 transition-transform hover:-translate-y-0.5"
+          style={{ background: "color-mix(in srgb, var(--color-ember) 6%, var(--surface))" }}
+        >
+          {Icon && <Icon size={22} style={{ color: "var(--color-ember)" }} />}
+          <h3 className="font-display mt-3 text-sm font-bold" style={{ color: "var(--ink)" }}>
+            {item.title}
+          </h3>
+          {item.description && <p className="mt-1 text-xs opacity-60">{item.description}</p>}
+        </div>
+      </FadeIn>
+    );
+  }
+
   return (
     <FadeIn delay={delay}>
       <div
@@ -68,7 +94,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
           </div>
           <div className={`grid gap-3 sm:grid-cols-2 ${data.columns === 3 ? "lg:grid-cols-3" : ""}`}>
             {data.items.map((item, i) => (
-              <CompactCard key={i} item={item} delay={i * 0.06} />
+              <CompactCard key={i} item={item} delay={i * 0.06} cardStyle={data.cardStyle ?? "bordered"} />
             ))}
           </div>
         </div>

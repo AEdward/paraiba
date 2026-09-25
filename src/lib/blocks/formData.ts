@@ -151,6 +151,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         viewAllLabel: optStr(formData, "viewAllLabel"),
         viewAllHref: optStr(formData, "viewAllHref"),
         layout: formData.get("layout") === "split" ? "split" : "grid",
+        cardStyle: formData.get("cardStyle") === "tinted" ? "tinted" : "bordered",
       };
     case "industriesShowcase":
       return {

@@ -124,8 +124,12 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   optional "View all" link next to its heading (`viewAllLabel`/`viewAllHref`) and a
   `layout` of `"grid"` (default: full-width heading + row of cards) or `"split"` (a
   narrower text+button column beside a compact card grid, used for the homepage's
-  Services section) — reused for both instead of building a near-duplicate block type
-  for what's really the same icon-grid pattern. `industriesShowcase` is a shorter, 3-column
+  Services section and Mead's "Key Features"/"Why Choose Mead" sections) — reused for
+  both instead of building a near-duplicate block type for what's really the same
+  icon-grid pattern. The `"split"` layout also takes a `cardStyle` of `"bordered"`
+  (default: a white/surface card with a bordered icon badge) or `"tinted"` (a borderless
+  card washed in the theme color with a plain, un-badged icon — used on Mead's two
+  sections). `industriesShowcase` is a shorter, 3-column
   alternative (text + button | small icon grid | photo card) used for the homepage's
   Industries section, where a tall one-card-per-industry `cardGrid` read as too long.
 - **`section`** is different from the other block types above: instead of one fixed

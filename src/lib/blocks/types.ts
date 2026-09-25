@@ -104,6 +104,10 @@ export type CardGridData = {
   // "split": a narrower text+button column beside a compact card grid —
   // for a shorter, denser section (e.g. a services overview).
   layout?: "grid" | "split";
+  // Only used by the "split" layout's cards. "bordered" (default): a
+  // white/surface card with a bordered icon badge. "tinted": a borderless
+  // card washed in the theme color, with a plain (un-badged) icon.
+  cardStyle?: "bordered" | "tinted";
 };
 
 export type IndustriesShowcaseItem = { icon?: IconKey; label: string };

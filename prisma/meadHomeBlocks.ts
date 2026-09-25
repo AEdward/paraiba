@@ -43,6 +43,8 @@ export const meadHomeBlocks: SeedBlock[] = [
     heading: "Everything You Need to Run a Successful Restaurant",
     body: "Mead gives you the tools to streamline your operations, improve customer experience, and increase your profits. Designed for restaurants, cafés, bars, and food businesses of all sizes.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     anchorId: "features",
     viewAllLabel: "Explore All Features",
@@ -68,6 +70,8 @@ export const meadHomeBlocks: SeedBlock[] = [
     heading: "More Than a System. A Partner in Your Kitchen.",
     body: "We're building Mead alongside the restaurants that use it, so it keeps getting better at solving the problems they actually have.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 2,
     items: [
       { icon: "compass", title: "Local Support In Your Language" },
