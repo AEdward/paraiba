@@ -103,6 +103,6 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     body: "Join schools using Yeneta to simplify operations, connect their community, and help every student succeed.",
     buttonLabel: "Get Started Free",
     buttonHref: "#contact",
-    theme: "dark",
+    theme: "light",
   }),
 ];
