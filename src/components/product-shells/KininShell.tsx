@@ -65,19 +65,15 @@ export function KininHero({ name }: { name: string }) {
         </div>
 
         <div className="relative mx-auto w-full max-w-md">
-          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[2.5rem]">
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))" }}
-            />
-            <div
-              aria-hidden
-              className="absolute -top-12 -left-12 h-56 w-56 rounded-full"
-              style={{ background: "rgba(255,255,255,0.12)" }}
-            />
-            <Pill size={92} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
-          </div>
+          <Image
+            src="/kinin-hero.webp"
+            alt=""
+            width={1658}
+            height={949}
+            className="w-full rounded-[2.5rem] object-cover"
+            priority
+            unoptimized
+          />
 
           <div
             className="absolute -top-4 -right-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
