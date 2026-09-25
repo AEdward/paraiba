@@ -17,7 +17,9 @@ export function ProductFooter({
       >
         <span className="inline-flex items-center gap-2.5 font-semibold">
           {logoUrl && (
-            <Image src={logoUrl} alt="" width={28} height={28} style={{ objectFit: "contain" }} unoptimized />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg p-1" style={{ background: "#ffffff" }}>
+              <Image src={logoUrl} alt="" width={24} height={24} style={{ objectFit: "contain", width: "100%", height: "100%" }} unoptimized />
+            </span>
           )}
           © {new Date().getFullYear()} {name}.
         </span>
