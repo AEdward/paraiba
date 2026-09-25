@@ -24,6 +24,12 @@ export default async function ProductSiteLayout({
   if (site.themeColor) {
     themeVars["--color-ember"] = site.themeColor;
     themeVars["--color-teal"] = site.themeColor;
+    // Dark sections (.paraiba-dark-section) and the card background used
+    // inside them (--surface) default to Paraiba's own navy — derive a
+    // product-tinted equivalent instead, so a "dark theme" block reads as
+    // a deep shade of *that product's* color rather than always navy blue.
+    themeVars["--color-indigo"] = `color-mix(in srgb, ${site.themeColor} 20%, black)`;
+    themeVars["--surface"] = `color-mix(in srgb, ${site.themeColor} 32%, black)`;
   }
   if (site.themeColorSecondary) {
     themeVars["--color-amber"] = site.themeColorSecondary;
