@@ -104,7 +104,7 @@ export function ContactForm({ initialMessage = "" }: { initialMessage?: string }
         type="submit"
         disabled={status === "submitting"}
         className="font-display inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-(--color-cream) shadow-[0_8px_24px_-8px_rgba(22,35,63,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-8px_rgba(22,35,63,0.6)] disabled:opacity-60"
-        style={{ background: "var(--color-indigo)" }}
+        style={{ background: "var(--color-ember)" }}
       >
         {status === "submitting" ? "Sending…" : "Send message"}
         <ArrowRight size={16} />

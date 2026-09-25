@@ -15,7 +15,7 @@ function CompactCard({ item, delay }: { item: CardGridData["items"][number]; del
         {Icon && (
           <span
             className="flex h-8 w-8 items-center justify-center rounded-lg"
-            style={{ background: "rgba(8,124,255,0.1)" }}
+            style={{ background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" }}
           >
             <Icon size={16} style={{ color: "var(--color-ember)" }} />
           </span>
@@ -100,8 +100,8 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
                     className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-sm font-bold"
                     style={{
                       color: "var(--color-ember)",
-                      background: "rgba(8,124,255,0.08)",
-                      border: "1px solid rgba(8,124,255,0.2)",
+                      background: "color-mix(in srgb, var(--color-ember) 8%, transparent)",
+                      border: "1px solid color-mix(in srgb, var(--color-ember) 20%, transparent)",
                     }}
                   >
                     {item.number}

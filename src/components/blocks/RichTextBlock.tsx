@@ -10,7 +10,7 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
         className="mx-auto max-w-3xl"
         style={
           data.tint
-            ? { background: "linear-gradient(rgba(8,124,255,0.05), transparent)" }
+            ? { background: "linear-gradient(color-mix(in srgb, var(--color-ember) 5%, transparent), transparent)" }
             : undefined
         }
       >

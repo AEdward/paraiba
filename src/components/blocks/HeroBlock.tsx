@@ -119,7 +119,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
                         {Icon && (
                           <span
                             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                            style={{ background: "rgba(8,124,255,0.1)" }}
+                            style={{ background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" }}
                           >
                             <Icon size={15} style={{ color: "var(--color-ember)" }} />
                           </span>

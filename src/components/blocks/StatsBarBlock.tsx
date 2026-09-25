@@ -16,7 +16,7 @@ export function StatsBarBlock({ data }: { data: StatsBarData }) {
                 {Icon && (
                   <span
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                    style={{ background: "rgba(8,124,255,0.1)" }}
+                    style={{ background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" }}
                   >
                     <Icon size={18} style={{ color: "var(--color-ember)" }} />
                   </span>

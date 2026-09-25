@@ -16,7 +16,7 @@ export function CtaBlock({ data }: { data: CtaData }) {
             data.theme === "dark"
               ? {
                   background:
-                    "radial-gradient(circle at 12% 15%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(115deg, var(--color-ember), #0a2ea8)",
+                    "radial-gradient(circle at 12% 15%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(115deg, var(--color-ember), color-mix(in srgb, var(--color-ember) 55%, black))",
                 }
               : { border: "1px solid var(--border-soft)", background: "var(--surface)" }
           }
@@ -43,7 +43,7 @@ export function CtaBlock({ data }: { data: CtaData }) {
               className="font-display inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold transition-transform hover:-translate-y-0.5"
               style={
                 data.theme === "dark"
-                  ? { background: "#ffffff", color: "var(--color-indigo)" }
+                  ? { background: "#ffffff", color: "var(--color-ember)" }
                   : { background: "var(--color-ember)", color: "#ffffff" }
               }
             >

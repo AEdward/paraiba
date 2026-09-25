@@ -38,9 +38,9 @@ export function StatsQuoteBlock({ data }: { data: StatsQuoteData }) {
           <div
             className="rounded-3xl border p-10"
             style={{
-              borderColor: "rgba(8,124,255,0.2)",
+              borderColor: "color-mix(in srgb, var(--color-ember) 20%, transparent)",
               background:
-                "radial-gradient(circle at 80% 20%, rgba(8,124,255,0.09), transparent 48%), var(--surface)",
+                "radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--color-ember) 9%, transparent), transparent 48%), var(--surface)",
             }}
           >
             <p className="text-2xl leading-snug font-medium tracking-tight" style={{ color: "var(--ink)" }}>
