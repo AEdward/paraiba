@@ -545,6 +545,21 @@ export function BlockFields({ block }: { block: BlockRecord }) {
                 </select>
               </div>
             </div>
+            <div className="mt-3">
+              <label htmlFor="imageFit" className={labelClass} style={{ color: "var(--ink)" }}>
+                Image fit
+              </label>
+              <select
+                id="imageFit"
+                name="imageFit"
+                defaultValue={data.imageFit ?? "cover"}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="cover">Crop to fill (a photo)</option>
+                <option value="contain">Show whole image (a wide UI mockup/screenshot)</option>
+              </select>
+            </div>
           </div>
         </div>
       );

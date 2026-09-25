@@ -27,6 +27,7 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
 
   if (data.imageUrl) {
     const imageFirst = (data.imagePosition ?? "left") === "left";
+    const contain = data.imageFit === "contain";
     return (
       <SectionShell theme={data.theme}>
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
@@ -35,7 +36,7 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
             <img
               src={data.imageUrl}
               alt=""
-              className="aspect-[4/3] w-full rounded-2xl object-cover"
+              className={contain ? "w-full rounded-2xl object-contain" : "aspect-[4/3] w-full rounded-2xl object-cover"}
             />
           </FadeIn>
           <FadeIn delay={0.1} className={imageFirst ? "lg:order-2" : "lg:order-1"}>

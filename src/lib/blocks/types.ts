@@ -81,6 +81,10 @@ export type RichTextData = {
   // back to the current single centered column when unset.
   imageUrl?: string;
   imagePosition?: "left" | "right";
+  // "cover" (default): crops to a 4:3 box, for a photo. "contain": shows
+  // the whole image at its natural aspect ratio, for a wide UI mockup/
+  // screenshot that would otherwise get cropped.
+  imageFit?: "cover" | "contain";
 };
 
 export type CardGridItem = {

@@ -134,7 +134,10 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   Industries section, where a tall one-card-per-industry `cardGrid` read as too long.
   `richText` optionally takes an `imageUrl`/`imagePosition` (`"left"`/`"right"`) to show
   its text beside a photo in a two-column layout instead of the default single centered
-  column (used on Mead's "Built for the Food Industry" section).
+  column (used on Mead's "Built for the Food Industry" section), plus an `imageFit` of
+  `"cover"` (default: crops to a 4:3 box, for a photo) or `"contain"` (shows the whole
+  image at its natural ratio, for a wide UI mockup/screenshot — used on Yeneta's
+  "Streamline Your Operations" section).
 - **`section`** is different from the other block types above: instead of one fixed
   shape, it's a blank container an admin fills freely with an ordered list of small
   **elements** — WordPress/Strapi-style, rather than picking a whole preset template.

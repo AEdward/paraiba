@@ -62,7 +62,11 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     eyebrow: "Streamline Your Operations",
     heading: "Built for Schools, Teachers and Parents",
     body: operationsDoc,
-    theme: "dark",
+    theme: "light",
+    tint: true,
+    imageUrl: "/yeneta-dashboard-mockup.webp",
+    imagePosition: "right",
+    imageFit: "contain",
   }),
   block("cardGrid", {
     eyebrow: "Why Choose Yeneta",

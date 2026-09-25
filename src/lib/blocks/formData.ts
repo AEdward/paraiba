@@ -133,6 +133,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         tint: formData.get("tint") === "on",
         imageUrl: optStr(formData, "imageUrl"),
         imagePosition: formData.get("imagePosition") === "right" ? "right" : "left",
+        imageFit: formData.get("imageFit") === "contain" ? "contain" : "cover",
       };
     }
     case "cardGrid":
