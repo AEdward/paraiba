@@ -131,13 +131,16 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   card washed in the theme color with a plain, un-badged icon — used on Mead's two
   sections), or `"plain"` (no card at all — just a round icon badge beside its label,
   used alongside a photo). `"split"` can also take an `imageUrl`/`imagePosition`
-  (`"left"`/`"right"`) and an optional `imageCaption` ({icon, title, subtitle}) floating
-  over the photo's corner — this replaces the text column with the photo, stacking the
-  heading/body and the (usually `"plain"`) item grid together in the other column
-  instead of side by side (used on Yeneta's "Why Choose Yeneta" section). A heading can
-  also take a `headingHighlight` rendered in the theme accent color, e.g. heading
-  "More Than a System." + highlight "A Partner in Education.". `industriesShowcase` is
-  a shorter, 3-column
+  (`"left"`/`"right"`), an `imageFit` of `"cover"` (default: crops to a 4:3 box, for a
+  photo) or `"contain"` (shows the whole image at its natural ratio, for a wide UI
+  mockup/screenshot — used on Tena's "Built to Improve Every Patient Interaction"
+  section), and an optional `imageCaption` ({icon, title, subtitle}) floating over the
+  photo's corner (only meaningful with `"cover"`) — this replaces the text column with
+  the photo, stacking the heading/body and the (usually `"plain"`) item grid together in
+  the other column instead of side by side (used on Yeneta's "Why Choose Yeneta"
+  section). A heading can also take a `headingHighlight` rendered in the theme accent
+  color, e.g. heading "More Than a System." + highlight "A Partner in Education.".
+  `industriesShowcase` is a shorter, 3-column
   alternative (text + button | small icon grid | photo card) used for the homepage's
   Industries section, where a tall one-card-per-industry `cardGrid` read as too long.
   `richText` optionally takes an `imageUrl`/`imagePosition` (`"left"`/`"right"`) to show

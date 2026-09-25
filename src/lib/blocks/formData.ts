@@ -164,6 +164,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
               : "bordered",
         imageUrl: optStr(formData, "imageUrl"),
         imagePosition: formData.get("imagePosition") === "right" ? "right" : "left",
+        imageFit: formData.get("imageFit") === "contain" ? "contain" : "cover",
         imageCaption: captionTitle
           ? {
               icon: optStr(formData, "captionIcon"),

@@ -111,6 +111,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
 
   if (data.layout === "split" && data.imageUrl) {
     const imageFirst = (data.imagePosition ?? "left") === "left";
+    const contain = data.imageFit === "contain";
     const CaptionIcon = data.imageCaption?.icon ? ICONS[data.imageCaption.icon] : undefined;
     return (
       <SectionShell theme={data.theme} id={data.anchorId} compact>
@@ -120,7 +121,7 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
             <img
               src={data.imageUrl}
               alt=""
-              className="aspect-[4/3] w-full rounded-2xl object-cover"
+              className={contain ? "w-full rounded-2xl object-contain" : "aspect-[4/3] w-full rounded-2xl object-cover"}
             />
             {data.imageCaption && (
               <div

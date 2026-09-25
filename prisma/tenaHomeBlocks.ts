@@ -81,6 +81,9 @@ export const tenaHomeBlocks: SeedBlock[] = [
     layout: "split",
     cardStyle: "tinted",
     columns: 3,
+    imageUrl: "/tena-dashboard-mockup.webp",
+    imagePosition: "left",
+    imageFit: "contain",
     items: [
       { icon: "target", title: "Fast Patient Check-in" },
       { icon: "cloud", title: "Real-time Bed & Resource Tracking" },
