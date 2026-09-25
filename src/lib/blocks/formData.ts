@@ -136,10 +136,12 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         imageFit: formData.get("imageFit") === "contain" ? "contain" : "cover",
       };
     }
-    case "cardGrid":
+    case "cardGrid": {
+      const captionTitle = optStr(formData, "captionTitle");
       return {
         eyebrow: optStr(formData, "eyebrow"),
         heading: optStr(formData, "heading"),
+        headingHighlight: optStr(formData, "headingHighlight"),
         body: optStr(formData, "body"),
         items: readJsonArray(formData, "itemsJson").filter(
           (item): item is { title: string } =>
@@ -154,8 +156,23 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         viewAllLabel: optStr(formData, "viewAllLabel"),
         viewAllHref: optStr(formData, "viewAllHref"),
         layout: formData.get("layout") === "split" ? "split" : "grid",
-        cardStyle: formData.get("cardStyle") === "tinted" ? "tinted" : "bordered",
+        cardStyle:
+          formData.get("cardStyle") === "tinted"
+            ? "tinted"
+            : formData.get("cardStyle") === "plain"
+              ? "plain"
+              : "bordered",
+        imageUrl: optStr(formData, "imageUrl"),
+        imagePosition: formData.get("imagePosition") === "right" ? "right" : "left",
+        imageCaption: captionTitle
+          ? {
+              icon: optStr(formData, "captionIcon"),
+              title: captionTitle,
+              subtitle: optStr(formData, "captionSubtitle"),
+            }
+          : undefined,
       };
+    }
     case "industriesShowcase":
       return {
         eyebrow: optStr(formData, "eyebrow"),

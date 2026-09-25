@@ -8,6 +8,7 @@ import {
   Compass,
   Cpu,
   Gem,
+  GraduationCap,
   Lightbulb,
   Rocket,
   ShieldCheck,
@@ -34,6 +35,7 @@ export const ICONS = {
   target: Target,
   star: Star,
   zap: Zap,
+  graduationCap: GraduationCap,
 } satisfies Record<string, LucideIcon>;
 
 export type IconKey = keyof typeof ICONS;
@@ -98,6 +100,10 @@ export type CardGridItem = {
 export type CardGridData = {
   eyebrow?: string;
   heading?: string;
+  // Optional trailing part of the heading rendered in the theme accent
+  // color, e.g. heading "More Than a System." + headingHighlight "A
+  // Partner in Education."
+  headingHighlight?: string;
   body?: string;
   items: CardGridItem[];
   theme: SectionTheme;
@@ -114,8 +120,17 @@ export type CardGridData = {
   layout?: "grid" | "split";
   // Only used by the "split" layout's cards. "bordered" (default): a
   // white/surface card with a bordered icon badge. "tinted": a borderless
-  // card washed in the theme color, with a plain (un-badged) icon.
-  cardStyle?: "bordered" | "tinted";
+  // card washed in the theme color, with a plain (un-badged) icon. "plain":
+  // no card at all — just a round icon badge beside its label, horizontally
+  // laid out (used when there's also a photo, see imageUrl below).
+  cardStyle?: "bordered" | "tinted" | "plain";
+  // Only used by the "split" layout — an optional photo replacing the
+  // text column's usual side, with the text+items stacked in the other
+  // column instead of side by side. An optional caption card floats over
+  // the photo's bottom-left corner, e.g. "Empowering educators."
+  imageUrl?: string;
+  imagePosition?: "left" | "right";
+  imageCaption?: { icon?: IconKey; title: string; subtitle?: string };
 };
 
 export type IndustriesShowcaseItem = { icon?: IconKey; label: string };

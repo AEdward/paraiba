@@ -569,7 +569,14 @@ export function BlockFields({ block }: { block: BlockRecord }) {
       return (
         <div className="flex flex-col gap-4">
           <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
-          <Field label="Heading — optional" name="heading" defaultValue={data.heading} />
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Heading — optional" name="heading" defaultValue={data.heading} />
+            <Field
+              label="Heading highlight (accent color) — optional"
+              name="headingHighlight"
+              defaultValue={data.headingHighlight}
+            />
+          </div>
           <TextAreaField label="Intro text — optional" name="body" defaultValue={data.body} rows={2} />
           <ItemsEditor defaultItems={data.items} />
           <div className="grid grid-cols-2 gap-4">
@@ -618,6 +625,7 @@ export function BlockFields({ block }: { block: BlockRecord }) {
               >
                 <option value="bordered">Bordered card with icon badge</option>
                 <option value="tinted">Borderless, color-washed card with a plain icon</option>
+                <option value="plain">No card — round icon badge beside its label (for use with a photo)</option>
               </select>
             </div>
           )}
@@ -629,6 +637,55 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             <Field label="'View all' link label — optional" name="viewAllLabel" defaultValue={data.viewAllLabel} placeholder="View All Services" />
             <Field label="'View all' link href — optional" name="viewAllHref" defaultValue={data.viewAllHref} placeholder="/services" />
           </div>
+          {data.layout === "split" && (
+            <div className="rounded-lg border p-4" style={{ borderColor: "var(--border-soft)" }}>
+              <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+                Optional photo — optional
+              </p>
+              <p className="mt-1 text-xs opacity-60">
+                Replaces the text column with a photo, stacking the text and cards together in
+                the other column. Paste a path under <code>public/</code> or a full image URL.
+              </p>
+              <div className="mt-3 grid grid-cols-2 gap-4">
+                <Field label="Image" name="imageUrl" defaultValue={data.imageUrl} placeholder="/yeneta-classroom.webp" />
+                <div>
+                  <label htmlFor="imagePosition" className={labelClass} style={{ color: "var(--ink)" }}>
+                    Image side
+                  </label>
+                  <select
+                    id="imagePosition"
+                    name="imagePosition"
+                    defaultValue={data.imagePosition ?? "left"}
+                    className={inputClass}
+                    style={inputStyle}
+                  >
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                  </select>
+                </div>
+              </div>
+              <p className="mt-4 text-sm font-medium" style={{ color: "var(--ink)" }}>
+                Caption card over the photo — optional
+              </p>
+              <div className="mt-2 grid grid-cols-3 gap-3">
+                <select
+                  name="captionIcon"
+                  defaultValue={data.imageCaption?.icon ?? ""}
+                  className={inputClass}
+                  style={inputStyle}
+                >
+                  <option value="">No icon</option>
+                  {ICON_KEYS.map((key) => (
+                    <option key={key} value={key}>
+                      {key}
+                    </option>
+                  ))}
+                </select>
+                <Field label="Title" name="captionTitle" defaultValue={data.imageCaption?.title} placeholder="Empowering educators." />
+                <Field label="Subtitle" name="captionSubtitle" defaultValue={data.imageCaption?.subtitle} placeholder="Inspiring students." />
+              </div>
+            </div>
+          )}
         </div>
       );
     }

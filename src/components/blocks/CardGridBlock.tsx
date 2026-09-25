@@ -11,9 +11,32 @@ function CompactCard({
 }: {
   item: CardGridData["items"][number];
   delay: number;
-  cardStyle: "bordered" | "tinted";
+  cardStyle: "bordered" | "tinted" | "plain";
 }) {
   const Icon = item.icon ? ICONS[item.icon] : undefined;
+
+  if (cardStyle === "plain") {
+    return (
+      <FadeIn delay={delay}>
+        <div className="flex items-start gap-3">
+          {Icon && (
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+              style={{ background: "color-mix(in srgb, var(--color-ember) 10%, transparent)" }}
+            >
+              <Icon size={16} style={{ color: "var(--color-ember)" }} />
+            </span>
+          )}
+          <div>
+            <p className="text-sm font-bold leading-snug" style={{ color: "var(--ink)" }}>
+              {item.title}
+            </p>
+            {item.description && <p className="mt-0.5 text-xs opacity-60">{item.description}</p>}
+          </div>
+        </div>
+      </FadeIn>
+    );
+  }
 
   if (cardStyle === "tinted") {
     return (
@@ -63,7 +86,13 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
       </Eyebrow>
       {data.heading && (
         <h2 className="font-display mt-4 max-w-lg text-3xl leading-tight font-bold sm:text-4xl" style={{ color: "var(--ink)" }}>
-          {data.heading}
+          {data.headingHighlight ? data.heading.trimEnd() : data.heading}
+          {data.headingHighlight && (
+            <>
+              {" "}
+              <span style={{ color: "var(--color-ember)" }}>{data.headingHighlight}</span>
+            </>
+          )}
         </h2>
       )}
       {data.body && <p className="mt-4 max-w-lg opacity-65">{data.body}</p>}
@@ -79,6 +108,61 @@ export function CardGridBlock({ data }: { data: CardGridData }) {
       {data.viewAllLabel} <ArrowRight size={14} />
     </Link>
   );
+
+  if (data.layout === "split" && data.imageUrl) {
+    const imageFirst = (data.imagePosition ?? "left") === "left";
+    const CaptionIcon = data.imageCaption?.icon ? ICONS[data.imageCaption.icon] : undefined;
+    return (
+      <SectionShell theme={data.theme} id={data.anchorId} compact>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <FadeIn className={`relative ${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={data.imageUrl}
+              alt=""
+              className="aspect-[4/3] w-full rounded-2xl object-cover"
+            />
+            {data.imageCaption && (
+              <div
+                className="absolute bottom-4 left-4 flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-lg"
+                style={{ background: "var(--surface)" }}
+              >
+                {CaptionIcon && (
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                    style={{ background: "var(--color-ember)" }}
+                  >
+                    <CaptionIcon size={16} style={{ color: "#ffffff" }} />
+                  </span>
+                )}
+                <div>
+                  <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+                    {data.imageCaption.title}
+                  </p>
+                  {data.imageCaption.subtitle && (
+                    <p className="text-[11px] opacity-60">{data.imageCaption.subtitle}</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </FadeIn>
+          <div className={imageFirst ? "lg:order-2" : "lg:order-1"}>
+            {eyebrowAndHeading}
+            {viewAllLink && (
+              <FadeIn delay={0.1} className="mt-6">
+                {viewAllLink}
+              </FadeIn>
+            )}
+            <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5">
+              {data.items.map((item, i) => (
+                <CompactCard key={i} item={item} delay={0.1 + i * 0.06} cardStyle={data.cardStyle ?? "bordered"} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </SectionShell>
+    );
+  }
 
   if (data.layout === "split") {
     return (
