@@ -52,6 +52,8 @@ export const tenaHomeBlocks: SeedBlock[] = [
     heading: "Everything You Need to Run a Modern Practice",
     body: "Tena brings together all the essential tools you need to manage your practice — from patient records and scheduling to billing and reporting. Designed for clinics and hospitals of all sizes, it's simple to use, powerful, and built for growth.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     anchorId: "features",
     viewAllLabel: "Explore All Services",
@@ -76,6 +78,8 @@ export const tenaHomeBlocks: SeedBlock[] = [
     heading: "Built to Improve Every Patient Interaction",
     body: "From the front desk to the back office, Tena gives your team the tools to do more.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     items: [
       { icon: "target", title: "Fast Patient Check-in" },

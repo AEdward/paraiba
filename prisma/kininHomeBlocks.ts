@@ -52,6 +52,8 @@ export const kininHomeBlocks: SeedBlock[] = [
     heading: "Everything You Need to Run a Modern Pharmacy",
     body: "Kinin brings together all the essential tools you need to manage your pharmacy operations — from inventory and prescriptions to sales and reporting. Designed for pharmacies of all sizes, it's simple to use, powerful, and built for growth.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     anchorId: "features",
     viewAllLabel: "Explore All Features",
@@ -76,6 +78,8 @@ export const kininHomeBlocks: SeedBlock[] = [
     heading: "Built to Make Your Pharmacy More Efficient",
     body: "From day-to-day operations to long-term growth, Kinin gives you the tools to do more.",
     theme: "light",
+    layout: "split",
+    cardStyle: "tinted",
     columns: 3,
     items: [
       { icon: "target", title: "Fast & Accurate Dispensing" },
