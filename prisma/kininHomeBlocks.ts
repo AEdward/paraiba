@@ -72,6 +72,9 @@ export const kininHomeBlocks: SeedBlock[] = [
     heading: "Designed for the Pharmaceutical Industry",
     body: industryDoc,
     theme: "dark",
+    imageUrl: "/kinin-pharmacy-banner.webp",
+    imagePosition: "right",
+    imageFit: "contain",
   }),
   block("cardGrid", {
     eyebrow: "Powerful Features",
