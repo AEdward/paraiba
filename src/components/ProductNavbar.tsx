@@ -14,7 +14,7 @@ export function ProductNavbar({ name, logoUrl, homeUrl }: { name: string; logoUr
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="inline-flex items-center gap-2.5">
           {logoUrl ? (
-            <Image src={logoUrl} alt={name} width={36} height={36} style={{ objectFit: "contain" }} unoptimized />
+            <Image src={logoUrl} alt={name} width={48} height={48} style={{ objectFit: "contain" }} unoptimized />
           ) : null}
           <span className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
             {name}
