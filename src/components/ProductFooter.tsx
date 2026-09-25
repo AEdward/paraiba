@@ -12,16 +12,16 @@ export function ProductFooter({
   return (
     <footer className="paraiba-dark-section border-t" style={{ borderColor: "var(--border-soft)" }}>
       <div
-        className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-8 text-xs opacity-60"
+        className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-8 text-sm"
         style={{ color: "var(--foreground)" }}
       >
-        <span className="inline-flex items-center gap-2">
+        <span className="inline-flex items-center gap-2.5 font-semibold">
           {logoUrl && (
-            <Image src={logoUrl} alt="" width={18} height={18} style={{ objectFit: "contain" }} unoptimized />
+            <Image src={logoUrl} alt="" width={28} height={28} style={{ objectFit: "contain" }} unoptimized />
           )}
           © {new Date().getFullYear()} {name}.
         </span>
-        <a href={homeUrl} className="hover:opacity-100">
+        <a href={homeUrl} className="opacity-75 hover:opacity-100">
           Built by Paraiba Technology PLC
         </a>
       </div>
