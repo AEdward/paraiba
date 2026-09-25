@@ -77,6 +77,10 @@ export type RichTextData = {
   body: RichDoc;
   theme: SectionTheme;
   tint?: boolean; // subtle brand-color wash background, used on a couple of Home sections
+  // Optional photo shown beside the text in a two-column layout — falls
+  // back to the current single centered column when unset.
+  imageUrl?: string;
+  imagePosition?: "left" | "right";
 };
 
 export type CardGridItem = {

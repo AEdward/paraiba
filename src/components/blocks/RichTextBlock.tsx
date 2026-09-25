@@ -4,30 +4,54 @@ import { renderRichDoc } from "@/lib/blocks/renderRichDoc";
 import type { RichTextData } from "@/lib/blocks/types";
 
 export function RichTextBlock({ data }: { data: RichTextData }) {
+  const text = (
+    <>
+      <Eyebrow color="var(--color-ember)">
+        {data.eyebrow}
+      </Eyebrow>
+      {data.heading && (
+        <h2
+          className="font-display mt-4 text-3xl font-bold"
+          style={{ color: "var(--ink)" }}
+        >
+          {data.heading}
+        </h2>
+      )}
+      <div>{renderRichDoc(data.body)}</div>
+    </>
+  );
+
+  const tintStyle = data.tint
+    ? { background: "linear-gradient(color-mix(in srgb, var(--color-ember) 5%, transparent), transparent)" }
+    : undefined;
+
+  if (data.imageUrl) {
+    const imageFirst = (data.imagePosition ?? "left") === "left";
+    return (
+      <SectionShell theme={data.theme}>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <FadeIn className={imageFirst ? "lg:order-1" : "lg:order-2"}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={data.imageUrl}
+              alt=""
+              className="aspect-[4/3] w-full rounded-2xl object-cover"
+            />
+          </FadeIn>
+          <FadeIn delay={0.1} className={imageFirst ? "lg:order-2" : "lg:order-1"}>
+            <div className="rounded-2xl p-6" style={tintStyle}>
+              {text}
+            </div>
+          </FadeIn>
+        </div>
+      </SectionShell>
+    );
+  }
+
   return (
     <SectionShell theme={data.theme}>
-      <div
-        className="mx-auto max-w-3xl"
-        style={
-          data.tint
-            ? { background: "linear-gradient(color-mix(in srgb, var(--color-ember) 5%, transparent), transparent)" }
-            : undefined
-        }
-      >
-        <FadeIn>
-          <Eyebrow color="var(--color-ember)">
-            {data.eyebrow}
-          </Eyebrow>
-          {data.heading && (
-            <h2
-              className="font-display mt-4 text-3xl font-bold"
-              style={{ color: "var(--ink)" }}
-            >
-              {data.heading}
-            </h2>
-          )}
-          <div>{renderRichDoc(data.body)}</div>
-        </FadeIn>
+      <div className="mx-auto max-w-3xl" style={tintStyle}>
+        <FadeIn>{text}</FadeIn>
       </div>
     </SectionShell>
   );

@@ -132,6 +132,9 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   sections). `industriesShowcase` is a shorter, 3-column
   alternative (text + button | small icon grid | photo card) used for the homepage's
   Industries section, where a tall one-card-per-industry `cardGrid` read as too long.
+  `richText` optionally takes an `imageUrl`/`imagePosition` (`"left"`/`"right"`) to show
+  its text beside a photo in a two-column layout instead of the default single centered
+  column (used on Mead's "Built for the Food Industry" section).
 - **`section`** is different from the other block types above: instead of one fixed
   shape, it's a blank container an admin fills freely with an ordered list of small
   **elements** — WordPress/Strapi-style, rather than picking a whole preset template.

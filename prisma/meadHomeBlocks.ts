@@ -64,6 +64,8 @@ export const meadHomeBlocks: SeedBlock[] = [
     body: industryDoc,
     theme: "light",
     tint: true,
+    imageUrl: "/mead-food-industry.webp",
+    imagePosition: "left",
   }),
   block("cardGrid", {
     eyebrow: "Why Choose Mead",

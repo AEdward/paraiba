@@ -519,6 +519,33 @@ export function BlockFields({ block }: { block: BlockRecord }) {
             </label>
             <ThemeField defaultValue={data.theme} />
           </div>
+          <div className="rounded-lg border p-4" style={{ borderColor: "var(--border-soft)" }}>
+            <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+              Optional photo — optional
+            </p>
+            <p className="mt-1 text-xs opacity-60">
+              Shows the text beside a photo instead of centered alone. Paste a path under{" "}
+              <code>public/</code> or a full image URL.
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-4">
+              <Field label="Image" name="imageUrl" defaultValue={data.imageUrl} placeholder="/mead-food-industry.webp" />
+              <div>
+                <label htmlFor="imagePosition" className={labelClass} style={{ color: "var(--ink)" }}>
+                  Image side
+                </label>
+                <select
+                  id="imagePosition"
+                  name="imagePosition"
+                  defaultValue={data.imagePosition ?? "left"}
+                  className={inputClass}
+                  style={inputStyle}
+                >
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
