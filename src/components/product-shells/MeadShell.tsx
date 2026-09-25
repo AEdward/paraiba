@@ -1,7 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChefHat, TrendingUp } from "lucide-react";
+import { ArrowRight, ChefHat, ClipboardList, FileBarChart2, PackageSearch, PlayCircle, Users } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
+
+const heroFeatures = [
+  { icon: ClipboardList, label: "Manage Orders & Tables" },
+  { icon: PackageSearch, label: "Track Inventory in Real-Time" },
+  { icon: Users, label: "Handle Staff & Shifts" },
+  { icon: FileBarChart2, label: "Get Detailed Reports" },
+];
 
 function MeadMark({ size = 36 }: { size?: number }) {
   return (
@@ -32,61 +39,65 @@ export function MeadNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl?:
 
 export function MeadHero({ name }: { name: string }) {
   return (
-    <section className="paraiba-dark-section relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+    <section className="paraiba-light-section relative overflow-hidden">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:gap-14">
         <div>
-          <p className="font-display text-xs font-semibold tracking-[0.3em] uppercase" style={{ color: "var(--color-amber)" }}>
+          <p className="font-display text-xs font-semibold tracking-[0.3em] uppercase" style={{ color: "var(--color-ember)" }}>
             Restaurant Management System
           </p>
-          <h1 className="font-display mt-4 max-w-lg text-4xl leading-tight font-bold sm:text-5xl">
-            Great Food Deserves Great Management
+          <h1 className="font-display mt-4 max-w-lg text-4xl leading-tight font-bold sm:text-5xl" style={{ color: "var(--ink)" }}>
+            Great Food Deserves{" "}
+            <span style={{ color: "var(--color-ember)" }}>Great Management</span>
           </h1>
-          <p className="mt-6 max-w-md opacity-70">
+          <p className="mt-6 max-w-md opacity-65">
             {name} is a complete restaurant management system that helps you run your
-            restaurant, café, or food business smoothly — orders, inventory, staff, and reports,
-            all in one platform.
+            restaurant, café, or food business smoothly. From orders to inventory, staff to
+            reports — everything you need in one powerful platform.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="#contact"
-              className="font-display inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+              className="font-display inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
               style={{ background: "linear-gradient(110deg, var(--color-ember), var(--color-amber))" }}
             >
               Get Started Free <ArrowRight size={16} />
             </Link>
             <Link
               href="#features"
-              className="font-display inline-flex items-center gap-2 rounded-lg border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
-              style={{ borderColor: "rgba(245,250,255,0.16)", background: "rgba(255,255,255,0.03)" }}
+              className="font-display inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
+              style={{ borderColor: "var(--border-soft)", color: "var(--ink)" }}
             >
-              See How It Works
+              <PlayCircle size={16} /> Watch Demo
             </Link>
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
+            {heroFeatures.map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-start gap-2.5">
+                <span
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                  style={{ background: "rgba(8,124,255,0.1)" }}
+                >
+                  <Icon size={15} style={{ color: "var(--color-ember)" }} />
+                </span>
+                <p className="text-xs leading-snug font-bold" style={{ color: "var(--ink)" }}>
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md">
-          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[2.5rem]">
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 30% 20%, var(--color-amber) 0%, transparent 55%), linear-gradient(135deg, var(--color-ember), #3a1005)",
-              }}
-            />
-            <ChefHat size={92} className="relative" style={{ color: "rgba(255,255,255,0.92)" }} />
-          </div>
-
-          <div
-            className="absolute -right-4 bottom-6 flex items-center gap-2 rounded-2xl border px-4 py-3 shadow-lg"
-            style={{ borderColor: "rgba(245,250,255,0.16)", background: "#1a0f08" }}
-          >
-            <TrendingUp size={18} style={{ color: "var(--color-amber)" }} />
-            <div>
-              <p className="text-xs font-bold text-white">Faster Service</p>
-              <p className="text-[11px] text-white/60">Happier Customers</p>
-            </div>
-          </div>
+        <div className="relative mx-auto w-full max-w-lg">
+          <Image
+            src="/mead-hero.webp"
+            alt=""
+            width={1536}
+            height={1024}
+            className="w-full rounded-[2rem] object-cover"
+            priority
+            unoptimized
+          />
         </div>
       </div>
     </section>

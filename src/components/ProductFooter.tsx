@@ -10,7 +10,7 @@ export function ProductFooter({
   homeUrl: string;
 }) {
   return (
-    <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
+    <footer className="paraiba-light-section border-t" style={{ borderColor: "var(--border-soft)" }}>
       <div
         className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-8 text-xs opacity-60"
         style={{ color: "var(--foreground)" }}

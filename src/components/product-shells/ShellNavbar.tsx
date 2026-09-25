@@ -17,8 +17,8 @@ export function ShellNavbar({
 }) {
   return (
     <header
-      className="paraiba-light-section sticky top-0 z-50 border-b backdrop-blur-md"
-      style={{ borderColor: "var(--border-soft)", background: "color-mix(in srgb, var(--surface) 90%, transparent)" }}
+      className="paraiba-light-section sticky top-0 z-50 border-b"
+      style={{ borderColor: "var(--border-soft)", background: "#ffffff" }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="inline-flex items-center gap-2.5">

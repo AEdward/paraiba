@@ -38,15 +38,6 @@ const industryDoc: RichDoc = {
 };
 
 export const meadHomeBlocks: SeedBlock[] = [
-  block("statsBar", {
-    theme: "light",
-    items: [
-      { icon: "briefcase", label: "Manage Orders & Tables" },
-      { icon: "cloud", label: "Track Inventory", sublabel: "In real-time" },
-      { icon: "compass", label: "Handle Staff & Shifts" },
-      { icon: "sparkles", label: "Get Detailed Reports" },
-    ],
-  }),
   block("cardGrid", {
     eyebrow: "Key Features",
     heading: "Everything You Need to Run a Successful Restaurant",
@@ -69,7 +60,8 @@ export const meadHomeBlocks: SeedBlock[] = [
     eyebrow: "Built for the Food Industry",
     heading: "A Smarter Way to Manage Your Restaurant",
     body: industryDoc,
-    theme: "dark",
+    theme: "light",
+    tint: true,
   }),
   block("cardGrid", {
     eyebrow: "Why Choose Mead",
@@ -96,6 +88,6 @@ export const meadHomeBlocks: SeedBlock[] = [
     body: "Join restaurants using Mead to manage their operations, improve efficiency, and serve better food.",
     buttonLabel: "Get Started Free",
     buttonHref: "#contact",
-    theme: "dark",
+    theme: "light",
   }),
 ];
