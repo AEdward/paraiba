@@ -25,6 +25,32 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
     ? { background: "linear-gradient(color-mix(in srgb, var(--color-ember) 5%, transparent), transparent)" }
     : undefined;
 
+  if (data.imageUrl && data.imageBleed) {
+    const imageOnRight = (data.imagePosition ?? "right") === "right";
+    return (
+      <SectionShell
+        theme={data.theme}
+        background={
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={data.imageUrl} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background: imageOnRight
+                  ? "linear-gradient(to right, var(--color-indigo) 32%, color-mix(in srgb, var(--color-indigo) 45%, transparent) 58%, transparent 88%)"
+                  : "linear-gradient(to left, var(--color-indigo) 32%, color-mix(in srgb, var(--color-indigo) 45%, transparent) 58%, transparent 88%)",
+              }}
+            />
+          </>
+        }
+      >
+        <FadeIn className="max-w-lg">{text}</FadeIn>
+      </SectionShell>
+    );
+  }
+
   if (data.imageUrl) {
     const imageFirst = (data.imagePosition ?? "left") === "left";
     const contain = data.imageFit === "contain";

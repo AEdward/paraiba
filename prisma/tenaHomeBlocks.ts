@@ -74,7 +74,7 @@ export const tenaHomeBlocks: SeedBlock[] = [
     theme: "dark",
     imageUrl: "/tena-healthcare-banner.webp",
     imagePosition: "right",
-    imageFit: "contain",
+    imageBleed: true,
   }),
   block("cardGrid", {
     eyebrow: "Powerful Features",

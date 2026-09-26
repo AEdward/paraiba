@@ -87,6 +87,12 @@ export type RichTextData = {
   // the whole image at its natural aspect ratio, for a wide UI mockup/
   // screenshot that would otherwise get cropped.
   imageFit?: "cover" | "contain";
+  // Instead of a boxed photo beside the text, stretches the image to fill
+  // the entire section as a background, with a dark scrim fading from
+  // solid (behind the text) to transparent (over the photo) on the
+  // `imagePosition` side — for a photo that should blend into the section
+  // rather than sit in its own box.
+  imageBleed?: boolean;
 };
 
 export type CardGridItem = {

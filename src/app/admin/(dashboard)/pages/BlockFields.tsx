@@ -560,6 +560,10 @@ export function BlockFields({ block }: { block: BlockRecord }) {
                 <option value="contain">Show whole image (a wide UI mockup/screenshot)</option>
               </select>
             </div>
+            <label className="mt-3 flex items-center gap-2 text-sm">
+              <input type="checkbox" name="imageBleed" value="on" defaultChecked={data.imageBleed} />
+              Blend as full-section background instead of a boxed photo
+            </label>
           </div>
         </div>
       );

@@ -10,6 +10,7 @@ export function SectionShell({
   id,
   tightTop = false,
   compact = false,
+  background,
 }: {
   theme: SectionTheme;
   children: ReactNode;
@@ -24,6 +25,10 @@ export function SectionShell({
   // already dense/compact (e.g. a split text+card-grid layout), where the
   // usual full padding reads as oversized relative to the content.
   compact?: boolean;
+  // Full-bleed content (e.g. a background photo + gradient scrim) painted
+  // behind everything, edge-to-edge across the whole section — unlike
+  // `children`, which stays inside the centered max-w-6xl column.
+  background?: ReactNode;
 }) {
   const padding = compact
     ? "py-14 sm:py-16"
@@ -37,6 +42,7 @@ export function SectionShell({
       style={{ borderColor: "var(--border-soft)", scrollMarginTop: id ? "90px" : undefined }}
     >
       {withMesh && <GradientMesh />}
+      {background}
       <div className={`relative mx-auto max-w-6xl px-6 ${padding} ${center ? "text-center" : ""}`}>
         {children}
       </div>
