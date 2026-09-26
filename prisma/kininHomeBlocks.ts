@@ -74,7 +74,7 @@ export const kininHomeBlocks: SeedBlock[] = [
     theme: "dark",
     imageUrl: "/kinin-pharmacy-banner.webp",
     imagePosition: "right",
-    imageFit: "contain",
+    imageBleed: true,
   }),
   block("cardGrid", {
     eyebrow: "Powerful Features",
