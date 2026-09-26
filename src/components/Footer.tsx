@@ -35,8 +35,8 @@ export function Footer({
   const socialLinks = getSocialLinks(settings);
   return (
     <footer className="border-t" style={{ borderColor: "var(--border-soft)" }}>
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-5">
-        <div className="sm:col-span-2 lg:col-span-1">
+      <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-x-10 gap-y-10 px-6 py-14">
+        <div className="w-full sm:w-auto">
           <Logo size={36} />
           <p className="mt-3 max-w-xs text-sm opacity-60">
             Innovative solutions, lasting impact — practical, reliable and beautiful digital
