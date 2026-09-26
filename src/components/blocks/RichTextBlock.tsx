@@ -54,15 +54,24 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
   if (data.imageUrl) {
     const imageFirst = (data.imagePosition ?? "left") === "left";
     const contain = data.imageFit === "contain";
+    const glow = data.imageGlow;
     return (
       <SectionShell theme={data.theme}>
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className={`grid items-center gap-10 lg:gap-14 ${glow ? "lg:grid-cols-[1fr_1.15fr]" : "lg:grid-cols-2"}`}>
           <FadeIn className={imageFirst ? "lg:order-1" : "lg:order-2"}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={data.imageUrl}
               alt=""
               className={contain ? "w-full rounded-2xl object-contain" : "aspect-[4/3] w-full rounded-2xl object-cover"}
+              style={
+                glow
+                  ? {
+                      boxShadow:
+                        "0 0 0 1px color-mix(in srgb, var(--color-ember) 8%, transparent), 0 30px 80px -10px color-mix(in srgb, var(--color-ember) 45%, transparent), 0 0 100px 20px color-mix(in srgb, var(--color-amber) 30%, transparent)",
+                    }
+                  : undefined
+              }
             />
           </FadeIn>
           <FadeIn delay={0.1} className={imageFirst ? "lg:order-2" : "lg:order-1"}>

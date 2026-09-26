@@ -67,6 +67,7 @@ export const yenetaHomeBlocks: SeedBlock[] = [
     imageUrl: "/yeneta-dashboard-mockup.webp",
     imagePosition: "right",
     imageFit: "contain",
+    imageGlow: true,
   }),
   block("cardGrid", {
     eyebrow: "Why Choose Yeneta",

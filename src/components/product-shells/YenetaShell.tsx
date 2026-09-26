@@ -10,7 +10,6 @@ import {
   GraduationCap,
   LayoutDashboard,
   MessageCircle,
-  PlayCircle,
   Users,
 } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
@@ -81,13 +80,6 @@ export function YenetaHero({ name }: { name: string }) {
               style={{ background: "var(--color-ember)" }}
             >
               Get Started Free <ArrowRight size={16} />
-            </Link>
-            <Link
-              href="#features"
-              className="font-display inline-flex items-center gap-2 rounded-lg border px-6 py-3 text-sm font-bold transition-transform hover:-translate-y-0.5"
-              style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
-            >
-              <PlayCircle size={16} /> Watch Video
             </Link>
           </div>
 

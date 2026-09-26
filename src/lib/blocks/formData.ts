@@ -135,6 +135,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         imagePosition: formData.get("imagePosition") === "right" ? "right" : "left",
         imageFit: formData.get("imageFit") === "contain" ? "contain" : "cover",
         imageBleed: formData.get("imageBleed") === "on",
+        imageGlow: formData.get("imageGlow") === "on",
       };
     }
     case "cardGrid": {

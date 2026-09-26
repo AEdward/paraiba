@@ -147,12 +147,17 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   its text beside a photo in a two-column layout instead of the default single centered
   column (used on Mead's "Built for the Food Industry" section), plus an `imageFit` of
   `"cover"` (default: crops to a 4:3 box, for a photo) or `"contain"` (shows the whole
-  image at its natural ratio, for a wide UI mockup/screenshot — used on Yeneta's
-  "Streamline Your Operations" section). An `imageBleed: true` switches from that boxed
-  photo to stretching the image full-bleed across the entire section as a background,
-  with a dark scrim fading from solid (behind the text) to transparent (over the photo)
-  on the `imagePosition` side, so the photo blends into the section instead of sitting
-  in its own box (used on Tena's "Built for Healthcare" section).
+  image at its natural ratio, for a wide UI mockup/screenshot). An `imageBleed: true`
+  switches from that boxed photo to stretching the image full-bleed across the entire
+  section as a background, with a dark scrim fading from solid (behind the text) to
+  transparent (over the photo) on the `imagePosition` side, so the photo blends into the
+  section instead of sitting in its own box (used on Tena's "Built for Healthcare" and
+  Kinin's "Built for Pharmacies" sections) — meant for a photo, since it masks the
+  image's own edges. `imageGlow: true` instead widens the image column and adds a soft
+  blurred theme-color halo behind the still-boxed photo, so it reads bigger and blends
+  into the section without masking the image's own pixels — meant for a UI mockup/
+  screenshot, where edge-masking would look broken (used on Yeneta's "Streamline Your
+  Operations" section).
 - **`section`** is different from the other block types above: instead of one fixed
   shape, it's a blank container an admin fills freely with an ordered list of small
   **elements** — WordPress/Strapi-style, rather than picking a whole preset template.

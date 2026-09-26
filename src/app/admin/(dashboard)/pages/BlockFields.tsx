@@ -564,6 +564,10 @@ export function BlockFields({ block }: { block: BlockRecord }) {
               <input type="checkbox" name="imageBleed" value="on" defaultChecked={data.imageBleed} />
               Blend as full-section background instead of a boxed photo
             </label>
+            <label className="mt-2 flex items-center gap-2 text-sm">
+              <input type="checkbox" name="imageGlow" value="on" defaultChecked={data.imageGlow} />
+              Enlarge and add a soft glow behind the boxed photo (for a UI mockup/screenshot)
+            </label>
           </div>
         </div>
       );

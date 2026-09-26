@@ -93,6 +93,12 @@ export type RichTextData = {
   // `imagePosition` side — for a photo that should blend into the section
   // rather than sit in its own box.
   imageBleed?: boolean;
+  // Widens the image column and adds a soft blurred theme-color glow
+  // behind the boxed photo, so it reads bigger and blends into the
+  // section without masking/cropping the image's own pixels (unlike
+  // imageBleed) — meant for a UI mockup/screenshot, where content-masking
+  // its edges would look broken.
+  imageGlow?: boolean;
 };
 
 export type CardGridItem = {

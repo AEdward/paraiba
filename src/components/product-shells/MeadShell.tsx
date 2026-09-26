@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChefHat, ClipboardList, FileBarChart2, PackageSearch, PlayCircle, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChefHat, ClipboardList, FileBarChart2, PackageSearch, Users } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
 const heroFeatures = [
@@ -40,7 +40,7 @@ export function MeadNavbar({ name, logoUrl, homeUrl }: { name: string; logoUrl?:
 export function MeadHero({ name }: { name: string }) {
   return (
     <section className="paraiba-light-section relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:gap-14">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
         <div>
           <p className="font-display text-xs font-semibold tracking-[0.3em] uppercase" style={{ color: "var(--color-ember)" }}>
             Restaurant Management System
@@ -62,13 +62,6 @@ export function MeadHero({ name }: { name: string }) {
             >
               Get Started Free <ArrowRight size={16} />
             </Link>
-            <Link
-              href="#features"
-              className="font-display inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5"
-              style={{ borderColor: "var(--border-soft)", color: "var(--ink)" }}
-            >
-              <PlayCircle size={16} /> Watch Demo
-            </Link>
           </div>
 
           <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
@@ -88,7 +81,7 @@ export function MeadHero({ name }: { name: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-lg">
+        <div className="relative mx-auto w-full">
           <Image
             src="/mead-hero.webp"
             alt=""
@@ -98,6 +91,34 @@ export function MeadHero({ name }: { name: string }) {
             priority
             unoptimized
           />
+
+          <div
+            className="absolute top-4 left-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <CheckCircle2 size={16} style={{ color: "#10b981" }} />
+            <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+              Order Confirmed
+            </p>
+          </div>
+
+          <div
+            className="absolute right-4 bottom-4 flex items-center gap-2.5 rounded-2xl border px-4 py-3 shadow-lg"
+            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+          >
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: "var(--color-ember)" }}
+            >
+              <ChefHat size={17} style={{ color: "#ffffff" }} />
+            </span>
+            <div>
+              <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+                Great Food.
+              </p>
+              <p className="text-[11px] opacity-60">Better Business.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
