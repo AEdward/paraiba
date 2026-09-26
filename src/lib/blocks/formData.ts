@@ -125,6 +125,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
       } catch {
         body = { type: "doc", content: [{ type: "paragraph" }] };
       }
+      const captionTitle = optStr(formData, "captionTitle");
       return {
         eyebrow: optStr(formData, "eyebrow"),
         heading: optStr(formData, "heading"),
@@ -136,6 +137,13 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         imageFit: formData.get("imageFit") === "contain" ? "contain" : "cover",
         imageBleed: formData.get("imageBleed") === "on",
         imageGlow: formData.get("imageGlow") === "on",
+        imageCaption: captionTitle
+          ? {
+              icon: optStr(formData, "captionIcon"),
+              title: captionTitle,
+              subtitle: optStr(formData, "captionSubtitle"),
+            }
+          : undefined,
       };
     }
     case "cardGrid": {

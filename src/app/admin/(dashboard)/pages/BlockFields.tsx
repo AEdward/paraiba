@@ -568,6 +568,26 @@ export function BlockFields({ block }: { block: BlockRecord }) {
               <input type="checkbox" name="imageGlow" value="on" defaultChecked={data.imageGlow} />
               Enlarge and add a soft glow behind the boxed photo (for a UI mockup/screenshot)
             </label>
+            <p className="mt-4 text-sm font-medium" style={{ color: "var(--ink)" }}>
+              Caption card over the photo — optional
+            </p>
+            <div className="mt-2 grid grid-cols-3 gap-3">
+              <select
+                name="captionIcon"
+                defaultValue={data.imageCaption?.icon ?? ""}
+                className={inputClass}
+                style={inputStyle}
+              >
+                <option value="">No icon</option>
+                {ICON_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+              <Field label="Title" name="captionTitle" defaultValue={data.imageCaption?.title} placeholder="Elevated Dining Experience." />
+              <Field label="Subtitle" name="captionSubtitle" defaultValue={data.imageCaption?.subtitle} placeholder="Simple. Seamless. Smart." />
+            </div>
           </div>
         </div>
       );

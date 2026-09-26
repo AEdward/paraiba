@@ -157,7 +157,10 @@ Every page's content lives in the database as an ordered list of **blocks**, not
   blurred theme-color halo behind the still-boxed photo, so it reads bigger and blends
   into the section without masking the image's own pixels — meant for a UI mockup/
   screenshot, where edge-masking would look broken (used on Yeneta's "Streamline Your
-  Operations" section).
+  Operations" section). A boxed photo (i.e. not `imageBleed`) can also take an optional
+  `imageCaption` ({icon, title, subtitle}) floating over its bottom-left corner, e.g.
+  "Effortless Dining Experience." — the same caption card `cardGrid`'s split+photo layout
+  uses (used on Mead's "Built for the Food Industry" section).
 - **`section`** is different from the other block types above: instead of one fixed
   shape, it's a blank container an admin fills freely with an ordered list of small
   **elements** — WordPress/Strapi-style, rather than picking a whole preset template.

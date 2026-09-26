@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, ChefHat, ClipboardList, FileBarChart2, PackageSearch, Users } from "lucide-react";
+import { ArrowRight, ChefHat, ClipboardList, FileBarChart2, PackageSearch, Sparkles, Users } from "lucide-react";
 import { ShellNavbar } from "./ShellNavbar";
 
 const heroFeatures = [
@@ -8,6 +8,17 @@ const heroFeatures = [
   { icon: PackageSearch, label: "Track Inventory in Real-Time" },
   { icon: Users, label: "Handle Staff & Shifts" },
   { icon: FileBarChart2, label: "Get Detailed Reports" },
+];
+
+const heroStats = [
+  { label: "Total Sales", value: "ETB 248,500", change: "+12%" },
+  { label: "Orders Today", value: "86", change: "+4%" },
+  { label: "Active Tables", value: "12", change: "+2%" },
+];
+
+const heroRecentOrders = [
+  { table: "Table 5", amount: "ETB 1,250", color: "#10b981" },
+  { table: "Table 3", amount: "ETB 780", color: "var(--color-ember)" },
 ];
 
 function MeadMark({ size = 36 }: { size?: number }) {
@@ -82,41 +93,81 @@ export function MeadHero({ name }: { name: string }) {
         </div>
 
         <div className="relative mx-auto w-full">
+          <div
+            aria-hidden
+            className="absolute -inset-10 -z-10"
+            style={{
+              background: "linear-gradient(135deg, var(--color-ember), var(--color-amber))",
+              borderRadius: "44% 56% 58% 42% / 48% 40% 60% 52%",
+              filter: "blur(50px)",
+              opacity: 0.6,
+            }}
+          />
           <Image
             src="/mead-hero.webp"
             alt=""
             width={1536}
             height={1024}
             className="w-full rounded-[2rem] object-cover"
+            style={{
+              maskImage: "radial-gradient(ellipse closest-side at 50% 50%, black 58%, transparent 100%)",
+              WebkitMaskImage: "radial-gradient(ellipse closest-side at 50% 50%, black 58%, transparent 100%)",
+            }}
             priority
             unoptimized
           />
 
-          <div
-            className="absolute top-4 left-4 flex items-center gap-2 rounded-2xl border px-3.5 py-2.5 shadow-lg"
-            style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
-          >
-            <CheckCircle2 size={16} style={{ color: "#10b981" }} />
-            <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
-              Order Confirmed
-            </p>
-          </div>
+          <Sparkles aria-hidden size={28} className="absolute top-2 left-10 sm:left-14" style={{ color: "var(--color-amber)" }} />
 
           <div
-            className="absolute right-4 bottom-4 flex items-center gap-2.5 rounded-2xl border px-4 py-3 shadow-lg"
+            className="absolute right-2 bottom-2 w-64 rounded-2xl border p-3.5 shadow-lg sm:right-4 sm:bottom-4 sm:w-72"
             style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
           >
-            <span
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-              style={{ background: "var(--color-ember)" }}
-            >
-              <ChefHat size={17} style={{ color: "#ffffff" }} />
-            </span>
-            <div>
-              <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
-                Great Food.
+            <div className="flex items-center gap-1.5 border-b pb-2" style={{ borderColor: "var(--border-soft)" }}>
+              <MeadMark size={18} />
+              <p className="font-display text-xs font-bold" style={{ color: "var(--ink)" }}>
+                Overview
               </p>
-              <p className="text-[11px] opacity-60">Better Business.</p>
+            </div>
+
+            <div className="mt-2.5 grid grid-cols-3 gap-2">
+              {heroStats.map((stat) => (
+                <div key={stat.label}>
+                  <p className="text-[10px] opacity-55">{stat.label}</p>
+                  <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+                    {stat.value}
+                  </p>
+                  <p className="text-[10px] font-semibold" style={{ color: "#10b981" }}>
+                    {stat.change}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <svg viewBox="0 0 200 50" className="mt-2.5 h-10 w-full" aria-hidden>
+              <polyline
+                points="0,40 25,30 50,35 75,20 100,28 125,15 150,22 175,8 200,14"
+                fill="none"
+                stroke="var(--color-ember)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <div className="mt-2.5 flex flex-col gap-1.5 border-t pt-2.5" style={{ borderColor: "var(--border-soft)" }}>
+              <p className="text-[10px] font-bold tracking-wide uppercase opacity-55">Recent Orders</p>
+              {heroRecentOrders.map((order) => (
+                <div key={order.table} className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: order.color }} />
+                    <p className="text-[11px] font-semibold" style={{ color: "var(--ink)" }}>
+                      {order.table}
+                    </p>
+                  </div>
+                  <p className="text-[11px] opacity-60">{order.amount}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

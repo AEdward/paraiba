@@ -99,6 +99,10 @@ export type RichTextData = {
   // imageBleed) — meant for a UI mockup/screenshot, where content-masking
   // its edges would look broken.
   imageGlow?: boolean;
+  // An optional caption card floating over the boxed photo's bottom-left
+  // corner, e.g. "Elevated Dining Experience." — only used when imageUrl
+  // is set and imageBleed is not.
+  imageCaption?: { icon?: IconKey; title: string; subtitle?: string };
 };
 
 export type CardGridItem = {

@@ -1,7 +1,7 @@
 import { FadeIn } from "@/components/FadeIn";
 import { SectionShell, Eyebrow } from "./SectionShell";
 import { renderRichDoc } from "@/lib/blocks/renderRichDoc";
-import type { RichTextData } from "@/lib/blocks/types";
+import { ICONS, type RichTextData } from "@/lib/blocks/types";
 
 export function RichTextBlock({ data }: { data: RichTextData }) {
   const text = (
@@ -55,10 +55,11 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
     const imageFirst = (data.imagePosition ?? "left") === "left";
     const contain = data.imageFit === "contain";
     const glow = data.imageGlow;
+    const CaptionIcon = data.imageCaption?.icon ? ICONS[data.imageCaption.icon] : undefined;
     return (
       <SectionShell theme={data.theme}>
         <div className={`grid items-center gap-10 lg:gap-14 ${glow ? "lg:grid-cols-[1fr_1.15fr]" : "lg:grid-cols-2"}`}>
-          <FadeIn className={imageFirst ? "lg:order-1" : "lg:order-2"}>
+          <FadeIn className={`relative ${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={data.imageUrl}
@@ -73,6 +74,29 @@ export function RichTextBlock({ data }: { data: RichTextData }) {
                   : undefined
               }
             />
+            {data.imageCaption && (
+              <div
+                className="absolute bottom-4 left-4 flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-lg"
+                style={{ background: "var(--surface)" }}
+              >
+                {CaptionIcon && (
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                    style={{ background: "var(--color-ember)" }}
+                  >
+                    <CaptionIcon size={16} style={{ color: "#ffffff" }} />
+                  </span>
+                )}
+                <div>
+                  <p className="text-xs font-bold" style={{ color: "var(--ink)" }}>
+                    {data.imageCaption.title}
+                  </p>
+                  {data.imageCaption.subtitle && (
+                    <p className="text-[11px] opacity-60">{data.imageCaption.subtitle}</p>
+                  )}
+                </div>
+              </div>
+            )}
           </FadeIn>
           <FadeIn delay={0.1} className={imageFirst ? "lg:order-2" : "lg:order-1"}>
             <div className="rounded-2xl p-6" style={tintStyle}>
