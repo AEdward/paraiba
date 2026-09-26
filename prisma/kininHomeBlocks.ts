@@ -84,6 +84,9 @@ export const kininHomeBlocks: SeedBlock[] = [
     layout: "split",
     cardStyle: "tinted",
     columns: 3,
+    imageUrl: "/kinin-app-mockup.webp",
+    imagePosition: "left",
+    imageFit: "contain",
     items: [
       { icon: "target", title: "Fast & Accurate Dispensing" },
       { icon: "cloud", title: "Real-time Inventory Tracking" },
