@@ -5,6 +5,7 @@ import { LoginForm } from "./LoginForm";
 export const metadata: Metadata = {
   title: "Admin Login",
 };
+export const dynamic = "force-dynamic";
 
 export default function AdminLoginPage() {
   return (

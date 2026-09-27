@@ -3,6 +3,7 @@ import { JobForm } from "../JobForm";
 import { createJob } from "../actions";
 
 export const metadata: Metadata = { title: "New Posting" };
+export const dynamic = "force-dynamic";
 
 export default function NewJobPage() {
   return (

@@ -9,6 +9,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { getNavData } from "@/lib/nav";
 
 export const metadata: Metadata = { title: "Page Not Found" };
+export const dynamic = "force-dynamic";
 
 export default async function NotFound() {
   const [products, settings, headerNav, footerNav] = await Promise.all([

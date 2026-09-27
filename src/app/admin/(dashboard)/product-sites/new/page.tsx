@@ -3,6 +3,7 @@ import { ProductSiteForm } from "../ProductSiteForm";
 import { createProductSite } from "../actions";
 
 export const metadata: Metadata = { title: "New Product Site" };
+export const dynamic = "force-dynamic";
 
 export default function NewProductSitePage() {
   const rootDomain = process.env.ROOT_DOMAIN || "your-domain.com";

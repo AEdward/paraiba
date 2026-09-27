@@ -5,6 +5,7 @@ import { ProjectForm } from "../ProjectForm";
 import { updateProject } from "../actions";
 
 export const metadata: Metadata = { title: "Edit Product" };
+export const dynamic = "force-dynamic";
 
 export default async function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

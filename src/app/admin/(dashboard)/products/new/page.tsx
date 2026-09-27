@@ -3,6 +3,7 @@ import { ProjectForm } from "../ProjectForm";
 import { createProject } from "../actions";
 
 export const metadata: Metadata = { title: "New Product" };
+export const dynamic = "force-dynamic";
 
 export default function NewProjectPage() {
   return (

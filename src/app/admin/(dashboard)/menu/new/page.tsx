@@ -3,6 +3,7 @@ import { NavItemForm } from "../NavItemForm";
 import { createNavItem } from "../actions";
 
 export const metadata: Metadata = { title: "New Menu Link" };
+export const dynamic = "force-dynamic";
 
 export default function NewNavItemPage() {
   return (

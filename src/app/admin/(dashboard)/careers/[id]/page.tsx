@@ -6,6 +6,7 @@ import { JobForm } from "../JobForm";
 import { updateJob } from "../actions";
 
 export const metadata: Metadata = { title: "Edit Posting" };
+export const dynamic = "force-dynamic";
 
 export default async function EditJobPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

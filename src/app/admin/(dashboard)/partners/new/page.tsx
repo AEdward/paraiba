@@ -3,6 +3,7 @@ import { PartnerForm } from "../PartnerForm";
 import { createPartner } from "../actions";
 
 export const metadata: Metadata = { title: "New Partner" };
+export const dynamic = "force-dynamic";
 
 export default function NewPartnerPage() {
   return (
