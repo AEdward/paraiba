@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { SectionShell, Eyebrow } from "@/components/blocks/SectionShell";
 import { getPartners, partnerLogoSrc } from "@/lib/partners";
 import { ComingSoon } from "@/components/ComingSoon";
@@ -29,30 +30,34 @@ export default async function PartnersPage() {
         The technology, business, and integration partners we work with to build and deliver
         for our clients.
       </p>
-      <div className="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-3">
+      <div className="mx-auto mt-12 grid max-w-5xl gap-6 text-left sm:grid-cols-2 lg:grid-cols-3">
         {partners.map((partner) => {
           const logoSrc = partnerLogoSrc(partner);
-          const content = (
+          return (
             <div
-              className="flex h-28 flex-col items-center justify-center gap-3 rounded-2xl border p-5"
-              style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
+              key={partner.id}
+              className="flex flex-col gap-4 rounded-2xl border p-6"
+              style={{ borderColor: "var(--border-soft)" }}
             >
-              {logoSrc ? (
+              {logoSrc && (
                 /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={logoSrc} alt={partner.name} className="max-h-10 w-auto max-w-[140px] object-contain" />
-              ) : (
-                <span className="font-display text-base font-bold" style={{ color: "var(--ink)" }}>
-                  {partner.name}
-                </span>
+                <img src={logoSrc} alt={partner.name} className="h-10 w-auto max-w-[160px] object-contain" />
+              )}
+              <p className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
+                {partner.name}
+              </p>
+              {partner.website && (
+                <a
+                  href={partner.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-display inline-flex items-center gap-1.5 text-sm font-bold"
+                  style={{ color: "var(--color-ember)" }}
+                >
+                  Visit website <ArrowRight size={14} />
+                </a>
               )}
             </div>
-          );
-          return partner.website ? (
-            <a key={partner.id} href={partner.website} target="_blank" rel="noopener noreferrer">
-              {content}
-            </a>
-          ) : (
-            <div key={partner.id}>{content}</div>
           );
         })}
       </div>

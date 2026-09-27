@@ -19,14 +19,25 @@ export async function PartnersTrustBarBlock({ data }: { data: PartnersTrustBarDa
       className={`${data.theme === "dark" ? "paraiba-dark-section" : "paraiba-light-section"} border-t`}
       style={{ borderColor: "var(--border-soft)" }}
     >
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-6xl px-6 py-14">
         <FadeIn>
           {data.eyebrow && (
-            <p className="font-display text-center text-xs font-semibold tracking-[0.3em] uppercase opacity-45">
-              {data.eyebrow}
-            </p>
+            <div className="flex items-center gap-2.5">
+              <span className="h-[2px] w-6" style={{ background: "var(--color-ember)" }} />
+              <p className="font-display text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "var(--color-ember)" }}>
+                {data.eyebrow}
+              </p>
+            </div>
           )}
-          <div className="mt-6">
+          {data.heading && (
+            <h2
+              className="font-display mt-4 max-w-2xl text-2xl leading-tight font-bold sm:text-3xl"
+              style={{ color: "var(--ink)" }}
+            >
+              {data.heading}
+            </h2>
+          )}
+          <div className="mt-8">
             <PartnersMarquee partners={display} />
           </div>
         </FadeIn>

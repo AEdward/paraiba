@@ -261,7 +261,7 @@ export async function readBlockFormData(type: BlockType, formData: FormData): Pr
         theme,
       };
     case "partnersTrustBar":
-      return { eyebrow: optStr(formData, "eyebrow"), theme };
+      return { eyebrow: optStr(formData, "eyebrow"), heading: optStr(formData, "heading"), theme };
     case "openPositions":
       return { eyebrow: optStr(formData, "eyebrow"), heading: str(formData, "heading"), theme };
     case "contactPanel":

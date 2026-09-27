@@ -848,7 +848,13 @@ export function BlockFields({ block }: { block: BlockRecord }) {
       const data = block.data as PartnersTrustBarData;
       return (
         <div className="flex flex-col gap-4">
-          <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} />
+          <Field label="Eyebrow — optional" name="eyebrow" defaultValue={data.eyebrow} placeholder="Our Partners" />
+          <Field
+            label="Heading — optional"
+            name="heading"
+            defaultValue={data.heading}
+            placeholder="Trusted by organizations across the value chain."
+          />
           <ThemeField defaultValue={data.theme} />
           <p className="text-xs opacity-50">
             Logos shown here come live from Admin → Partners, and this section hides itself

@@ -19,7 +19,7 @@ export function PartnersMarquee({ partners }: { partners: PartnerDisplay[] }) {
           "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
       }}
     >
-      <div className="partners-marquee-track flex w-max items-center gap-5">
+      <div className="partners-marquee-track flex w-max items-center gap-12">
         {loop.map((partner, i) => (
           <PartnerLogo key={`${partner.id}-${i}`} partner={partner} />
         ))}
@@ -30,12 +30,12 @@ export function PartnersMarquee({ partners }: { partners: PartnerDisplay[] }) {
 
 function PartnerLogo({ partner }: { partner: PartnerDisplay }) {
   const content = partner.logoSrc ? (
-    <span className="partners-marquee-card flex h-24 w-56 shrink-0 items-center justify-center rounded-2xl">
+    <span className="flex h-12 w-32 shrink-0 items-center justify-center opacity-80 transition-opacity hover:opacity-100">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={partner.logoSrc}
         alt={partner.name}
-        className="max-h-14 max-w-[78%] object-contain"
+        className="max-h-12 max-w-full object-contain"
         loading="lazy"
       />
     </span>

@@ -109,7 +109,11 @@ export const homeBlocks: SeedBlock[] = [
       { icon: "gem", title: "Client Focused", description: "Your goals are at the center of everything we do." },
     ],
   }),
-  block("partnersTrustBar", { eyebrow: "Growing Together with Amazing Clients", theme: "light" }),
+  block("partnersTrustBar", {
+    eyebrow: "Our Partners",
+    heading: "Trusted by organizations across the value chain.",
+    theme: "light",
+  }),
   block("cta", {
     eyebrow: "Let's build",
     heading: "Ready to Build Something Great?",

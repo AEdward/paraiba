@@ -219,6 +219,7 @@ export type ProductsPreviewData = {
 
 export type PartnersTrustBarData = {
   eyebrow?: string;
+  heading?: string;
   theme: SectionTheme;
 };
 

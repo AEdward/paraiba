@@ -166,21 +166,6 @@ body {
   animation-play-state: paused;
 }
 
-/* Fixed white card behind every logo (not theme-linked) so a partner's real
-   logo colors always stay legible, whether the section around it is dark or
-   light, and however that logo was designed (dark text, colored mark, etc).
-   Flat border only (no shadow), matching the tech-stack logo grid's style. */
-.partners-marquee-card {
-  background: #ffffff;
-  border: 1px solid rgba(6, 20, 38, 0.1);
-  padding: 1.25rem;
-  transition: transform 0.2s ease;
-}
-
-.partners-marquee-card:hover {
-  transform: translateY(-3px);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .partners-marquee-track {
     animation: none;
