@@ -35,7 +35,7 @@ function PartnerLogo({ partner }: { partner: PartnerDisplay }) {
       <img
         src={partner.logoSrc}
         alt={partner.name}
-        className="max-h-12 max-w-full object-contain"
+        className="max-h-12 max-w-full grayscale object-contain"
         loading="lazy"
       />
     </span>

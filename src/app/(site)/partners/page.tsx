@@ -41,7 +41,7 @@ export default async function PartnersPage() {
             >
               {logoSrc && (
                 /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={logoSrc} alt={partner.name} className="h-10 w-auto max-w-[160px] object-contain" />
+                <img src={logoSrc} alt={partner.name} className="h-10 w-auto max-w-[160px] grayscale object-contain" />
               )}
               <p className="font-display text-lg font-bold" style={{ color: "var(--ink)" }}>
                 {partner.name}
