@@ -30,12 +30,12 @@ export function PartnersMarquee({ partners }: { partners: PartnerDisplay[] }) {
 
 function PartnerLogo({ partner }: { partner: PartnerDisplay }) {
   const content = partner.logoSrc ? (
-    <span className="flex h-12 w-32 shrink-0 items-center justify-center opacity-80 transition-opacity hover:opacity-100">
+    <span className="flex h-20 w-44 shrink-0 items-center justify-center opacity-80 transition-opacity hover:opacity-100">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={partner.logoSrc}
         alt={partner.name}
-        className="max-h-12 max-w-full grayscale object-contain"
+        className="max-h-20 max-w-full grayscale object-contain"
         loading="lazy"
       />
     </span>
