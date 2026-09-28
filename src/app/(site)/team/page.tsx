@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 import { getPageBlocks } from "@/lib/blocks/data";
 
-export const metadata: Metadata = { title: "Leadership & Team" };
+export const metadata: Metadata = {
+  title: "Leadership & Team",
+  description: "The people leading Paraiba Technology PLC.",
+};
 export const dynamic = "force-dynamic";
 
 export default async function TeamPage() {

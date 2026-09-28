@@ -4,7 +4,10 @@ import { SectionShell, Eyebrow } from "@/components/blocks/SectionShell";
 import { getPartners, partnerLogoSrc } from "@/lib/partners";
 import { ComingSoon } from "@/components/ComingSoon";
 
-export const metadata: Metadata = { title: "Partners" };
+export const metadata: Metadata = {
+  title: "Partners",
+  description: "Organizations Paraiba Technology PLC works with across the value chain.",
+};
 export const dynamic = "force-dynamic";
 
 export default async function PartnersPage() {
