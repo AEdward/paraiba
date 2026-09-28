@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 import { SESSION_COOKIE } from "@/lib/auth";
-import { getProductSubdomain } from "@/lib/subdomain";
+import { getProductSubdomain, isPortalHost } from "@/lib/subdomain";
 
 export async function proxy(request: NextRequest) {
   const subdomain = getProductSubdomain(request.headers.get("host"), process.env.ROOT_DOMAIN ?? "");
@@ -11,12 +11,25 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  if (!request.nextUrl.pathname.startsWith("/admin")) {
-    return NextResponse.next();
+  // The "portal" subdomain is the admin dashboard's own host — every path on
+  // it maps to the same path under /admin, so the URL never shows "/admin".
+  const portalHost = isPortalHost(request.headers.get("host"), process.env.ROOT_DOMAIN ?? "");
+  const requestPath = request.nextUrl.pathname;
+  const adminPath = portalHost ? `/admin${requestPath === "/" ? "" : requestPath}` : requestPath;
+
+  const rewriteIfPortal = () => {
+    if (!portalHost) return NextResponse.next();
+    const url = request.nextUrl.clone();
+    url.pathname = adminPath;
+    return NextResponse.rewrite(url);
+  };
+
+  if (!adminPath.startsWith("/admin")) {
+    return rewriteIfPortal();
   }
 
-  if (request.nextUrl.pathname === "/admin/login") {
-    return NextResponse.next();
+  if (adminPath === "/admin/login") {
+    return rewriteIfPortal();
   }
 
   const token = request.cookies.get(SESSION_COOKIE)?.value;
@@ -33,11 +46,12 @@ export async function proxy(request: NextRequest) {
   }
 
   if (!authenticated) {
-    const loginUrl = new URL("/admin/login", request.url);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = portalHost ? "/login" : "/admin/login";
     return NextResponse.redirect(loginUrl);
   }
 
-  return NextResponse.next();
+  return rewriteIfPortal();
 }
 
 export const config = {

@@ -1,7 +1,7 @@
 // Pure string logic, no DB access — safe to run inside the proxy/middleware,
 // which can't use the Prisma/pg driver adapter this app relies on elsewhere.
 
-export const RESERVED_SUBDOMAINS = new Set(["www", "app", "api", "admin", "mail", "ftp"]);
+export const RESERVED_SUBDOMAINS = new Set(["www", "app", "api", "admin", "portal", "mail", "ftp"]);
 
 // Returns the product subdomain a request's Host header targets, or null if
 // it's the main site. "<sub>.localhost[:port]" always works in local dev,
@@ -25,6 +25,16 @@ export function getProductSubdomain(host: string | null, rootDomain: string): st
   // app.temari.paraiba.com for the real application) isn't handled here.
   if (!sub || sub.includes(".") || RESERVED_SUBDOMAINS.has(sub)) return null;
   return sub;
+}
+
+// True if a request's Host header targets the "portal" subdomain, which the
+// proxy maps to the admin dashboard so it never shows "/admin" in the URL.
+export function isPortalHost(host: string | null, rootDomain: string): boolean {
+  if (!host) return false;
+  const hostname = host.split(":")[0].toLowerCase();
+  if (hostname === "portal.localhost") return true;
+  const root = rootDomain.toLowerCase().trim();
+  return Boolean(root) && hostname === `portal.${root}`;
 }
 
 // The inverse of getProductSubdomain — builds the absolute URL for a
