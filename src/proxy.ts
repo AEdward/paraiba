@@ -18,6 +18,16 @@ export async function proxy(request: NextRequest) {
   // is left as-is rather than getting a second prefix.
   const portalHost = isPortalHost(request.headers.get("host"), process.env.ROOT_DOMAIN ?? "");
   const requestPath = request.nextUrl.pathname;
+
+  // The admin dashboard now lives only on the portal subdomain — the old
+  // paraibatech.com/admin path is closed off entirely rather than left as a
+  // second, unadvertised way in.
+  if (!portalHost && requestPath.startsWith("/admin")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/__admin_closed__";
+    return NextResponse.rewrite(url);
+  }
+
   const adminPath =
     portalHost && !requestPath.startsWith("/admin")
       ? `/admin${requestPath === "/" ? "" : requestPath}`
