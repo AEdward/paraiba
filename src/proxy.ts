@@ -12,10 +12,16 @@ export async function proxy(request: NextRequest) {
   }
 
   // The "portal" subdomain is the admin dashboard's own host — every path on
-  // it maps to the same path under /admin, so the URL never shows "/admin".
+  // it maps to the same path under /admin. Server actions throughout the
+  // admin section redirect to absolute "/admin/..." paths directly (they
+  // predate this subdomain), so a path that already starts with "/admin"
+  // is left as-is rather than getting a second prefix.
   const portalHost = isPortalHost(request.headers.get("host"), process.env.ROOT_DOMAIN ?? "");
   const requestPath = request.nextUrl.pathname;
-  const adminPath = portalHost ? `/admin${requestPath === "/" ? "" : requestPath}` : requestPath;
+  const adminPath =
+    portalHost && !requestPath.startsWith("/admin")
+      ? `/admin${requestPath === "/" ? "" : requestPath}`
+      : requestPath;
 
   const rewriteIfPortal = () => {
     if (!portalHost) return NextResponse.next();
