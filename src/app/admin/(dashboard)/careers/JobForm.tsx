@@ -36,6 +36,41 @@ export function JobForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <label htmlFor="category" className={labelClass} style={{ color: "var(--ink)" }}>
+            Category
+          </label>
+          <input
+            id="category"
+            name="category"
+            required
+            defaultValue={job?.category ?? "Engineering"}
+            placeholder="Engineering"
+            className={inputClass}
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="level" className={labelClass} style={{ color: "var(--ink)" }}>
+            Level
+          </label>
+          <select
+            id="level"
+            name="level"
+            defaultValue={job?.level ?? "Mid"}
+            className={inputClass}
+            style={inputStyle}
+          >
+            <option value="Internship">Internship</option>
+            <option value="Junior">Junior</option>
+            <option value="Mid">Mid</option>
+            <option value="Senior">Senior</option>
+            <option value="Lead">Lead</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div>
           <label htmlFor="location" className={labelClass} style={{ color: "var(--ink)" }}>
             Location
           </label>
@@ -44,7 +79,7 @@ export function JobForm({
             name="location"
             required
             defaultValue={job?.location}
-            placeholder="Addis Ababa · Remote"
+            placeholder="Addis Ababa, Ethiopia"
             className={inputClass}
             style={inputStyle}
           />
@@ -63,6 +98,22 @@ export function JobForm({
             <option value="Full-time">Full-time</option>
             <option value="Part-time">Part-time</option>
             <option value="Contract">Contract</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="workMode" className={labelClass} style={{ color: "var(--ink)" }}>
+            Work mode
+          </label>
+          <select
+            id="workMode"
+            name="workMode"
+            defaultValue={job?.workMode ?? "On-site"}
+            className={inputClass}
+            style={inputStyle}
+          >
+            <option value="On-site">On-site</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
           </select>
         </div>
       </div>

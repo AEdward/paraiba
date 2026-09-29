@@ -90,8 +90,11 @@ model ProductBlock {
 model JobPosting {
   id           String           @id @default(cuid())
   title        String
+  category     String           @default("Engineering") // e.g. "Engineering", "Design", "Sales"
+  level        String           @default("Mid") // "Internship" | "Junior" | "Mid" | "Senior" | "Lead"
   location     String
   type         String // "Full-time" | "Part-time" | "Contract"
+  workMode     String           @default("On-site") // "On-site" | "Remote" | "Hybrid"
   description  String
   status       String           @default("open") // "open" | "closed"
   createdAt    DateTime         @default(now())

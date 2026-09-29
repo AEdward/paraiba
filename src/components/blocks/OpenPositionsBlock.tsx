@@ -11,7 +11,7 @@ export async function OpenPositionsBlock({ data }: { data: OpenPositionsData }) 
 
   return (
     <SectionShell theme={data.theme} center>
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-4xl">
         <FadeIn>
           <Eyebrow color="var(--color-ember)">
             {data.eyebrow}

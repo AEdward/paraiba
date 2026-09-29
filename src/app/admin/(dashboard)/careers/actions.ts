@@ -5,6 +5,8 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
 const TYPES = ["Full-time", "Part-time", "Contract"];
+const LEVELS = ["Internship", "Junior", "Mid", "Senior", "Lead"];
+const WORK_MODES = ["On-site", "Remote", "Hybrid"];
 const STATUSES = ["open", "closed"];
 
 async function requireSession() {
@@ -15,19 +17,24 @@ async function requireSession() {
 
 function readJobForm(formData: FormData) {
   const type = String(formData.get("type") ?? "");
+  const level = String(formData.get("level") ?? "");
+  const workMode = String(formData.get("workMode") ?? "");
   const status = String(formData.get("status") ?? "");
   if (!TYPES.includes(type)) throw new Error("Invalid job type.");
+  if (!LEVELS.includes(level)) throw new Error("Invalid job level.");
+  if (!WORK_MODES.includes(workMode)) throw new Error("Invalid work mode.");
   if (!STATUSES.includes(status)) throw new Error("Invalid job status.");
 
   const title = String(formData.get("title") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
   const location = String(formData.get("location") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
 
-  if (!title || !location || !description) {
-    throw new Error("Title, location, and description are required.");
+  if (!title || !category || !location || !description) {
+    throw new Error("Title, category, location, and description are required.");
   }
 
-  return { title, location, type, status, description };
+  return { title, category, level, location, type, workMode, status, description };
 }
 
 export async function createJob(formData: FormData) {
