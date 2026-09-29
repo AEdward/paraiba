@@ -120,14 +120,89 @@ export function JobForm({
 
       <div>
         <label htmlFor="description" className={labelClass} style={{ color: "var(--ink)" }}>
-          Description
+          Short summary
         </label>
         <textarea
           id="description"
           name="description"
           required
-          rows={5}
+          rows={3}
           defaultValue={job?.description}
+          placeholder="Shown on the listing card, and as the role's intro if no longer 'About the role' text is set below."
+          className={inputClass}
+          style={inputStyle}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="aboutRole" className={labelClass} style={{ color: "var(--ink)" }}>
+          About the role (optional)
+        </label>
+        <textarea
+          id="aboutRole"
+          name="aboutRole"
+          rows={4}
+          defaultValue={job?.aboutRole ?? ""}
+          placeholder="Longer intro shown on the role's own page. Falls back to the short summary above if left blank."
+          className={inputClass}
+          style={inputStyle}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="responsibilities" className={labelClass} style={{ color: "var(--ink)" }}>
+          What you&apos;ll do (optional, one per line)
+        </label>
+        <textarea
+          id="responsibilities"
+          name="responsibilities"
+          rows={4}
+          defaultValue={job?.responsibilities ?? ""}
+          placeholder={"Ship features end-to-end\nWrite and consume REST APIs\n..."}
+          className={inputClass}
+          style={inputStyle}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="niceToHave" className={labelClass} style={{ color: "var(--ink)" }}>
+          Nice to have (optional, one per line)
+        </label>
+        <textarea
+          id="niceToHave"
+          name="niceToHave"
+          rows={3}
+          defaultValue={job?.niceToHave ?? ""}
+          placeholder={"Experience with Tailwind CSS\nExposure to PostgreSQL\n..."}
+          className={inputClass}
+          style={inputStyle}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="techStack" className={labelClass} style={{ color: "var(--ink)" }}>
+          Tech stack (optional, comma-separated)
+        </label>
+        <input
+          id="techStack"
+          name="techStack"
+          defaultValue={job?.techStack ?? ""}
+          placeholder="TypeScript, Next.js, React, PostgreSQL"
+          className={inputClass}
+          style={inputStyle}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="howToApply" className={labelClass} style={{ color: "var(--ink)" }}>
+          How to apply (optional)
+        </label>
+        <textarea
+          id="howToApply"
+          name="howToApply"
+          rows={3}
+          defaultValue={job?.howToApply ?? ""}
+          placeholder="Shown above the application form on the role's page."
           className={inputClass}
           style={inputStyle}
         />

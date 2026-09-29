@@ -19,24 +19,24 @@ model User {
 }
 
 model Project {
-  id           String   @id @default(cuid())
-  slug         String   @unique
-  name         String
-  tagline      String
-  description  String
-  status       String // "live" | "in-progress" | "concept" | "archived"
-  tags         String // comma-separated
-  link         String?
-  screenshot   String? // used when no file was uploaded — a link to an already-hosted image
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  tagline            String
+  description        String
+  status             String // "live" | "in-progress" | "concept" | "archived"
+  tags               String // comma-separated
+  link               String?
+  screenshot         String? // used when no file was uploaded — a link to an already-hosted image
   screenshotData     Bytes? // set when the admin uploads a file directly; takes priority over `screenshot`
   screenshotMimeType String?
-  embedLive    Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
-  githubRepo   String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
-  featured     Boolean  @default(false) // shown in the large showcase hero above the /projects grid
-  deliverables String? // "## Category\n- item\n- item\n\n## Category\n..." — rendered as grouped cards
-  caseStudy    String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  embedLive          Boolean  @default(false) // render `link` in a live iframe instead of the screenshot
+  githubRepo         String? // "owner/repo" — boots and renders the app live from source via StackBlitz, no deploy needed. Takes priority over embedLive.
+  featured           Boolean  @default(false) // shown in the large showcase hero above the /projects grid
+  deliverables       String? // "## Category\n- item\n- item\n\n## Category\n..." — rendered as grouped cards
+  caseStudy          String? // "## Section\nbody text\n\n## Section\n..." — rendered as numbered sections on the detail page
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 // A standalone, custom-designed marketing site for a product — fully
@@ -88,18 +88,23 @@ model ProductBlock {
 }
 
 model JobPosting {
-  id           String           @id @default(cuid())
-  title        String
-  category     String           @default("Engineering") // e.g. "Engineering", "Design", "Sales"
-  level        String           @default("Mid") // "Internship" | "Junior" | "Mid" | "Senior" | "Lead"
-  location     String
-  type         String // "Full-time" | "Part-time" | "Contract"
-  workMode     String           @default("On-site") // "On-site" | "Remote" | "Hybrid"
-  description  String
-  status       String           @default("open") // "open" | "closed"
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  applications JobApplication[]
+  id               String           @id @default(cuid())
+  title            String
+  category         String           @default("Engineering") // e.g. "Engineering", "Design", "Sales"
+  level            String           @default("Mid") // "Internship" | "Junior" | "Mid" | "Senior" | "Lead"
+  location         String
+  type             String // "Full-time" | "Part-time" | "Contract"
+  workMode         String           @default("On-site") // "On-site" | "Remote" | "Hybrid"
+  description      String
+  aboutRole        String? // longer intro shown on the role detail page; falls back to `description` if unset
+  responsibilities String? // "What you'll do" — one item per line
+  niceToHave       String? // one item per line
+  howToApply       String? // instructions shown above the application form
+  techStack        String? // comma-separated, e.g. "TypeScript, Next.js, PostgreSQL"
+  status           String           @default("open") // "open" | "closed"
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  applications     JobApplication[]
 }
 
 model JobApplication {

@@ -1,16 +1,12 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Briefcase, Clock, MapPin } from "lucide-react";
-import { ApplicationForm } from "@/components/ApplicationForm";
 import type { JobPosting } from "@/generated/prisma/client";
 
 export function JobCard({ job }: { job: JobPosting }) {
-  const [open, setOpen] = useState(false);
-
   return (
-    <div
-      className="rounded-2xl border p-6 transition-colors hover:border-(--color-teal)"
+    <Link
+      href={`/careers/${job.id}`}
+      className="block rounded-2xl border p-6 transition-colors hover:border-(--color-teal)"
       style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
     >
       <div className="flex flex-wrap items-center justify-between gap-6">
@@ -48,18 +44,13 @@ export function JobCard({ job }: { job: JobPosting }) {
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
+        <span
           className="font-display inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold"
           style={{ color: "var(--color-teal)" }}
         >
-          {open ? "Close" : "View role"}{" "}
-          <ArrowRight size={14} className={open ? "rotate-90 transition-transform" : "transition-transform"} />
-        </button>
+          View role <ArrowRight size={14} />
+        </span>
       </div>
-
-      {open && <ApplicationForm jobId={job.id} jobTitle={job.title} />}
-    </div>
+    </Link>
   );
 }

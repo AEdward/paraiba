@@ -34,7 +34,23 @@ function readJobForm(formData: FormData) {
     throw new Error("Title, category, location, and description are required.");
   }
 
-  return { title, category, level, location, type, workMode, status, description };
+  const optional = (name: string) => String(formData.get(name) ?? "").trim() || null;
+
+  return {
+    title,
+    category,
+    level,
+    location,
+    type,
+    workMode,
+    status,
+    description,
+    aboutRole: optional("aboutRole"),
+    responsibilities: optional("responsibilities"),
+    niceToHave: optional("niceToHave"),
+    techStack: optional("techStack"),
+    howToApply: optional("howToApply"),
+  };
 }
 
 export async function createJob(formData: FormData) {
