@@ -28,11 +28,21 @@ function readJobForm(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
   const location = String(formData.get("location") ?? "").trim();
+  const region = String(formData.get("region") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
 
-  if (!title || !category || !location || !description) {
-    throw new Error("Title, category, location, and description are required.");
+  if (!title || !category || !location || !region || !description) {
+    throw new Error("Title, category, location, region, and description are required.");
   }
+
+  const positions = Math.max(1, Number(formData.get("positions") ?? 1) || 1);
+  const minExperienceYears = Math.max(0, Number(formData.get("minExperienceYears") ?? 0) || 0);
+  const maxExperienceYears = Math.max(
+    minExperienceYears,
+    Number(formData.get("maxExperienceYears") ?? minExperienceYears) || minExperienceYears,
+  );
+  const expiresAtRaw = String(formData.get("expiresAt") ?? "").trim();
+  const expiresAt = expiresAtRaw ? new Date(expiresAtRaw) : null;
 
   const optional = (name: string) => String(formData.get(name) ?? "").trim() || null;
 
@@ -41,10 +51,15 @@ function readJobForm(formData: FormData) {
     category,
     level,
     location,
+    region,
     type,
     workMode,
     status,
     description,
+    positions,
+    minExperienceYears,
+    maxExperienceYears,
+    expiresAt,
     aboutRole: optional("aboutRole"),
     responsibilities: optional("responsibilities"),
     niceToHave: optional("niceToHave"),

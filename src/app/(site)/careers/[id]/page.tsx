@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Briefcase, Calendar, CheckCircle2, Clock, MapPin } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { ApplicationForm } from "@/components/ApplicationForm";
-import { getOpenJob, splitLines, splitTags } from "@/lib/jobs";
+import { db } from "@/lib/db";
+import { getOpenJob } from "@/lib/jobs";
+import { splitLines, splitTags } from "@/lib/jobConstants";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +25,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
   const { id } = await params;
   const job = await getOpenJob(id);
   if (!job) notFound();
+
+  await db.jobPosting.update({ where: { id }, data: { viewCount: { increment: 1 } } });
 
   const responsibilities = splitLines(job.responsibilities);
   const niceToHave = splitLines(job.niceToHave);

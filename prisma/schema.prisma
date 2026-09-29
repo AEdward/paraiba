@@ -88,23 +88,29 @@ model ProductBlock {
 }
 
 model JobPosting {
-  id               String           @id @default(cuid())
-  title            String
-  category         String           @default("Engineering") // e.g. "Engineering", "Design", "Sales"
-  level            String           @default("Mid") // "Internship" | "Junior" | "Mid" | "Senior" | "Lead"
-  location         String
-  type             String // "Full-time" | "Part-time" | "Contract"
-  workMode         String           @default("On-site") // "On-site" | "Remote" | "Hybrid"
-  description      String
-  aboutRole        String? // longer intro shown on the role detail page; falls back to `description` if unset
-  responsibilities String? // "What you'll do" — one item per line
-  niceToHave       String? // one item per line
-  howToApply       String? // instructions shown above the application form
-  techStack        String? // comma-separated, e.g. "TypeScript, Next.js, PostgreSQL"
-  status           String           @default("open") // "open" | "closed"
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  applications     JobApplication[]
+  id                 String           @id @default(cuid())
+  title              String
+  category           String           @default("Engineering") // e.g. "Engineering", "Design", "Sales"
+  level              String           @default("Mid") // "Internship" | "Junior" | "Mid" | "Senior" | "Lead"
+  location           String
+  type               String // "Full-time" | "Part-time" | "Contract"
+  workMode           String           @default("On-site") // "On-site" | "Remote" | "Hybrid"
+  description        String
+  aboutRole          String? // longer intro shown on the role detail page; falls back to `description` if unset
+  responsibilities   String? // "What you'll do" — one item per line
+  niceToHave         String? // one item per line
+  howToApply         String? // instructions shown above the application form
+  techStack          String? // comma-separated, e.g. "TypeScript, Next.js, PostgreSQL"
+  region             String? // Ethiopian region for the region filter, e.g. "Addis Ababa", "Oromia"
+  positions          Int              @default(1) // number of openings for this posting
+  minExperienceYears Int              @default(0)
+  maxExperienceYears Int              @default(3)
+  viewCount          Int              @default(0)
+  expiresAt          DateTime? // when set, the listing shows "X days left" instead of "Posted <date>"
+  status             String           @default("open") // "open" | "closed"
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  applications       JobApplication[]
 }
 
 model JobApplication {

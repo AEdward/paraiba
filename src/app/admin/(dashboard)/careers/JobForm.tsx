@@ -1,4 +1,5 @@
 import type { JobPosting } from "@/generated/prisma/client";
+import { ETHIOPIA_REGIONS } from "@/lib/jobConstants";
 
 const inputClass =
   "w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:border-(--color-teal)";
@@ -116,6 +117,87 @@ export function JobForm({
             <option value="Hybrid">Hybrid</option>
           </select>
         </div>
+      </div>
+
+      <div className="grid grid-cols-4 gap-4">
+        <div>
+          <label htmlFor="region" className={labelClass} style={{ color: "var(--ink)" }}>
+            Region
+          </label>
+          <select
+            id="region"
+            name="region"
+            required
+            defaultValue={job?.region ?? ETHIOPIA_REGIONS[0]}
+            className={inputClass}
+            style={inputStyle}
+          >
+            {ETHIOPIA_REGIONS.map((region) => (
+              <option key={region} value={region}>
+                {region}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="positions" className={labelClass} style={{ color: "var(--ink)" }}>
+            Positions
+          </label>
+          <input
+            id="positions"
+            name="positions"
+            type="number"
+            min={1}
+            required
+            defaultValue={job?.positions ?? 1}
+            className={inputClass}
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="minExperienceYears" className={labelClass} style={{ color: "var(--ink)" }}>
+            Min years exp.
+          </label>
+          <input
+            id="minExperienceYears"
+            name="minExperienceYears"
+            type="number"
+            min={0}
+            required
+            defaultValue={job?.minExperienceYears ?? 0}
+            className={inputClass}
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="maxExperienceYears" className={labelClass} style={{ color: "var(--ink)" }}>
+            Max years exp.
+          </label>
+          <input
+            id="maxExperienceYears"
+            name="maxExperienceYears"
+            type="number"
+            min={0}
+            required
+            defaultValue={job?.maxExperienceYears ?? 3}
+            className={inputClass}
+            style={inputStyle}
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="expiresAt" className={labelClass} style={{ color: "var(--ink)" }}>
+          Listing expires (optional — shows &quot;days left&quot; instead of the posted date)
+        </label>
+        <input
+          id="expiresAt"
+          name="expiresAt"
+          type="date"
+          defaultValue={job?.expiresAt ? job.expiresAt.toISOString().slice(0, 10) : ""}
+          className={inputClass}
+          style={inputStyle}
+        />
       </div>
 
       <div>

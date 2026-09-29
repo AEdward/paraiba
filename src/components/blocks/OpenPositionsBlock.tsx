@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
-import { JobCard } from "@/components/JobCard";
+import { JobBoard } from "@/components/JobBoard";
 import { SectionShell, Eyebrow } from "./SectionShell";
 import { getOpenJobs } from "@/lib/jobs";
 import type { OpenPositionsData } from "@/lib/blocks/types";
@@ -10,27 +10,25 @@ export async function OpenPositionsBlock({ data }: { data: OpenPositionsData }) 
   const jobs = await getOpenJobs();
 
   return (
-    <SectionShell theme={data.theme} center>
-      <div className="mx-auto max-w-4xl">
+    <SectionShell theme={data.theme}>
+      <div className="mx-auto max-w-2xl text-center">
         <FadeIn>
-          <Eyebrow color="var(--color-ember)">
-            {data.eyebrow}
-          </Eyebrow>
+          <Eyebrow color="var(--color-ember)">{data.eyebrow}</Eyebrow>
           <h2 className="font-display mt-4 text-2xl font-bold" style={{ color: "var(--ink)" }}>
             {data.heading}
           </h2>
         </FadeIn>
+      </div>
 
-        {jobs.length > 0 ? (
-          <div className="mt-10 flex flex-col gap-4 text-left">
-            {jobs.map((job, i) => (
-              <FadeIn key={job.id} delay={i * 0.06}>
-                <JobCard job={job} />
-              </FadeIn>
-            ))}
+      {jobs.length > 0 ? (
+        <FadeIn delay={0.05}>
+          <div className="mt-10">
+            <JobBoard jobs={jobs} />
           </div>
-        ) : (
-          <FadeIn delay={0.1}>
+        </FadeIn>
+      ) : (
+        <FadeIn delay={0.1}>
+          <div className="mx-auto max-w-md text-center">
             <p className="mx-auto mt-10 max-w-md opacity-70">
               We don&apos;t have any open roles posted right now. When we do, they&apos;ll show up
               here — but we&apos;re always glad to hear from people who want to build with us.
@@ -42,9 +40,9 @@ export async function OpenPositionsBlock({ data }: { data: OpenPositionsData }) 
             >
               Get in touch <ArrowRight size={16} />
             </Link>
-          </FadeIn>
-        )}
-      </div>
+          </div>
+        </FadeIn>
+      )}
     </SectionShell>
   );
 }

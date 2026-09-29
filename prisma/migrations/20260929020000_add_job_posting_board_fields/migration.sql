@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "JobPosting" ADD COLUMN     "region" TEXT,
+ADD COLUMN     "positions" INTEGER NOT NULL DEFAULT 1,
+ADD COLUMN     "minExperienceYears" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "maxExperienceYears" INTEGER NOT NULL DEFAULT 3,
+ADD COLUMN     "viewCount" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "expiresAt" TIMESTAMP(3);
