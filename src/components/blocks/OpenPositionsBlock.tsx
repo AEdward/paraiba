@@ -10,7 +10,7 @@ export async function OpenPositionsBlock({ data }: { data: OpenPositionsData }) 
   const jobs = await getOpenJobs();
 
   return (
-    <SectionShell theme={data.theme}>
+    <SectionShell theme={data.theme} maxWidth="max-w-[1600px]">
       <div className="mx-auto max-w-2xl text-center">
         <FadeIn>
           <Eyebrow color="var(--color-ember)">{data.eyebrow}</Eyebrow>

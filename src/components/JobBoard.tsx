@@ -255,7 +255,7 @@ export function JobBoard({ jobs }: { jobs: JobPosting[] }) {
         </p>
 
         {paged.length > 0 ? (
-          <div className="mt-4 flex flex-col gap-5">
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {paged.map((job) => (
               <JobBoardCard key={job.id} job={job} />
             ))}

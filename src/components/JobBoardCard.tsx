@@ -82,92 +82,89 @@ export function JobBoardCard({ job }: { job: JobPosting }) {
 
   return (
     <div
-      className="rounded-2xl border p-7"
+      className="flex flex-col rounded-2xl border p-5"
       style={{ borderColor: "var(--border-soft)", background: "var(--surface)" }}
     >
-      <div className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-1.5 text-sm font-medium opacity-60">
-          <Clock size={14} /> {timeLeftLabel(job.expiresAt, job.createdAt)}
+      <div className="flex items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1.5 text-xs font-medium opacity-60">
+          <Clock size={12} /> {timeLeftLabel(job.expiresAt, job.createdAt)}
         </span>
         <button
           type="button"
           onClick={toggleSave}
-          className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold"
+          className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold"
           style={{ borderColor: "var(--border-soft)", color: saved ? "var(--color-teal)" : "var(--ink)" }}
         >
-          <Bookmark size={14} fill={saved ? "var(--color-teal)" : "none"} /> {saved ? "Saved" : "Save"}
+          <Bookmark size={12} fill={saved ? "var(--color-teal)" : "none"} /> {saved ? "Saved" : "Save"}
         </button>
       </div>
 
-      <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-        <div className="flex min-w-0 flex-1 items-start gap-4">
-          <span
-            className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl"
-            style={{ background: "var(--background)" }}
-          >
-            <Image src="/paraiba-symbol.png" alt="" width={36} height={36} />
-          </span>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-display text-xl leading-snug font-bold" style={{ color: "var(--ink)" }}>
-              {job.title}
-            </h3>
-            <p className="mt-1 text-sm opacity-60">Paraiba Technology PLC</p>
-
-            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm opacity-70">
-              <span className="inline-flex items-center gap-1.5">
-                <Briefcase size={15} /> {job.category}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <MapPin size={15} /> {job.location}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock size={15} /> {experienceLabel}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Users size={15} /> {job.positions} position{job.positions === 1 ? "" : "s"}
-              </span>
-            </div>
-
-            <div className="mt-4">
-              <span
-                className="rounded-full px-3.5 py-1.5 text-sm font-semibold"
-                style={{ background: "rgba(22,207,192,0.12)", color: "var(--color-teal)" }}
-              >
-                {job.type}
-              </span>
-            </div>
-
-            <p className="mt-5 text-base opacity-70">{job.description}</p>
-          </div>
-        </div>
-
-        <div className="flex shrink-0 flex-col items-stretch gap-3 lg:w-48">
-          <Link
-            href={`/careers/${job.id}`}
-            className="font-display rounded-full border px-6 py-3 text-center text-sm font-semibold"
-            style={{ borderColor: "var(--border-soft)", color: "var(--ink)" }}
-          >
-            Read More
-          </Link>
-          <Link
-            href={`/careers/${job.id}#apply`}
-            className="font-display rounded-full px-6 py-3 text-center text-sm font-semibold text-(--color-cream)"
-            style={{ background: "var(--color-teal)" }}
-          >
-            Apply Now
-          </Link>
+      <div className="mt-4 flex items-start gap-3">
+        <span
+          className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl"
+          style={{ background: "var(--background)" }}
+        >
+          <Image src="/paraiba-symbol.png" alt="" width={28} height={28} />
+        </span>
+        <div className="min-w-0">
+          <h3 className="font-display text-base leading-snug font-bold" style={{ color: "var(--ink)" }}>
+            {job.title}
+          </h3>
+          <p className="mt-0.5 text-xs opacity-60">Paraiba Technology PLC</p>
         </div>
       </div>
 
-      <div
-        className="mt-6 flex items-center justify-between border-t pt-4 text-sm opacity-50"
-        style={{ borderColor: "var(--border-soft)" }}
-      >
+      <div className="mt-4 flex flex-col gap-1.5 text-sm opacity-70">
         <span className="inline-flex items-center gap-1.5">
-          <Eye size={14} /> {formatCount(job.viewCount)}
+          <Briefcase size={13} /> {job.category}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <MapPin size={13} /> {job.location}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Clock size={13} /> {experienceLabel}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Users size={13} /> {job.positions} position{job.positions === 1 ? "" : "s"}
+        </span>
+      </div>
+
+      <div className="mt-3">
+        <span
+          className="rounded-full px-3 py-1 text-xs font-semibold"
+          style={{ background: "rgba(22,207,192,0.12)", color: "var(--color-teal)" }}
+        >
+          {job.type}
+        </span>
+      </div>
+
+      <p className="mt-4 line-clamp-2 flex-1 border-t pt-4 text-sm opacity-70" style={{ borderColor: "var(--border-soft)" }}>
+        {job.description}
+      </p>
+
+      <div className="mt-4 flex items-center gap-2">
+        <Link
+          href={`/careers/${job.id}`}
+          className="font-display flex-1 rounded-full border px-4 py-2 text-center text-sm font-semibold"
+          style={{ borderColor: "var(--border-soft)", color: "var(--ink)" }}
+        >
+          Read More
+        </Link>
+        <Link
+          href={`/careers/${job.id}#apply`}
+          className="font-display flex-1 rounded-full px-4 py-2 text-center text-sm font-semibold text-(--color-cream)"
+          style={{ background: "var(--color-teal)" }}
+        >
+          Apply Now
+        </Link>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between text-xs opacity-50">
+        <span className="inline-flex items-center gap-1">
+          <Eye size={12} /> {formatCount(job.viewCount)}
         </span>
         <button type="button" onClick={share} aria-label="Share this role">
-          <Share2 size={15} />
+          <Share2 size={13} />
         </button>
       </div>
     </div>

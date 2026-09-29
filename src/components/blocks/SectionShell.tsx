@@ -11,6 +11,7 @@ export function SectionShell({
   tightTop = false,
   compact = false,
   background,
+  maxWidth = "max-w-6xl",
 }: {
   theme: SectionTheme;
   children: ReactNode;
@@ -29,6 +30,10 @@ export function SectionShell({
   // behind everything, edge-to-edge across the whole section — unlike
   // `children`, which stays inside the centered max-w-6xl column.
   background?: ReactNode;
+  // Widens the centered content column beyond the default max-w-6xl — for
+  // sections like the job board whose sidebar + content layout needs more
+  // room to breathe than the standard reading-width column allows.
+  maxWidth?: string;
 }) {
   const padding = compact
     ? "py-14 sm:py-16"
@@ -43,7 +48,7 @@ export function SectionShell({
     >
       {withMesh && <GradientMesh />}
       {background}
-      <div className={`relative mx-auto max-w-6xl px-6 ${padding} ${center ? "text-center" : ""}`}>
+      <div className={`relative mx-auto ${maxWidth} px-6 ${padding} ${center ? "text-center" : ""}`}>
         {children}
       </div>
     </section>
