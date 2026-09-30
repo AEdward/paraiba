@@ -205,7 +205,12 @@ function BlockCard({
           }}
         >
           <input type="hidden" name="id" value={block.id} />
-          <button type="submit" aria-label="Delete block" style={{ color: "var(--color-ember)" }}>
+          <button
+            type="submit"
+            aria-label="Delete block"
+            className="rounded-md p-2 transition-colors hover:bg-(--background)"
+            style={{ color: "var(--color-ember)" }}
+          >
             <Trash2 size={16} />
           </button>
         </form>

@@ -59,7 +59,11 @@ export function IndustriesShowcaseBlock({ data }: { data: IndustriesShowcaseData
             <FadeIn delay={0.2}>
               <div className="relative h-56 overflow-hidden rounded-2xl lg:h-full lg:min-h-[14rem]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={data.photoUrl} alt="" className="h-full w-full object-cover" />
+                {/* When photoHeading is set it's rendered as visible overlay text right
+                    below (already announced on its own), so the image can stay
+                    decorative; without it, fall back to the section heading so the
+                    photo is never left completely undescribed. */}
+                <img src={data.photoUrl} alt={data.photoHeading ? "" : data.heading} className="h-full w-full object-cover" />
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(0deg, rgba(6,12,24,0.85) 0%, rgba(6,12,24,0.05) 55%)" }}

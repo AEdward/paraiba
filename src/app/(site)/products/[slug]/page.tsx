@@ -94,6 +94,7 @@ export default async function ProjectPage({
               <DeviceMockup
                 gradient={getShowcaseGradient(project.slug)}
                 screenshot={project.screenshot}
+                label={project.name}
               />
             </TiltCard>
           );

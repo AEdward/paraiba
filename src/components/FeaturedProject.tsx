@@ -72,7 +72,7 @@ export function FeaturedProject({ project }: { project: Project }) {
             <LiveBrowserPreview url={embedUrl} label={getEmbedLabel(project)} />
           ) : (
             <TiltCard className="rounded-3xl" glowColor={statusColor[project.status]}>
-              <DeviceMockup gradient={getShowcaseGradient(project.slug)} screenshot={project.screenshot} />
+              <DeviceMockup gradient={getShowcaseGradient(project.slug)} screenshot={project.screenshot} label={project.name} />
             </TiltCard>
           );
         })()}

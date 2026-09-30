@@ -13,15 +13,17 @@ function PlaceholderScreen() {
   );
 }
 
-function Screen({ screenshot }: { screenshot?: string }) {
+function Screen({ screenshot, label }: { screenshot?: string; label?: string }) {
   if (screenshot) {
+    // A screen reader that already heard the laptop's description doesn't
+    // need the phone mockup (same screenshot) announced a second time.
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={screenshot} alt="" className="h-full w-full object-cover object-top" />;
+    return <img src={screenshot} alt={label ? `${label} screenshot` : ""} className="h-full w-full object-cover object-top" />;
   }
   return <PlaceholderScreen />;
 }
 
-export function DeviceMockup({ gradient, screenshot }: { gradient: string; screenshot?: string }) {
+export function DeviceMockup({ gradient, screenshot, label }: { gradient: string; screenshot?: string; label: string }) {
   return (
     <div
       className="relative overflow-hidden rounded-3xl px-8 py-16 sm:px-16 sm:py-20"
@@ -38,7 +40,7 @@ export function DeviceMockup({ gradient, screenshot }: { gradient: string; scree
         >
           <div className="rounded-t-xl border-[6px] border-b-0 border-neutral-900 bg-neutral-900 shadow-2xl">
             <div className="aspect-[16/10] overflow-hidden rounded-sm bg-black">
-              <Screen screenshot={screenshot} />
+              <Screen screenshot={screenshot} label={label} />
             </div>
           </div>
           <div className="relative h-3 rounded-b-md bg-neutral-800 shadow-xl">

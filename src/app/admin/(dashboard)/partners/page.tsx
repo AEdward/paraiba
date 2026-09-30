@@ -62,7 +62,7 @@ export default async function AdminPartnersPage() {
                       className="h-7 w-auto object-contain"
                     />
                   ) : (
-                    <span className="text-xs opacity-40">—</span>
+                    <span className="text-xs opacity-50">—</span>
                   )}
                 </td>
                 <td className="px-4 py-3 font-medium" style={{ color: "var(--ink)" }}>

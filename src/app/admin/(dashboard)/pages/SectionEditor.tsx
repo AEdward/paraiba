@@ -124,7 +124,7 @@ function ElementList({
               if (visible.length === 0) return null;
               return (
                 <div key={category.label} className="mb-2 last:mb-0">
-                  <p className="px-2 py-1 text-[10px] font-bold tracking-widest uppercase opacity-40">
+                  <p className="px-2 py-1 text-[10px] font-bold tracking-widest uppercase opacity-50">
                     {category.label}
                   </p>
                   {visible.map((type) => (
@@ -201,7 +201,13 @@ function ElementCard({
           </span>
           {open ? <ChevronUp size={15} opacity={0.5} /> : <ChevronDown size={15} opacity={0.5} />}
         </button>
-        <button type="button" onClick={onDelete} aria-label="Delete element" style={{ color: "var(--color-ember)" }}>
+        <button
+          type="button"
+          onClick={onDelete}
+          aria-label="Delete element"
+          className="rounded-md p-2 transition-colors hover:bg-(--background)"
+          style={{ color: "var(--color-ember)" }}
+        >
           <Trash2 size={15} />
         </button>
       </div>
@@ -812,7 +818,7 @@ function ElementFields({
           <div className="grid gap-4 sm:grid-cols-2">
             {columns.map((col, i) => (
               <div key={i} className="rounded-lg border p-3" style={{ borderColor: "var(--border-soft)" }}>
-                <p className="mb-2 text-xs font-bold tracking-widest uppercase opacity-40">Column {i + 1}</p>
+                <p className="mb-2 text-xs font-bold tracking-widest uppercase opacity-50">Column {i + 1}</p>
                 <ElementList
                   elements={col}
                   onChange={(next) => {

@@ -69,7 +69,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 {data.primaryLabel && data.primaryHref && (
                   <Link
                     href={data.primaryHref}
-                    className={`font-display inline-flex items-center gap-2 rounded-xl text-sm font-bold text-white transition-transform hover:-translate-y-0.5 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
+                    className={`font-display inline-flex items-center gap-2 rounded-xl text-sm font-bold text-white transition-transform hover:-translate-y-0.5 active:translate-y-0 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
                     style={{ background: "var(--color-ember)" }}
                   >
                     {data.primaryLabel} <ArrowRight size={16} />
@@ -78,7 +78,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 {data.secondaryLabel && data.secondaryHref && (
                   <Link
                     href={data.secondaryHref}
-                    className={`font-display inline-flex items-center gap-2 rounded-xl border text-sm font-bold transition-transform hover:-translate-y-0.5 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
+                    className={`font-display inline-flex items-center gap-2 rounded-xl border text-sm font-bold transition-transform hover:-translate-y-0.5 active:translate-y-0 ${mockupVariant ? "px-5 py-2.5" : "px-6 py-3.5"}`}
                     style={{ borderColor: "var(--border-soft)", background: "var(--surface)", color: "var(--ink)" }}
                   >
                     {data.secondaryLabel}
@@ -101,7 +101,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
             >
               <Hero3D />
             </div>
-            <p className="mt-3 text-center text-xs opacity-40">Drag to spin the mark</p>
+            <p className="mt-3 text-center text-xs opacity-50">Drag to spin the mark</p>
           </FadeIn>
         )}
 
@@ -109,7 +109,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
           <FadeIn delay={0.15} className="relative">
             <div className="flex items-center gap-4 sm:gap-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={data.mockupImage} alt="" className="min-w-0 flex-1 object-contain" />
+              <img src={data.mockupImage} alt={`${data.headline.trimEnd()} — product screenshot`} className="min-w-0 flex-1 object-contain" />
               {data.sideList && data.sideList.length > 0 && (
                 <div className="hidden shrink-0 flex-col gap-5 sm:flex sm:w-36 lg:w-40">
                   {data.sideList.map((item, i) => {

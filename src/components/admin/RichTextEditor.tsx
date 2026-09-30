@@ -75,7 +75,7 @@ export function RichTextEditor({
           <ListOrdered size={15} />
         </ToolbarButton>
       </div>
-      <div className="px-3 py-2.5">
+      <div className="rounded-b-lg px-3 py-2.5 transition-shadow focus-within:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-teal)_18%,transparent)]">
         <EditorContent editor={editor} />
       </div>
       <input type="hidden" name={name} value={json} readOnly />
