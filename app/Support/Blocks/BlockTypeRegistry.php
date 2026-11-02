@@ -54,6 +54,14 @@ class BlockTypeRegistry
         'section' => ['elements'],
     ];
 
+    // Mirrors src/lib/blocks/types.ts's 21 SectionElementType values.
+    public const SECTION_ELEMENT_TYPES = [
+        'heading', 'paragraph', 'list', 'quote', 'pullquote', 'code', 'preformatted', 'details', 'table',
+        'image', 'gallery', 'video', 'audio', 'file', 'cover', 'mediaText',
+        'icon', 'buttons', 'columns', 'separator', 'spacer',
+        'embed',
+    ];
+
     public static function defaultData(string $type): array
     {
         return match ($type) {
