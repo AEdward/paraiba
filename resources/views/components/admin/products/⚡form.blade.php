@@ -2,12 +2,17 @@
 
 use App\Enums\ProjectStatus;
 use App\Models\Project;
+use App\Support\HandlesUploads;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 new class extends Component
 {
+    use HandlesUploads, WithFileUploads;
+
     public ?Project $project = null;
 
     public string $slug = '';
@@ -18,6 +23,8 @@ new class extends Component
     public string $tags = '';
     public string $link = '';
     public string $screenshot_url = '';
+    public ?UploadedFile $screenshot_upload = null;
+    public bool $remove_screenshot = false;
     public bool $embed_live = false;
     public string $github_repo = '';
     public bool $featured = false;
@@ -56,12 +63,26 @@ new class extends Component
             'tags' => ['nullable', 'string'],
             'link' => ['nullable', 'url'],
             'screenshot_url' => ['nullable', 'url'],
+            'screenshot_upload' => ['nullable', 'image', 'max:4096'],
             'embed_live' => ['boolean'],
             'github_repo' => ['nullable', 'regex:/^[\w.-]+\/[\w.-]+$/'],
             'featured' => ['boolean'],
             'deliverables' => ['nullable', 'string'],
             'case_study' => ['nullable', 'string'],
         ]);
+
+        unset($data['screenshot_upload']);
+
+        if ($this->screenshot_upload) {
+            $stored = $this->storeUpload($this->screenshot_upload, 'screenshots');
+            $data = array_merge($data, [
+                'screenshot_disk' => $stored['disk'],
+                'screenshot_path' => $stored['path'],
+                'screenshot_mime_type' => $stored['mime_type'],
+            ]);
+        } elseif ($this->remove_screenshot) {
+            $data = array_merge($data, ['screenshot_disk' => null, 'screenshot_path' => null, 'screenshot_mime_type' => null]);
+        }
 
         if ($this->project) {
             $this->project->update($data);
@@ -139,9 +160,18 @@ new class extends Component
         </div>
 
         <div>
-            <label class="block text-sm font-medium mb-1">Screenshot URL</label>
-            <input type="url" wire:model="screenshot_url" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
-            <p class="text-xs text-slate-400 mt-1">Uploaded screenshots land in Phase 3.</p>
+            <label class="block text-sm font-medium mb-1">Screenshot</label>
+            @if ($project?->screenshot_path && ! $remove_screenshot)
+                <div class="mb-2 flex items-center gap-3">
+                    <img src="{{ $project->screenshotSrc() }}" class="h-16 rounded border border-slate-200">
+                    <label class="text-xs text-red-600"><input type="checkbox" wire:model="remove_screenshot"> Remove</label>
+                </div>
+            @endif
+            <input type="file" wire:model="screenshot_upload" accept="image/*" class="w-full text-sm">
+            @error('screenshot_upload') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+            <div wire:loading wire:target="screenshot_upload" class="text-xs text-slate-400 mt-1">Uploading…</div>
+            <p class="text-xs text-slate-400 mt-1">Or fall back to a URL (used only if no file is uploaded):</p>
+            <input type="url" wire:model="screenshot_url" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mt-1">
         </div>
 
         <div class="flex gap-6">

@@ -38,6 +38,17 @@ return [
             'report' => false,
         ],
 
+        // Alias for 'local', matching the 'disk' column values used for
+        // ApplicationDocument (never symlinked — served only through the
+        // auth-gated ApplicationDocumentController).
+        'private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
