@@ -14,12 +14,12 @@ trait HandlesUploads
     /**
      * @return array{disk: string, path: string, mime_type: string}
      */
-    protected function storeUpload(UploadedFile $file, string $directory): array
+    protected function storeUpload(UploadedFile $file, string $directory, string $disk = 'public'): array
     {
-        $path = $file->store($directory, 'public');
+        $path = $file->store($directory, $disk);
 
         return [
-            'disk' => 'public',
+            'disk' => $disk,
             'path' => $path,
             'mime_type' => $file->getMimeType(),
         ];

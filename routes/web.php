@@ -3,7 +3,14 @@
 use App\Http\Controllers\Admin\ApplicationDocumentController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\Site\CareersController;
+use App\Http\Controllers\Site\ContactController;
+use App\Http\Controllers\Site\LegalController;
 use App\Http\Controllers\Site\MicrositeController;
+use App\Http\Controllers\Site\PartnersController;
+use App\Http\Controllers\Site\ProductsController;
+use App\Http\Controllers\SitemapController;
 use App\Models\JobPosting;
 use App\Models\NavItem;
 use App\Models\Partner;
@@ -75,8 +82,26 @@ Route::domain('{subdomain}.'.$root)
 */
 Route::domain($root)->group(function () {
     Route::get('/', function () {
-        return 'Paraiba public site — Phase 4/5/6 build out the real pages.';
+        return 'Paraiba public site — homepage CMS blocks land in Phase 5/6.';
     })->name('home');
+
+    Route::get('/partners', [PartnersController::class, 'index'])->name('partners.index');
+
+    Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+    Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('products.show');
+
+    Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');
+    Route::get('/careers/{job}', [CareersController::class, 'show'])->name('careers.show');
+
+    Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+    Route::get('/legal/privacy', [LegalController::class, 'privacy'])->name('legal.privacy');
+    Route::get('/legal/terms', [LegalController::class, 'terms'])->name('legal.terms');
+    Route::get('/legal/cookies', [LegalController::class, 'cookies'])->name('legal.cookies');
+
+    Route::get('/sitemap.xml', SitemapController::class);
+    Route::get('/robots.txt', RobotsController::class);
 
     // Local-dev / fallback path parity with the Next.js app's /sites/<subdomain>.
     Route::get('/sites/{subdomain}', [MicrositeController::class, 'home'])
