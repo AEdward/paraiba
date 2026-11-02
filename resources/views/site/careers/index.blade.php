@@ -2,6 +2,7 @@
 @section('title', 'Careers — Paraiba Technology PLC')
 
 @section('content')
+<x-block-renderer :blocks="$introBlocks" />
 <div class="mx-auto max-w-6xl px-6 py-16"
     x-data="jobBoard({{ $jobs->map(fn ($j) => [
         'id' => $j->id,

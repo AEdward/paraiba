@@ -23,4 +23,9 @@ class Page extends Model
     {
         return $this->hasMany(Block::class)->orderBy('order');
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

@@ -6,6 +6,7 @@
     <title>@yield('title', 'Portal') — Paraiba</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @stack('head')
 </head>
 <body class="bg-slate-50 text-slate-900">
     @yield('content')

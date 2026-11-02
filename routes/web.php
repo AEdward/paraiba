@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\Site\CareersController;
+use App\Http\Controllers\Site\CmsPageController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\LegalController;
 use App\Http\Controllers\Site\MicrositeController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Site\ProductsController;
 use App\Http\Controllers\SitemapController;
 use App\Models\JobPosting;
 use App\Models\NavItem;
+use App\Models\Page;
 use App\Models\Partner;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +61,9 @@ Route::domain("portal.{$root}")->group(function () {
         Route::get('/settings', fn () => view('admin.settings.edit'))->name('admin.settings.edit');
 
         Route::get('/users', fn () => view('admin.users.index'))->name('admin.users.index');
+
+        Route::get('/pages', fn () => view('admin.pages.index'))->name('admin.pages.index');
+        Route::get('/pages/{page:slug}', fn (Page $page) => view('admin.pages.edit', compact('page')))->name('admin.pages.edit');
     });
 });
 
@@ -81,9 +86,13 @@ Route::domain('{subdomain}.'.$root)
 |--------------------------------------------------------------------------
 */
 Route::domain($root)->group(function () {
-    Route::get('/', function () {
-        return 'Paraiba public site — homepage CMS blocks land in Phase 5/6.';
-    })->name('home');
+    Route::get('/', fn () => app(CmsPageController::class)->show('home'))->name('home');
+    Route::get('/about', fn () => app(CmsPageController::class)->show('about'))->name('about');
+    Route::get('/services', fn () => app(CmsPageController::class)->show('services'))->name('services');
+    Route::get('/solutions', fn () => app(CmsPageController::class)->show('solutions'))->name('solutions');
+    Route::get('/work', fn () => app(CmsPageController::class)->show('work'))->name('work');
+    Route::get('/team', fn () => app(CmsPageController::class)->show('team'))->name('team');
+    Route::get('/resources', fn () => app(CmsPageController::class)->show('resources'))->name('resources');
 
     Route::get('/partners', [PartnersController::class, 'index'])->name('partners.index');
 
