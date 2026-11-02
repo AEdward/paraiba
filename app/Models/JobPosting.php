@@ -21,6 +21,17 @@ class JobPosting extends Model
 {
     use HasUlids;
 
+    protected $attributes = [
+        'category' => 'Engineering',
+        'level' => 'Mid',
+        'work_mode' => 'On-site',
+        'positions' => 1,
+        'min_experience_years' => 0,
+        'max_experience_years' => 3,
+        'view_count' => 0,
+        'status' => 'open',
+    ];
+
     protected function casts(): array
     {
         return [

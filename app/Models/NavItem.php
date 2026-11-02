@@ -12,6 +12,12 @@ class NavItem extends Model
 {
     use HasUlids;
 
+    protected $attributes = [
+        'location' => 'both',
+        'order' => 0,
+        'new_tab' => false,
+    ];
+
     protected function casts(): array
     {
         return [

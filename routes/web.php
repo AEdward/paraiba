@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicationDocumentController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Site\MicrositeController;
+use App\Models\JobPosting;
+use App\Models\NavItem;
+use App\Models\Partner;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 $root = config('tenancy.root_domain');
@@ -22,7 +27,31 @@ Route::domain("portal.{$root}")->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::get('/', DashboardController::class)->name('admin.dashboard');
-        // Admin CRUD route groups (Pages, Products, Partners, Careers, ...) land in Phase 2.
+
+        Route::get('/menu', fn () => view('admin.menu.index'))->name('admin.menu.index');
+        Route::get('/menu/new', fn () => view('admin.menu.create'))->name('admin.menu.create');
+        Route::get('/menu/{item}/edit', fn (NavItem $item) => view('admin.menu.edit', compact('item')))->name('admin.menu.edit');
+
+        Route::get('/products', fn () => view('admin.products.index'))->name('admin.products.index');
+        Route::get('/products/new', fn () => view('admin.products.create'))->name('admin.products.create');
+        Route::get('/products/{project}/edit', fn (Project $project) => view('admin.products.edit', compact('project')))->name('admin.products.edit');
+
+        Route::get('/partners', fn () => view('admin.partners.index'))->name('admin.partners.index');
+        Route::get('/partners/new', fn () => view('admin.partners.create'))->name('admin.partners.create');
+        Route::get('/partners/{partner}/edit', fn (Partner $partner) => view('admin.partners.edit', compact('partner')))->name('admin.partners.edit');
+
+        Route::get('/careers', fn () => view('admin.careers.index'))->name('admin.careers.index');
+        Route::get('/careers/new', fn () => view('admin.careers.create'))->name('admin.careers.create');
+        Route::get('/careers/{posting}/edit', fn (JobPosting $posting) => view('admin.careers.edit', compact('posting')))->name('admin.careers.edit');
+
+        Route::get('/applicants', fn () => view('admin.applicants.index'))->name('admin.applicants.index');
+        Route::get('/documents/{document}', [ApplicationDocumentController::class, 'show'])->name('admin.documents.show');
+
+        Route::get('/messages', fn () => view('admin.messages.index'))->name('admin.messages.index');
+
+        Route::get('/settings', fn () => view('admin.settings.edit'))->name('admin.settings.edit');
+
+        Route::get('/users', fn () => view('admin.users.index'))->name('admin.users.index');
     });
 });
 

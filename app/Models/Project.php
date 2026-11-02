@@ -17,6 +17,13 @@ class Project extends Model
 {
     use HasUlids;
 
+    protected $attributes = [
+        'status' => 'concept',
+        'tags' => '',
+        'embed_live' => false,
+        'featured' => false,
+    ];
+
     protected function casts(): array
     {
         return [

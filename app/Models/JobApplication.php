@@ -16,6 +16,10 @@ class JobApplication extends Model
 
     const UPDATED_AT = null;
 
+    protected $attributes = [
+        'status' => 'new',
+    ];
+
     protected function casts(): array
     {
         return [
