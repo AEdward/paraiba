@@ -23,6 +23,9 @@ class SiteSettings extends Model
 
     public static function current(): self
     {
-        return self::findOrNew('singleton')->fill(['id' => 'singleton']);
+        $model = self::find('singleton') ?? new self();
+        $model->id = 'singleton';
+
+        return $model;
     }
 }
