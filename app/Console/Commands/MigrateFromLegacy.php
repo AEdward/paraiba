@@ -212,8 +212,13 @@ class MigrateFromLegacy extends Command
                 $user = User::create([
                     'name' => $row->name,
                     'email' => $row->email,
-                    'password' => $row->passwordHash, // bcrypt hashes are directly compatible, no rehash needed
+                    'password' => $row->passwordHash,
                 ]);
+                // User::password has a 'hashed' cast, which re-hashes whatever
+                // it's given - but this value is already a bcrypt hash, so
+                // create() above just double-hashed it. Overwrite via a raw
+                // query to bypass the cast and store the real hash as-is.
+                DB::table('users')->where('id', $user->id)->update(['password' => $row->passwordHash]);
                 $user->forceFill(['created_at' => $row->createdAt])->save();
                 $this->remember('users', $row->id, $user->id);
             });
