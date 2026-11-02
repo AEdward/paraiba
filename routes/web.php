@@ -16,6 +16,7 @@ use App\Models\JobPosting;
 use App\Models\NavItem;
 use App\Models\Page;
 use App\Models\Partner;
+use App\Models\ProductSite;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +65,10 @@ Route::domain("portal.{$root}")->group(function () {
 
         Route::get('/pages', fn () => view('admin.pages.index'))->name('admin.pages.index');
         Route::get('/pages/{page:slug}', fn (Page $page) => view('admin.pages.edit', compact('page')))->name('admin.pages.edit');
+
+        Route::get('/product-sites', fn () => view('admin.product-sites.index'))->name('admin.product-sites.index');
+        Route::get('/product-sites/new', fn () => view('admin.product-sites.create'))->name('admin.product-sites.create');
+        Route::get('/product-sites/{site}/edit', fn (ProductSite $site) => view('admin.product-sites.edit', compact('site')))->name('admin.product-sites.edit');
     });
 });
 
