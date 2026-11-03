@@ -1,15 +1,17 @@
-<section class="py-20">
+<section class="py-10">
     <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
-        @if (! empty($data['heading']))<h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-12">{{ $data['heading'] }}</h2>@endif
+        @if (! empty($data['heading']))<h2 class="text-4xl font-extrabold tracking-tight text-[#14284B] mb-6">{{ $data['heading'] }}</h2>@endif
 
-        <div class="grid sm:grid-cols-3 gap-12">
+        <div class="grid sm:grid-cols-3 gap-y-6 sm:divide-x divide-slate-200">
             @foreach ($data['items'] ?? [] as $item)
-                <div>
-                    <span class="inline-flex items-center justify-center size-10 rounded-full bg-blue-50 text-blue-600 font-bold text-base">
+                <div class="flex items-start gap-5 {{ $loop->first ? 'sm:pr-8' : ($loop->last ? 'sm:pl-10' : 'sm:px-10') }} {{ $loop->first ? 'pl-5' : '' }}">
+                    <span class="shrink-0 inline-flex items-center justify-center rounded-full bg-blue-50 text-blue-600 font-semibold text-base px-4 py-1.5">
                         {{ $item['number'] ?? '' }}
                     </span>
-                    <h3 class="text-lg font-semibold text-slate-900 mt-5">{{ $item['title'] ?? '' }}</h3>
-                    <p class="text-base text-slate-500 mt-1.5">{{ $item['description'] ?? '' }}</p>
+                    <div>
+                        <h3 class="text-lg font-semibold text-[#14284B] leading-tight">{{ $item['title'] ?? '' }}</h3>
+                        <p class="text-sm text-slate-600 mt-1 leading-snug max-w-[16rem]">{{ $item['description'] ?? '' }}</p>
+                    </div>
                 </div>
             @endforeach
         </div>

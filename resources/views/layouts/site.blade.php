@@ -101,59 +101,40 @@
         @yield('content')
     </main>
 
-    @php
-        $footerItems = \App\Models\NavItem::whereIn('location', ['footer', 'both'])->orderBy('order')->get()->groupBy(fn ($i) => $i->group ?? 'Company');
-        $settings = \App\Models\SiteSettings::current();
-    @endphp
+    <footer class="bg-[#0B1F3F] text-slate-300">
+        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-7 grid grid-cols-2 lg:grid-cols-[1.3fr_auto_1fr_auto_1fr_auto_1.2fr] gap-y-8 gap-x-10 items-start">
+            <a href="{{ route('home') }}" class="col-span-2 lg:col-span-1 flex items-center gap-3">
+                <img src="/paraiba-symbol.png" alt="" class="h-11 w-11 object-contain">
+                <span class="flex flex-col leading-none">
+                    <span class="text-2xl font-bold tracking-wide text-white">PARAIBA</span>
+                    <span class="text-[10px] font-semibold tracking-[0.3em] text-slate-300 mt-1">TECHNOLOGY PLC</span>
+                </span>
+            </a>
 
-    <footer class="bg-slate-950 text-slate-300 mt-16">
-        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
-            <div class="col-span-2 lg:col-span-1">
-                <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <img src="/paraiba-symbol.png" alt="Paraiba" class="h-8 w-8 object-contain">
-                    <span class="font-bold tracking-wide text-white">PARAIBA</span>
-                </a>
-                <p class="text-sm text-slate-400 mt-3">Innovative solutions, lasting impact.</p>
-            </div>
+            <span class="hidden lg:block w-px self-stretch bg-white/15"></span>
 
             <div>
-                <h4 class="text-sm font-semibold text-white mb-3">Products</h4>
-                <ul class="space-y-2 text-sm">
+                <h4 class="text-sm font-semibold text-white mb-2">Products</h4>
+                <ul class="space-y-1 text-sm">
                     <li><a href="{{ route('products.index') }}#niledating" class="hover:text-white transition-colors">NileDating</a></li>
                     <li><a href="{{ route('products.index') }}#zemen-homes" class="hover:text-white transition-colors">Zemen Homes</a></li>
                 </ul>
             </div>
 
-            @foreach ($footerItems as $group => $items)
-                <div>
-                    <h4 class="text-sm font-semibold text-white mb-3">{{ $group }}</h4>
-                    <ul class="space-y-2 text-sm">
-                        @foreach ($items as $item)
-                            <li><a href="{{ $item->href }}" class="hover:text-white transition-colors">{{ $item->label }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endforeach
+            <span class="hidden lg:block w-px self-stretch bg-white/15"></span>
 
             <div>
-                <h4 class="text-sm font-semibold text-white mb-3">Contact</h4>
-                <ul class="space-y-2 text-sm text-slate-400">
-                    @if ($settings->office_location)<li>{{ $settings->office_location }}</li>@endif
-                    @if ($settings->email)<li>{{ $settings->email }}</li>@endif
-                    @if ($settings->phone)<li>{{ $settings->phone }}</li>@endif
+                <h4 class="text-sm font-semibold text-white mb-2">Company</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/about" class="hover:text-white transition-colors">About</a></li>
+                    <li><a href="/services" class="hover:text-white transition-colors">Services</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors">Contact</a></li>
                 </ul>
             </div>
-        </div>
 
-        <div class="border-t border-white/10">
-            <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-6 text-sm text-slate-500 flex flex-wrap items-center justify-between gap-3">
-                <span>&copy; {{ now()->year }} Paraiba Technology PLC. All rights reserved.</span>
-                <div class="flex gap-4">
-                    <a href="{{ route('legal.privacy') }}" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="{{ route('legal.terms') }}" class="hover:text-white transition-colors">Terms & Conditions</a>
-                    <a href="{{ route('legal.cookies') }}" class="hover:text-white transition-colors">Cookie Policy</a>
-                </div>
-            </div>
+            <span class="hidden lg:block w-px self-stretch bg-white/15"></span>
+
+            <p class="col-span-2 lg:col-span-1 text-sm text-slate-300 lg:text-right">&copy; {{ now()->year }} Paraiba Technology PLC.<br>All rights reserved.</p>
         </div>
     </footer>
     @livewireScripts
