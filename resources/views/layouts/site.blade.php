@@ -35,8 +35,8 @@
                     </button>
                     <div x-show="open" x-cloak @click.outside="open = false" class="absolute left-0 top-full pt-3 w-56">
                         <div class="rounded-xl border border-slate-100 bg-white shadow-lg p-2">
-                            <a href="{{ route('products.index') }}#zemen-homes" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">Zemen Homes</a>
-                            <a href="{{ route('products.index') }}#niledating" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">NileDating</a>
+                            <a href="https://zemenhomes.com/" target="_blank" rel="noopener" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">Zemen Homes</a>
+                            <a href="https://t.me/Niledatebot" target="_blank" rel="noopener" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">NileDating</a>
                         </div>
                     </div>
                 </div>
@@ -77,8 +77,8 @@
                 <a href="{{ route('home') }}" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">Home</a>
 
                 <p class="px-3 pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">Products</p>
-                <a href="{{ route('products.index') }}#zemen-homes" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">Zemen Homes</a>
-                <a href="{{ route('products.index') }}#niledating" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">NileDating</a>
+                <a href="https://zemenhomes.com/" target="_blank" rel="noopener" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">Zemen Homes</a>
+                <a href="https://t.me/Niledatebot" target="_blank" rel="noopener" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">NileDating</a>
 
                 @foreach ($flatHeaderItems as $item)
                     <a href="{{ $item->href }}" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">{{ $item->label }}</a>
@@ -116,8 +116,8 @@
             <div>
                 <h4 class="text-sm font-semibold text-white mb-2">Products</h4>
                 <ul class="space-y-1 text-sm">
-                    <li><a href="{{ route('products.index') }}#niledating" class="hover:text-white transition-colors">NileDating</a></li>
-                    <li><a href="{{ route('products.index') }}#zemen-homes" class="hover:text-white transition-colors">Zemen Homes</a></li>
+                    <li><a href="https://t.me/Niledatebot" target="_blank" rel="noopener" class="hover:text-white transition-colors">NileDating</a></li>
+                    <li><a href="https://zemenhomes.com/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zemen Homes</a></li>
                 </ul>
             </div>
 

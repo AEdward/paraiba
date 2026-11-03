@@ -27,7 +27,7 @@
                         <p class="text-xl leading-snug text-slate-800 mt-4">{{ $item['tagline'] ?? '' }}</p>
                         @if (! empty($item['buttonLabel']))
                             <div>
-                                <a href="{{ $item['buttonHref'] ?? '#' }}" class="inline-flex items-center gap-2 mt-5 rounded-lg bg-blue-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors">
+                                <a href="{{ $item['buttonHref'] ?? '#' }}" @if (str_starts_with($item['buttonHref'] ?? '', 'http')) target="_blank" rel="noopener" @endif class="inline-flex items-center gap-2 mt-5 rounded-lg bg-blue-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors">
                                     {{ $item['buttonLabel'] }} <x-icon name="arrowRight" class="size-4" />
                                 </a>
                             </div>
