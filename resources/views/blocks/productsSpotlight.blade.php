@@ -8,7 +8,7 @@
 
         <div class="grid sm:grid-cols-2 gap-8">
             @foreach ($data['items'] ?? [] as $item)
-                <div class="relative rounded-2xl overflow-hidden p-6 flex items-center gap-3" style="background-color: #FBF0E2; min-height: 15rem;">
+                <div class="relative rounded-2xl overflow-hidden p-6 flex items-center gap-3" style="background-color: #FBF0E2; min-height: 13rem;">
                     <div class="w-1/3 shrink-0">
                         <div class="flex items-center gap-2.5 mb-4">
                             @if (! empty($item['logoImage']))
@@ -34,14 +34,14 @@
                                 ? @getimagesize(public_path($item['image']))
                                 : false;
                         @endphp
-                        <div class="flex-1 flex items-center justify-center overflow-visible">
+                        <div class="flex-1 flex items-center justify-center">
                             <img
                                 src="{{ $item['image'] }}"
                                 alt="{{ $item['name'] ?? '' }}"
                                 loading="lazy"
                                 decoding="async"
                                 @if ($spotlightImageSize) width="{{ $spotlightImageSize[0] }}" height="{{ $spotlightImageSize[1] }}" @endif
-                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-56 sm:w-64' : 'w-[26rem] sm:w-[34rem] max-w-none' }} h-auto"
+                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'h-52 sm:h-56 w-auto' : 'w-full h-auto' }}"
                             >
                         </div>
                     @endif
