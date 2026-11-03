@@ -15,6 +15,7 @@ class BlockTypeRegistry
         'hero', 'richText', 'cardGrid', 'industriesShowcase', 'statsBar',
         'statsQuote', 'quote', 'cta', 'productsPreview', 'partnersTrustBar',
         'openPositions', 'contactPanel', 'productsGrid', 'section', 'techStack',
+        'productShowcase',
     ];
 
     // Restricted subset usable on product-site (microsite) pages — excludes
@@ -39,6 +40,7 @@ class BlockTypeRegistry
         'productsGrid' => 'Products grid (live)',
         'section' => 'Section (freeform)',
         'techStack' => 'Tech stack',
+        'productShowcase' => 'Product showcase (scroll animation)',
     ];
 
     // Fields edited as a raw JSON textarea rather than individual inputs —
@@ -86,6 +88,11 @@ class BlockTypeRegistry
             'productsGrid' => ['eyebrow' => '', 'heading' => ''],
             'section' => ['elements' => []],
             'techStack' => ['eyebrow' => '', 'heading' => '', 'keys' => []],
+            'productShowcase' => [
+                'eyebrow' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => '',
+                'primaryLabel' => '', 'primaryHref' => '', 'secondaryLabel' => '', 'secondaryHref' => '',
+                'laptopImage' => '', 'laptopLabel' => '', 'phoneImage' => '', 'phoneLabel' => '',
+            ],
             default => [],
         };
     }
