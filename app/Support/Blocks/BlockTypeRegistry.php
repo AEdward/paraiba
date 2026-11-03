@@ -15,7 +15,7 @@ class BlockTypeRegistry
         'hero', 'richText', 'cardGrid', 'industriesShowcase', 'statsBar',
         'statsQuote', 'quote', 'cta', 'productsPreview', 'partnersTrustBar',
         'openPositions', 'contactPanel', 'productsGrid', 'section', 'techStack',
-        'productsSpotlight', 'processSteps', 'pageHeader', 'challengeGrid', 'calloutBanner', 'serviceCards', 'storySplit',
+        'productsSpotlight', 'processSteps', 'pageHeader', 'challengeGrid', 'calloutBanner', 'serviceCards', 'storySplit', 'introSplit', 'iconCards', 'principles', 'statementBand', 'productList', 'partnerPanel',
     ];
 
     // Restricted subset usable on product-site (microsite) pages — excludes
@@ -47,6 +47,12 @@ class BlockTypeRegistry
         'calloutBanner' => 'Callout banner',
         'serviceCards' => 'Service cards (with bullet points)',
         'storySplit' => 'Story (text + image)',
+        'introSplit' => 'Intro (heading + paragraph)',
+        'iconCards' => 'Icon cards (e.g. mission / vision)',
+        'principles' => 'Principles (icon columns)',
+        'statementBand' => 'Statement band (dark)',
+        'productList' => 'Product list (rows with links)',
+        'partnerPanel' => 'Partner panel (blue, with points)',
     ];
 
     // Fields edited as a raw JSON textarea rather than individual inputs —
@@ -64,6 +70,10 @@ class BlockTypeRegistry
         'processSteps' => ['items'],
         'challengeGrid' => ['items'],
         'serviceCards' => ['items'],
+        'iconCards' => ['items'],
+        'principles' => ['items'],
+        'productList' => ['items'],
+        'partnerPanel' => ['items'],
     ];
 
     // Mirrors src/lib/blocks/types.ts's 21 SectionElementType values.
@@ -100,11 +110,17 @@ class BlockTypeRegistry
             'techStack' => ['eyebrow' => '', 'heading' => '', 'keys' => []],
             'productsSpotlight' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'footnote' => '', 'items' => []],
             'processSteps' => ['heading' => '', 'items' => []],
-            'pageHeader' => ['breadcrumb' => '', 'eyebrow' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => ''],
+            'pageHeader' => ['breadcrumb' => '', 'eyebrow' => '', 'headlineTop' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => '', 'image' => '', 'imageAlt' => ''],
             'challengeGrid' => ['heading' => '', 'challengeLabel' => 'The challenge', 'buildLabel' => 'What we can build', 'items' => []],
             'calloutBanner' => ['icon' => 'sparkle', 'heading' => '', 'body' => ''],
             'serviceCards' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'items' => []],
             'storySplit' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'image' => '', 'imageAlt' => '', 'imagePosition' => 'right'],
+            'introSplit' => ['heading' => '', 'body' => ''],
+            'iconCards' => ['heading' => '', 'items' => []],
+            'principles' => ['heading' => '', 'items' => []],
+            'statementBand' => ['heading' => '', 'body' => ''],
+            'productList' => ['heading' => '', 'footnote' => '', 'items' => []],
+            'partnerPanel' => ['heading' => '', 'body' => '', 'items' => []],
             default => [],
         };
     }

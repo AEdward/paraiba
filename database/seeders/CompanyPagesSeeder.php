@@ -104,58 +104,7 @@ class CompanyPagesSeeder extends Seeder
 
     private function about(): array
     {
-        $homeProducts = optional(Page::where('slug', 'home')->first()?->blocks()->where('type', 'productsSpotlight')->first())->data['items'] ?? [];
-
-        $blocks = [
-            ['pageHeader', [
-                'breadcrumb' => 'About Us',
-                'eyebrow' => 'About Us',
-                'headline' => 'Building Software That ',
-                'headlineHighlight' => 'Works for People',
-                'subhead' => 'Paraiba Technology PLC is an Ethiopian software company creating intelligent products and digital platforms for people and businesses.',
-            ]],
-            ['storySplit', [
-                'eyebrow' => 'Who we are',
-                'heading' => 'A product-minded technology company',
-                'body' => "We design and build software that solves real problems, from platforms we run ourselves to custom systems for the businesses we work with.\n\nOur work brings together AI thinking, solid engineering, and thoughtful design. We focus on tools that are simple to use, reliable, and built to grow with the people who depend on them.",
-                'image' => '/addis-ababa-park-sunset.webp',
-                'imageAlt' => 'Addis Ababa skyline',
-                'imagePosition' => 'right',
-            ]],
-            ['cardGrid', [
-                'compact' => true, 'theme' => 'light', 'layout' => 'split', 'columns' => 2,
-                'heading' => 'What we stand for.',
-                'items' => [
-                    ['icon' => 'target', 'title' => 'Clarity', 'description' => 'Goals, scope, and progress stay clear from the first conversation.'],
-                    ['icon' => 'gem', 'title' => 'Craft', 'description' => 'We care about quality in the details people actually notice.'],
-                    ['icon' => 'handshake', 'title' => 'Partnership', 'description' => 'We work alongside you long after launch day.'],
-                    ['icon' => 'mapPin', 'title' => 'Local insight', 'description' => 'We build for the realities of the Ethiopian market.'],
-                ],
-            ]],
-        ];
-
-        if ($homeProducts) {
-            $blocks[] = ['productsSpotlight', [
-                'eyebrow' => 'What we have built',
-                'heading' => 'Products we run ourselves.',
-                'body' => 'We build and operate our own platforms, so we know what it takes to keep software working for real people.',
-                'items' => $homeProducts,
-            ]];
-        }
-
-        $blocks[] = ['industriesShowcase', [
-            'compact' => true, 'theme' => 'dark', 'items' => [],
-            'heading' => "Rooted in Ethiopia. Built for what's next.",
-            'body' => 'Paraiba Technology PLC brings AI thinking, engineering, and design together to create useful digital products.',
-            'photoUrl' => '/addis-ababa-park-sunset.webp',
-        ]];
-        $blocks[] = ['cta', [
-            'style' => 'strip', 'theme' => 'light',
-            'heading' => "Let's build something that matters.",
-            'buttonLabel' => 'Start a Conversation', 'buttonHref' => '/contact',
-        ]];
-
-        return $blocks;
+        return AboutPageSeeder::blocks();
     }
 
     private function careers(): array

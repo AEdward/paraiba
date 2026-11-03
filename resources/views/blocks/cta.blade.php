@@ -1,7 +1,19 @@
 @php
     $dark = ($data['theme'] ?? 'dark') === 'dark';
 @endphp
-@if (($data['style'] ?? '') === 'strip')
+@if (($data['style'] ?? '') === 'center')
+<section class="py-12">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#14284B]">{{ $data['heading'] ?? '' }}</h2>
+        @if (! empty($data['body']))<p class="mt-3 text-lg text-slate-600">{{ $data['body'] }}</p>@endif
+        @if (! empty($data['buttonLabel']))
+            <a href="{{ $data['buttonHref'] ?? '#' }}" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 text-white px-7 py-3.5 text-base font-semibold hover:bg-blue-700 transition-colors">
+                {{ $data['buttonLabel'] }} <x-icon name="arrowRight" class="size-5" />
+            </a>
+        @endif
+    </div>
+</section>
+@elseif (($data['style'] ?? '') === 'strip')
 <section class="py-10">
     <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#14284B]">{{ $data['heading'] ?? '' }}</h2>

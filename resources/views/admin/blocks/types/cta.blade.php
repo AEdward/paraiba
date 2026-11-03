@@ -2,6 +2,7 @@
     <select wire:model="editData.{{ $blockId }}.style" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
         <option value="">Banner (blue)</option>
         <option value="strip">Strip (plain row)</option>
+        <option value="center">Centered</option>
     </select>
     <input type="text" wire:model="editData.{{ $blockId }}.eyebrow" placeholder="Eyebrow" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
     <input type="text" wire:model="editData.{{ $blockId }}.heading" placeholder="Heading" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
