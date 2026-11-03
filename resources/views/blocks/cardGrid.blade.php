@@ -2,7 +2,30 @@
     $dark = ($data['theme'] ?? 'light') === 'dark';
     $split = ($data['layout'] ?? 'grid') === 'split';
     $cols = (int) ($data['columns'] ?? 3);
+    $compact = ! empty($data['compact']);
 @endphp
+@if ($compact)
+<section class="py-12 {{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }}">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-8 items-center">
+        <div>
+            @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
+            @if (! empty($data['heading']))<h2 class="text-3xl font-bold leading-tight max-w-xs">{{ $data['heading'] }}</h2>@endif
+            @if (! empty($data['body']))<p class="{{ $dark ? 'text-slate-300' : 'text-slate-600' }} mt-3">{{ $data['body'] }}</p>@endif
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3">
+            @foreach ($data['items'] ?? [] as $item)
+                <div class="flex items-start gap-4 rounded-lg border {{ $dark ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white' }} px-5 py-4">
+                    <x-icon :name="$item['icon'] ?? 'sparkles'" class="size-7 shrink-0 mt-0.5 {{ $dark ? 'text-blue-400' : 'text-blue-600' }}" />
+                    <div>
+                        <h3 class="text-base font-semibold">{{ $item['title'] ?? '' }}</h3>
+                        <p class="text-sm {{ $dark ? 'text-slate-400' : 'text-slate-500' }} mt-0.5">{{ $item['description'] ?? $item['desc'] ?? '' }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@else
 <section class="py-20 {{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }}">
     <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
         <div class="{{ $split ? 'grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-12 items-start' : '' }}">
@@ -36,3 +59,4 @@
         </div>
     </div>
 </section>
+@endif

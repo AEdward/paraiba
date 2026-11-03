@@ -1,6 +1,22 @@
 @php
     $dark = ($data['theme'] ?? 'light') === 'dark';
+    $compact = ! empty($data['compact']);
 @endphp
+@if ($compact)
+<section class="py-8 {{ $dark ? 'bg-[#0B1F3F] text-white' : 'bg-slate-50 text-slate-900' }}">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[2fr_3fr] gap-10 items-center">
+        <div>
+            <h2 class="text-3xl font-bold leading-tight max-w-sm">{{ $data['heading'] ?? '' }}</h2>
+            @if (! empty($data['body']))<p class="{{ $dark ? 'text-slate-200' : 'text-slate-600' }} mt-3 max-w-md">{{ $data['body'] }}</p>@endif
+        </div>
+        @if (! empty($data['photoUrl']))
+            <div class="rounded-xl overflow-hidden aspect-[4/1]">
+                <img src="{{ $data['photoUrl'] }}" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="">
+            </div>
+        @endif
+    </div>
+</section>
+@else
 <section class="py-20 {{ $dark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900' }}">
     <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
         <div>
@@ -37,3 +53,4 @@
         @endif
     </div>
 </section>
+@endif
