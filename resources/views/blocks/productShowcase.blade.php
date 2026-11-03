@@ -104,7 +104,7 @@
             function init() {
                 gsap.registerPlugin(ScrollTrigger);
 
-                gsap.set('#{{ $uid }}-laptop-lid', { rotateX: 100 });
+                gsap.set('#{{ $uid }}-laptop-lid', { rotateX: -100 });
                 gsap.set('#{{ $uid }}-laptop-rig', { rotateY: 55 });
                 gsap.set('#{{ $uid }}-phone-rig', { opacity: 0, x: 120, scale: 0.9 });
                 gsap.set(['#{{ $uid }}-laptop-label', '#{{ $uid }}-phone-label'], { opacity: 0, y: 10 });
