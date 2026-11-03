@@ -73,11 +73,24 @@
                 fill.position.set(-3, 1, -2);
                 scene.add(fill);
 
+                // Everything we place in the scene needs to stay within this
+                // horizontal half-width (world units) regardless of how
+                // narrow/wide the container is - laptop spans roughly
+                // x=-1.2..0.5, phone rests at x=1.2, so 1.6 covers both with
+                // a margin. When the container is tall/narrow, back the
+                // camera off further so that half-width is still visible.
+                const MIN_HALF_WIDTH = 1.6;
+                const MIN_DISTANCE = 5.2;
+
                 function resize() {
                     const w = container.clientWidth;
                     const h = container.clientHeight;
                     renderer.setSize(w, h, false);
-                    camera.aspect = w / h;
+                    const aspect = w / h;
+                    camera.aspect = aspect;
+                    const vFov = THREE.MathUtils.degToRad(camera.fov / 2);
+                    const distanceForWidth = MIN_HALF_WIDTH / (Math.tan(vFov) * aspect);
+                    camera.position.z = Math.max(MIN_DISTANCE, distanceForWidth);
                     camera.updateProjectionMatrix();
                 }
                 window.addEventListener('resize', resize);
@@ -88,7 +101,7 @@
 
                 // --- Laptop ---
                 const laptopGroup = new THREE.Group();
-                laptopGroup.position.x = -0.9;
+                laptopGroup.position.x = -0.6;
 
                 const base = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.1, 1.7), baseMat);
                 base.position.y = -0.05;
@@ -99,7 +112,7 @@
                 laptopGroup.add(hinge);
 
                 const lidHeight = 1.4;
-                const lidWidth = 2.5;
+                const lidWidth = 2.0;
                 const bezel = new THREE.Mesh(new THREE.PlaneGeometry(lidWidth, lidHeight), bezelMat);
                 bezel.position.set(0, lidHeight / 2, 0);
                 hinge.add(bezel);
@@ -122,7 +135,7 @@
 
                 // --- Phone ---
                 const phoneGroup = new THREE.Group();
-                phoneGroup.position.set(1.7, 0.55, 0.3);
+                phoneGroup.position.set(1.2, 0.5, 0.3);
 
                 const phoneW = 0.8;
                 const phoneRatio = 853 / 1844;
@@ -148,7 +161,7 @@
                 // --- Initial / closed state ---
                 hinge.rotation.x = Math.PI / 2 * 0.98; // closed: lid folded flat onto the base
                 laptopGroup.rotation.y = -0.9; // angled away from viewer
-                phoneGroup.position.x = 3.4;
+                phoneGroup.position.x = 4.5;
                 phoneScreenMat.opacity = 0;
                 phoneBezel.material.opacity = 0;
 
@@ -173,7 +186,7 @@
 
                 tl.to(hinge.rotation, { x: 0, duration: 0.25, ease: 'power2.out' }, 0)
                   .to(laptopGroup.rotation, { y: 0, duration: 0.25, ease: 'power2.inOut' }, 0.25)
-                  .to(phoneGroup.position, { x: 1.7, duration: 0.25, ease: 'power2.out' }, 0.5)
+                  .to(phoneGroup.position, { x: 1.2, duration: 0.25, ease: 'power2.out' }, 0.5)
                   .to(phoneScreenMat, { opacity: 1, duration: 0.25 }, 0.5)
                   .to(phoneBezel.material, { opacity: 1, duration: 0.25 }, 0.5)
                   .to('#{{ $uid }}-laptop-label', { opacity: 1, duration: 0.2 }, 0.78)
