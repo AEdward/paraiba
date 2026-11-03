@@ -14,6 +14,10 @@
         $headerItems = \App\Models\NavItem::whereIn('location', ['header', 'both'])->orderBy('order')->get();
         $flatHeaderItems = $headerItems->whereNull('group');
         $groupedHeaderItems = $headerItems->whereNotNull('group')->groupBy('group');
+        $navActive = fn (string $href) => request()->is(trim((string) parse_url($href, PHP_URL_PATH), '/') ?: '/');
+        $navClass = fn (string $href) => $navActive($href)
+            ? 'text-blue-600 relative after:absolute after:-bottom-6 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600'
+            : 'hover:text-blue-600 transition-colors';
     @endphp
 
     <header class="border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur z-50" x-data="{ mobileOpen: false }">
@@ -27,7 +31,7 @@
             </a>
 
             <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700">
-                <a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors">Home</a>
+                <a href="{{ route('home') }}" class="{{ $navClass('/') }}" @if ($navActive('/')) aria-current="page" @endif>Home</a>
 
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @keydown.escape.window="open = false">
                     <button type="button" @click="open = !open" @focus="open = true" :aria-expanded="open.toString()" aria-haspopup="true" class="flex items-center gap-1 hover:text-blue-600 transition-colors">
@@ -42,7 +46,7 @@
                 </div>
 
                 @foreach ($flatHeaderItems as $item)
-                    <a href="{{ $item->href }}" class="hover:text-blue-600 transition-colors">{{ $item->label }}</a>
+                    <a href="{{ $item->href }}" class="{{ $navClass($item->href) }}" @if ($navActive($item->href)) aria-current="page" @endif>{{ $item->label }}</a>
                 @endforeach
 
                 @foreach ($groupedHeaderItems as $group => $items)

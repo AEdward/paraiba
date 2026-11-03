@@ -15,7 +15,7 @@ class BlockTypeRegistry
         'hero', 'richText', 'cardGrid', 'industriesShowcase', 'statsBar',
         'statsQuote', 'quote', 'cta', 'productsPreview', 'partnersTrustBar',
         'openPositions', 'contactPanel', 'productsGrid', 'section', 'techStack',
-        'productsSpotlight', 'processSteps',
+        'productsSpotlight', 'processSteps', 'pageHeader', 'challengeGrid', 'calloutBanner',
     ];
 
     // Restricted subset usable on product-site (microsite) pages — excludes
@@ -42,6 +42,9 @@ class BlockTypeRegistry
         'techStack' => 'Tech stack',
         'productsSpotlight' => 'Products spotlight (device cards)',
         'processSteps' => 'Process steps (numbered)',
+        'pageHeader' => 'Page header (breadcrumb + title)',
+        'challengeGrid' => 'Challenge / solution cards',
+        'calloutBanner' => 'Callout banner',
     ];
 
     // Fields edited as a raw JSON textarea rather than individual inputs —
@@ -57,6 +60,7 @@ class BlockTypeRegistry
         'section' => ['elements'],
         'productsSpotlight' => ['items'],
         'processSteps' => ['items'],
+        'challengeGrid' => ['items'],
     ];
 
     // Mirrors src/lib/blocks/types.ts's 21 SectionElementType values.
@@ -93,6 +97,9 @@ class BlockTypeRegistry
             'techStack' => ['eyebrow' => '', 'heading' => '', 'keys' => []],
             'productsSpotlight' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'footnote' => '', 'items' => []],
             'processSteps' => ['heading' => '', 'items' => []],
+            'pageHeader' => ['breadcrumb' => '', 'eyebrow' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => ''],
+            'challengeGrid' => ['heading' => '', 'challengeLabel' => 'The challenge', 'buildLabel' => 'What we can build', 'items' => []],
+            'calloutBanner' => ['icon' => 'sparkle', 'heading' => '', 'body' => ''],
             default => [],
         };
     }

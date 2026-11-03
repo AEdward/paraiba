@@ -196,7 +196,7 @@ new class extends Component
 
                 @if (in_array($block->id, $expanded, true))
                     <div class="border-t border-slate-100 px-4 py-4">
-                        @include('admin.blocks.types.'.(in_array($block->type, array_keys(\App\Support\Blocks\BlockTypeRegistry::LABELS)) ? $block->type : 'fallback'), ['blockId' => $block->id])
+                        @include(view()->exists('admin.blocks.types.'.$block->type) ? 'admin.blocks.types.'.$block->type : 'admin.blocks.types.fallback', ['blockId' => $block->id])
                         <button wire:click="saveBlock('{{ $block->id }}')" class="mt-3 rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800">Save block</button>
                     </div>
                 @endif
