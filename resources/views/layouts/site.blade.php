@@ -17,7 +17,7 @@
     @endphp
 
     <header class="border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur z-50" x-data="{ mobileOpen: false }">
-        <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between gap-6">
+        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-4 flex items-center justify-between gap-6">
             <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
                 <img src="/paraiba-symbol.png" alt="Paraiba" class="h-9 w-9 object-contain">
                 <span class="flex flex-col leading-none">
@@ -107,7 +107,7 @@
     @endphp
 
     <footer class="bg-slate-950 text-slate-300 mt-16">
-        <div class="mx-auto max-w-7xl px-6 py-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
+        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
             <div class="col-span-2 lg:col-span-1">
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="/paraiba-symbol.png" alt="Paraiba" class="h-8 w-8 object-contain">
@@ -146,7 +146,7 @@
         </div>
 
         <div class="border-t border-white/10">
-            <div class="mx-auto max-w-7xl px-6 py-6 text-sm text-slate-500 flex flex-wrap items-center justify-between gap-3">
+            <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-6 text-sm text-slate-500 flex flex-wrap items-center justify-between gap-3">
                 <span>&copy; {{ now()->year }} Paraiba Technology PLC. All rights reserved.</span>
                 <div class="flex gap-4">
                     <a href="{{ route('legal.privacy') }}" class="hover:text-white transition-colors">Privacy Policy</a>

@@ -1,12 +1,12 @@
 @php
     $dark = ($data['theme'] ?? 'light') === 'dark';
 @endphp
-<section class="py-16 {{ $dark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900' }}">
-    <div class="mx-auto max-w-7xl px-6 grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
+<section class="py-20 {{ $dark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900' }}">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
         <div>
-            @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-400">{{ $data['eyebrow'] }}</p>@endif
-            <h2 class="text-2xl sm:text-3xl font-bold mt-2">{{ $data['heading'] ?? '' }}</h2>
-            @if (! empty($data['body']))<p class="{{ $dark ? 'text-slate-300' : 'text-slate-600' }} mt-3 max-w-md">{{ $data['body'] }}</p>@endif
+            @if (! empty($data['eyebrow']))<p class="text-base font-semibold uppercase tracking-wide text-blue-400">{{ $data['eyebrow'] }}</p>@endif
+            <h2 class="text-3xl sm:text-4xl font-bold mt-3">{{ $data['heading'] ?? '' }}</h2>
+            @if (! empty($data['body']))<p class="text-lg {{ $dark ? 'text-slate-300' : 'text-slate-600' }} mt-4 max-w-md">{{ $data['body'] }}</p>@endif
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
                 @foreach ($data['items'] ?? [] as $item)
