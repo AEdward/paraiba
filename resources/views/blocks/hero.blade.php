@@ -50,12 +50,12 @@
     </div>
 
     @if ($trust)
-        <div class="border-t {{ $dark ? 'border-white/10' : 'border-slate-200 bg-slate-50/70' }}">
-            <ul class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 py-5 grid grid-cols-2 lg:grid-cols-4 gap-y-4 lg:divide-x {{ $dark ? 'divide-white/10' : 'divide-slate-300' }}">
+        <div class="w-full mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 pb-8 lg:pb-10">
+            <ul class="grid grid-cols-2 lg:grid-cols-4 gap-y-5 lg:divide-x {{ $dark ? 'divide-white/15' : 'divide-slate-200' }}">
                 @foreach ($trust as $item)
-                    <li class="flex items-center gap-3 lg:justify-center lg:px-4">
+                    <li class="flex items-center gap-3 {{ $loop->first ? 'lg:pr-6' : 'lg:px-6 lg:justify-center' }}">
                         <x-icon :name="$item['icon'] ?? 'star'" :stroke="1.7" class="size-7 shrink-0 text-blue-600" />
-                        <span class="text-base font-semibold">{{ $item['label'] ?? '' }}</span>
+                        <span class="text-base font-semibold {{ $dark ? 'text-white' : 'text-[#14284B]' }}">{{ $item['label'] ?? '' }}</span>
                     </li>
                 @endforeach
             </ul>
