@@ -18,7 +18,7 @@
             </div>
 
             @if (! empty($data['imageUrl']))
-                <img src="{{ $data['imageUrl'] }}" class="rounded-xl w-full {{ $split ? '' : 'mb-10' }}" alt="">
+                <img src="{{ $data['imageUrl'] }}" loading="lazy" decoding="async" class="rounded-xl w-full {{ $split ? '' : 'mb-10' }}" alt="">
             @endif
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-{{ $cols }} gap-5">

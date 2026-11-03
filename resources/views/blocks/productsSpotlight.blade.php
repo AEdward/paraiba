@@ -23,8 +23,20 @@
                     @endif
 
                     @if (! empty($item['image']))
+                        @php
+                            $spotlightImageSize = ! str_starts_with($item['image'], 'http')
+                                ? @getimagesize(public_path($item['image']))
+                                : false;
+                        @endphp
                         <div class="mt-6 flex justify-end">
-                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-40 sm:w-44' : 'w-full' }} h-auto">
+                            <img
+                                src="{{ $item['image'] }}"
+                                alt="{{ $item['name'] ?? '' }}"
+                                loading="lazy"
+                                decoding="async"
+                                @if ($spotlightImageSize) width="{{ $spotlightImageSize[0] }}" height="{{ $spotlightImageSize[1] }}" @endif
+                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-40 sm:w-44' : 'w-full' }} h-auto"
+                            >
                         </div>
                     @endif
                 </div>

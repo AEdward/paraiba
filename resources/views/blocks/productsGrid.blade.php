@@ -8,7 +8,7 @@
                 <a href="{{ route('products.show', $project->slug) }}" class="group rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow bg-white">
                     @if ($project->screenshotSrc())
                         <div class="aspect-video overflow-hidden bg-slate-100">
-                            <img src="{{ $project->screenshotSrc() }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="{{ $project->name }}">
+                            <img src="{{ $project->screenshotSrc() }}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="{{ $project->name }}">
                         </div>
                     @endif
                     <div class="p-5">

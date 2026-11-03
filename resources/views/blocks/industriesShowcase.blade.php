@@ -26,7 +26,7 @@
 
         @if (! empty($data['photoUrl']))
             <div class="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="{{ $data['photoUrl'] }}" class="absolute inset-0 w-full h-full object-cover" alt="">
+                <img src="{{ $data['photoUrl'] }}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" alt="">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent"></div>
                 @if (! empty($data['photoHeading']))
                     <p class="absolute bottom-6 left-6 right-6 text-white text-xl font-semibold">{{ $data['photoHeading'] }}</p>

@@ -28,8 +28,20 @@
         </div>
 
         @if (! empty($data['mockupImage']))
+            @php
+                $heroImageSize = ! str_starts_with($data['mockupImage'], 'http')
+                    ? @getimagesize(public_path($data['mockupImage']))
+                    : false;
+            @endphp
             <div class="flex items-center justify-center">
-                <img src="{{ $data['mockupImage'] }}" alt="" class="w-full max-w-xl h-auto">
+                <img
+                    src="{{ $data['mockupImage'] }}"
+                    alt=""
+                    loading="eager"
+                    fetchpriority="high"
+                    @if ($heroImageSize) width="{{ $heroImageSize[0] }}" height="{{ $heroImageSize[1] }}" @endif
+                    class="w-full max-w-xl h-auto"
+                >
             </div>
         @endif
     </div>
