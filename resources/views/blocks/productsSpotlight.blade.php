@@ -8,17 +8,17 @@
 
         <div class="grid sm:grid-cols-2 gap-8">
             @foreach ($data['items'] ?? [] as $item)
-                <div class="relative rounded-2xl overflow-hidden p-8 flex items-center gap-4" style="background-color: #FBF0E2; min-height: 20rem;">
-                    <div class="w-2/5 shrink-0">
-                        <div class="flex items-center gap-2 mb-4">
+                <div class="relative rounded-2xl overflow-hidden p-6 flex items-center gap-3" style="background-color: #FBF0E2; min-height: 15rem;">
+                    <div class="w-1/3 shrink-0">
+                        <div class="flex items-center gap-2.5 mb-4">
                             @if (! empty($item['logoImage']))
-                                <img src="{{ $item['logoImage'] }}" alt="" class="size-7 rounded-md object-contain">
+                                <img src="{{ $item['logoImage'] }}" alt="" class="size-10 rounded-md object-contain">
                             @elseif (! empty($item['logoIcon']))
-                                <span class="inline-flex items-center justify-center size-7 rounded-md bg-white text-blue-600 shadow-sm">
-                                    <x-icon :name="$item['logoIcon']" class="size-4" />
+                                <span class="inline-flex items-center justify-center size-10 rounded-md bg-white text-blue-600 shadow-sm">
+                                    <x-icon :name="$item['logoIcon']" class="size-5" />
                                 </span>
                             @endif
-                            <span class="font-bold text-slate-900">{{ $item['name'] ?? '' }}</span>
+                            <span class="text-lg font-bold text-slate-900">{{ $item['name'] ?? '' }}</span>
                         </div>
                         <h3 class="text-xl font-semibold text-slate-900">{{ $item['tagline'] ?? '' }}</h3>
                         @if (! empty($item['buttonLabel']))
@@ -34,14 +34,14 @@
                                 ? @getimagesize(public_path($item['image']))
                                 : false;
                         @endphp
-                        <div class="flex-1 flex items-center justify-center">
+                        <div class="flex-1 flex items-center justify-center overflow-visible">
                             <img
                                 src="{{ $item['image'] }}"
                                 alt="{{ $item['name'] ?? '' }}"
                                 loading="lazy"
                                 decoding="async"
                                 @if ($spotlightImageSize) width="{{ $spotlightImageSize[0] }}" height="{{ $spotlightImageSize[1] }}" @endif
-                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-44 sm:w-48' : 'w-full' }} h-auto"
+                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-56 sm:w-64' : 'w-[26rem] sm:w-[34rem] max-w-none' }} h-auto"
                             >
                         </div>
                     @endif
