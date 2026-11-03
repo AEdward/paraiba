@@ -2,7 +2,7 @@
     $dark = ($data['theme'] ?? 'light') === 'dark';
 @endphp
 <section class="{{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }} overflow-hidden">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-24 grid lg:grid-cols-[1fr_1.35fr] gap-8 lg:gap-4 items-center">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 pt-6 pb-8 lg:pt-8 lg:pb-10 grid lg:grid-cols-[1fr_1.35fr] gap-8 lg:gap-4 items-center">
         <div class="{{ ($data['align'] ?? 'left') === 'center' ? 'text-center mx-auto' : '' }}">
             @if (! empty($data['eyebrow']))
                 <p class="text-base font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>
