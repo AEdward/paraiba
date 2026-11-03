@@ -23,15 +23,8 @@
                     @endif
 
                     @if (! empty($item['image']))
-                        <div class="mt-6 -mb-0 flex justify-end">
-                            @if (($item['device'] ?? 'laptop') === 'phone')
-                                <div class="spotlight-phone" style="background-image: url('{{ $item['image'] }}')"></div>
-                            @else
-                                <div class="spotlight-laptop">
-                                    <div class="spotlight-laptop-screen" style="background-image: url('{{ $item['image'] }}')"></div>
-                                    <div class="spotlight-laptop-base"></div>
-                                </div>
-                            @endif
+                        <div class="mt-6 flex justify-end">
+                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'w-40 sm:w-44' : 'w-full' }} h-auto">
                         </div>
                     @endif
                 </div>
@@ -43,37 +36,3 @@
         @endif
     </div>
 </section>
-
-@once
-    <style>
-        .spotlight-laptop { width: 92%; }
-        .spotlight-laptop-screen {
-            width: 100%;
-            aspect-ratio: 1357 / 645;
-            background-color: #f8fafc;
-            background-size: cover;
-            background-position: top center;
-            border-radius: 8px 8px 2px 2px;
-            border: 6px solid #1e293b;
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.3);
-        }
-        .spotlight-laptop-base {
-            width: 106%;
-            margin-left: -3%;
-            height: 8px;
-            background: linear-gradient(to bottom, #cbd5e1, #94a3b8);
-            border-radius: 0 0 6px 6px;
-        }
-        .spotlight-phone {
-            width: 46%;
-            aspect-ratio: 853 / 1844;
-            background-color: #f8fafc;
-            background-size: cover;
-            background-position: top center;
-            border-radius: 16px 16px 2px 2px;
-            border: 6px solid #1e293b;
-            border-bottom: none;
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.3);
-        }
-    </style>
-@endonce
