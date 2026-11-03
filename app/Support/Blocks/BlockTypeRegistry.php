@@ -15,7 +15,7 @@ class BlockTypeRegistry
         'hero', 'richText', 'cardGrid', 'industriesShowcase', 'statsBar',
         'statsQuote', 'quote', 'cta', 'productsPreview', 'partnersTrustBar',
         'openPositions', 'contactPanel', 'productsGrid', 'section', 'techStack',
-        'productsSpotlight', 'processSteps', 'pageHeader', 'challengeGrid', 'calloutBanner',
+        'productsSpotlight', 'processSteps', 'pageHeader', 'challengeGrid', 'calloutBanner', 'serviceCards', 'storySplit',
     ];
 
     // Restricted subset usable on product-site (microsite) pages — excludes
@@ -45,12 +45,14 @@ class BlockTypeRegistry
         'pageHeader' => 'Page header (breadcrumb + title)',
         'challengeGrid' => 'Challenge / solution cards',
         'calloutBanner' => 'Callout banner',
+        'serviceCards' => 'Service cards (with bullet points)',
+        'storySplit' => 'Story (text + image)',
     ];
 
     // Fields edited as a raw JSON textarea rather than individual inputs —
     // repeatable sub-items (card items, stats, lines, etc).
     public const JSON_FIELDS = [
-        'hero' => ['sideList'],
+        'hero' => ['sideList', 'trust'],
         'cardGrid' => ['items'],
         'industriesShowcase' => ['items'],
         'statsBar' => ['items'],
@@ -61,6 +63,7 @@ class BlockTypeRegistry
         'productsSpotlight' => ['items'],
         'processSteps' => ['items'],
         'challengeGrid' => ['items'],
+        'serviceCards' => ['items'],
     ];
 
     // Mirrors src/lib/blocks/types.ts's 21 SectionElementType values.
@@ -79,7 +82,7 @@ class BlockTypeRegistry
                 'subhead' => '', 'primaryLabel' => '', 'primaryHref' => '',
                 'secondaryLabel' => '', 'secondaryHref' => '',
                 'theme' => 'dark', 'align' => 'left', 'showLogo3D' => false,
-                'mockupImage' => '', 'phoneImage' => '', 'sideList' => [],
+                'mockupImage' => '', 'phoneImage' => '', 'sideList' => [], 'trust' => [],
             ],
             'richText' => ['body' => '<p></p>', 'imageUrl' => '', 'imagePosition' => 'right', 'imageFit' => 'cover', 'caption' => ''],
             'cardGrid' => ['eyebrow' => '', 'heading' => '', 'columns' => 3, 'layout' => 'grid', 'imageUrl' => '', 'items' => []],
@@ -100,6 +103,8 @@ class BlockTypeRegistry
             'pageHeader' => ['breadcrumb' => '', 'eyebrow' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => ''],
             'challengeGrid' => ['heading' => '', 'challengeLabel' => 'The challenge', 'buildLabel' => 'What we can build', 'items' => []],
             'calloutBanner' => ['icon' => 'sparkle', 'heading' => '', 'body' => ''],
+            'serviceCards' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'items' => []],
+            'storySplit' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'image' => '', 'imageAlt' => '', 'imagePosition' => 'right'],
             default => [],
         };
     }

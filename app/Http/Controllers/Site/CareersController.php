@@ -19,9 +19,15 @@ class CareersController extends Controller
     public function index(): View
     {
         $page = Page::where('slug', 'careers')->where('published', true)->first();
+        $blocks = ($page?->blocks ?? collect())->sortBy('order')->values();
+
+        // The openPositions block marks where the job board goes; sections
+        // before it render above the board and sections after it below.
+        $split = $blocks->search(fn ($block) => $block->type === 'openPositions');
 
         return view('site.careers.index', [
-            'introBlocks' => $page?->blocks->where('type', '!=', 'openPositions') ?? collect(),
+            'introBlocks' => $split === false ? $blocks : $blocks->slice(0, $split),
+            'outroBlocks' => $split === false ? collect() : $blocks->slice($split + 1),
             'jobs' => JobPosting::where('status', JobPostingStatus::Open)
                 ->orderBy('created_at', 'desc')
                 ->get(),

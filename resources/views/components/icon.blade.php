@@ -54,6 +54,7 @@
         'logOut' => '<path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>',
         'menu' => '<path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/>',
         'x' => '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+        'smartphone' => '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
     ];
     $svg = $paths[$name] ?? $paths['sparkles'];
 @endphp

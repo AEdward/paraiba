@@ -3,7 +3,8 @@
 
 @section('content')
 <x-block-renderer :blocks="$introBlocks" />
-<div class="mx-auto max-w-6xl px-6 py-16"
+
+<section id="open-positions" class="py-12 bg-[#F6F8FC] border-y border-slate-100"
     x-data="jobBoard({{ $jobs->map(fn ($j) => [
         'id' => $j->id,
         'title' => $j->title,
@@ -17,74 +18,100 @@
         'positions' => $j->positions,
         'url' => route('careers.show', $j),
     ])->toJson() }})">
-    <h1 class="text-3xl font-bold mb-10">Open positions</h1>
-
-    <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
-        <aside class="space-y-6">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
             <div>
-                <label class="block text-sm font-medium mb-2">Experience (years): <span x-text="experienceMax"></span></label>
-                <input type="range" min="0" max="{{ config('jobs.max_experience_slider') }}" x-model.number="experienceMax" class="w-full">
-                <label class="flex items-center gap-2 text-xs mt-1"><input type="checkbox" x-model="includeSenior"> Also show 10+ years roles</label>
+                <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">Join the team</p>
+                <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#14284B]">Open positions</h2>
             </div>
-            <div>
-                <p class="text-sm font-medium mb-2">Type</p>
-                <div class="flex flex-wrap gap-2">
-                    @foreach (config('jobs.types') as $type)
-                        <button type="button" @click="toggleType('{{ $type }}')"
-                            :class="selectedTypes.includes('{{ $type }}') ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-                            class="rounded-full px-3 py-1 text-xs">{{ $type }}</button>
-                    @endforeach
+            <p class="text-slate-600">Showing <span class="font-semibold text-slate-900" x-text="paged.length"></span> of <span class="font-semibold text-slate-900" x-text="filtered.length"></span> roles</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 items-start">
+            <aside class="rounded-xl border border-slate-200 bg-white p-6 space-y-6">
+                <div>
+                    <label for="job-search" class="block text-sm font-semibold text-[#14284B] mb-2">Search</label>
+                    <input id="job-search" type="text" x-model="search" placeholder="Role or keyword" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 </div>
-            </div>
-            <div>
-                <p class="text-sm font-medium mb-2">Region</p>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" @click="region = ''" :class="region === '' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'" class="rounded-full px-3 py-1 text-xs">All</button>
-                    @foreach (config('jobs.regions') as $r)
-                        <button type="button" @click="region = '{{ $r }}'" :class="region === '{{ $r }}' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'" class="rounded-full px-3 py-1 text-xs">{{ $r }}</button>
-                    @endforeach
+                <div>
+                    <label for="job-category" class="block text-sm font-semibold text-[#14284B] mb-2">Category</label>
+                    <select id="job-category" x-model="category" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm">
+                        <option value="">All categories</option>
+                        <template x-for="c in categories" :key="c"><option :value="c" x-text="c"></option></template>
+                    </select>
                 </div>
-            </div>
-        </aside>
+                <div>
+                    <label for="job-city" class="block text-sm font-semibold text-[#14284B] mb-2">City</label>
+                    <select id="job-city" x-model="city" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm">
+                        <option value="">All cities</option>
+                        <template x-for="c in cities" :key="c"><option :value="c" x-text="c"></option></template>
+                    </select>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-[#14284B] mb-2">Type</p>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach (config('jobs.types') as $type)
+                            <button type="button" @click="toggleType('{{ $type }}')" :aria-pressed="selectedTypes.includes('{{ $type }}').toString()"
+                                :class="selectedTypes.includes('{{ $type }}') ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-700 border-slate-300 hover:border-blue-400'"
+                                class="rounded-full border px-3 py-1 text-sm transition-colors">{{ $type }}</button>
+                        @endforeach
+                    </div>
+                </div>
+                <div>
+                    <label for="job-experience" class="block text-sm font-semibold text-[#14284B] mb-2">Experience: up to <span x-text="experienceMax"></span> years</label>
+                    <input id="job-experience" type="range" min="0" max="{{ config('jobs.max_experience_slider') }}" x-model.number="experienceMax" class="w-full accent-blue-600">
+                    <label class="flex items-center gap-2 text-sm text-slate-600 mt-2"><input type="checkbox" x-model="includeSenior" class="accent-blue-600"> Include 10+ years roles</label>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-[#14284B] mb-2">Region</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" @click="region = ''" :class="region === '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-700 border-slate-300 hover:border-blue-400'" class="rounded-full border px-3 py-1 text-sm transition-colors">All</button>
+                        @foreach (config('jobs.regions') as $r)
+                            <button type="button" @click="region = '{{ $r }}'" :class="region === '{{ $r }}' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-700 border-slate-300 hover:border-blue-400'" class="rounded-full border px-3 py-1 text-sm transition-colors">{{ $r }}</button>
+                        @endforeach
+                    </div>
+                </div>
+            </aside>
 
-        <div>
-            <div class="flex flex-wrap gap-3 mb-6">
-                <input type="text" x-model="search" placeholder="Search roles..." class="rounded-lg border border-slate-300 px-3 py-2 text-sm flex-1 min-w-[200px]">
-                <select x-model="title" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
-                    <option value="">Select Position</option>
-                    <template x-for="t in titles" :key="t"><option :value="t" x-text="t"></option></template>
-                </select>
-                <select x-model="category" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
-                    <option value="">All categories</option>
-                    <template x-for="c in categories" :key="c"><option :value="c" x-text="c"></option></template>
-                </select>
-                <select x-model="city" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
-                    <option value="">Select City</option>
-                    <template x-for="c in cities" :key="c"><option :value="c" x-text="c"></option></template>
-                </select>
-            </div>
+            <div>
+                <ul class="flex flex-col gap-4">
+                    <template x-for="job in paged" :key="job.id">
+                        <li>
+                            <a :href="job.url" class="group flex items-start gap-5 rounded-xl border border-slate-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-md">
+                                <span class="hidden sm:inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                                    <x-icon name="briefcase" :stroke="1.7" class="size-6" />
+                                </span>
+                                <div class="min-w-0 flex-1">
+                                    <h3 class="text-lg font-bold text-[#14284B] group-hover:text-blue-600" x-text="job.title"></h3>
+                                    <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                                        <span class="rounded-md bg-slate-100 px-2 py-0.5 text-slate-700" x-text="job.category"></span>
+                                        <span class="rounded-md bg-slate-100 px-2 py-0.5 text-slate-700" x-text="job.location"></span>
+                                        <span class="rounded-md bg-blue-50 px-2 py-0.5 text-blue-700" x-text="job.type"></span>
+                                    </div>
+                                    <p class="mt-3 text-[15px] text-slate-600 line-clamp-2" x-text="job.description"></p>
+                                </div>
+                                <x-icon name="arrowRight" class="mt-1 size-5 shrink-0 text-blue-600 transition-transform group-hover:translate-x-1" />
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+                <div x-show="filtered.length === 0" class="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+                    <x-icon name="briefcase" :stroke="1.4" class="mx-auto size-12 text-slate-400" />
+                    <p class="mt-3 text-lg font-semibold text-[#14284B]" x-text="jobs.length ? 'No roles match these filters' : 'No open roles right now'"></p>
+                    <p class="text-slate-600">We're always glad to hear from people who want to build with us.</p>
+                </div>
 
-            <p class="text-sm text-slate-500 mb-4">Showing <span x-text="paged.length"></span> of <span x-text="filtered.length"></span> posts</p>
-
-            <div class="flex flex-col gap-4">
-                <template x-for="job in paged" :key="job.id">
-                    <a :href="job.url" class="block rounded-xl border border-slate-200 p-5 hover:border-slate-300">
-                        <h3 class="font-bold" x-text="job.title"></h3>
-                        <p class="text-sm text-slate-500" x-text="job.category + ' · ' + job.location + ' · ' + job.type"></p>
-                        <p class="text-sm text-slate-600 mt-2 line-clamp-2" x-text="job.description"></p>
-                    </a>
-                </template>
-                <p x-show="filtered.length === 0" class="text-center text-slate-400 py-10">No roles match these filters right now.</p>
-            </div>
-
-            <div class="flex items-center justify-center gap-2 mt-8" x-show="totalPages > 1">
-                <template x-for="n in totalPages" :key="n">
-                    <button @click="page = n" :class="page === n ? 'bg-slate-900 text-white' : 'bg-white border border-slate-300'" class="h-8 w-8 rounded-full text-xs" x-text="n"></button>
-                </template>
+                <nav class="flex items-center justify-center gap-2 mt-8" x-show="totalPages > 1" aria-label="Pagination">
+                    <template x-for="n in totalPages" :key="n">
+                        <button type="button" @click="page = n" :aria-current="page === n ? 'page' : null" :class="page === n ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-300 text-slate-700 hover:border-blue-400'" class="size-9 rounded-full border text-sm font-semibold" x-text="n"></button>
+                    </template>
+                </nav>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<x-block-renderer :blocks="$outroBlocks" />
 
 @push('head')
 <script>
