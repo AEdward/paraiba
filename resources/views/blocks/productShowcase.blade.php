@@ -1,7 +1,5 @@
 @php
     $uid = 'showcase-' . substr(md5(serialize($data)), 0, 6);
-    $laptopImage = $data['laptopImage'] ?? '/images/showcase/zemenhomes.png';
-    $phoneImage = $data['phoneImage'] ?? '/images/showcase/niledating.png';
 @endphp
 
 <section class="relative bg-white" style="height: 400vh;">
@@ -28,25 +26,76 @@
                 </div>
 
                 <div class="flex gap-8 mt-12">
-                    <span id="{{ $uid }}-laptop-label" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-900" style="opacity:0">
+                    <span id="{{ $uid }}-laptop-label" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <span class="size-2 rounded-full bg-blue-600"></span> {{ $data['laptopLabel'] ?? 'Zemen Homes' }}
                     </span>
-                    <span id="{{ $uid }}-phone-label" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-900" style="opacity:0">
+                    <span id="{{ $uid }}-phone-label" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <span class="size-2 rounded-full bg-slate-900"></span> {{ $data['phoneLabel'] ?? 'NileDating' }}
                     </span>
                 </div>
             </div>
 
-            <div class="relative h-full">
-                <canvas id="{{ $uid }}-canvas" class="w-full h-full block"></canvas>
+            <div class="relative flex items-center justify-center" style="perspective: 2000px;">
+                <div id="{{ $uid }}-stage" class="relative">
+                    <div id="{{ $uid }}-laptop-rig" style="transform-style: preserve-3d;">
+                        <div id="{{ $uid }}-laptop-lid" class="device-lid" style="background-image: url('{{ $data['laptopImage'] ?? '/images/showcase/zemenhomes.png' }}')"></div>
+                        <div class="device-laptop-base"></div>
+                    </div>
+
+                    <div id="{{ $uid }}-phone-rig" class="device-phone-rig">
+                        <div class="device-phone-screen" style="background-image: url('{{ $data['phoneImage'] ?? '/images/showcase/niledating.png' }}')"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+@once
+    <style>
+        .device-lid {
+            width: min(44vw, 560px);
+            aspect-ratio: 1357 / 645;
+            background-color: #f8fafc;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 14px;
+            border: 10px solid #0f172a;
+            box-shadow: 0 30px 60px -20px rgba(15, 23, 42, 0.35);
+            transform-origin: bottom center;
+        }
+        .device-laptop-base {
+            width: calc(min(44vw, 560px) * 1.08);
+            height: 16px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            border-radius: 0 0 10px 10px;
+        }
+        .device-phone-rig {
+            position: absolute;
+            right: -8%;
+            bottom: -8%;
+        }
+        .device-phone-screen {
+            width: min(16vw, 150px);
+            aspect-ratio: 853 / 1844;
+            background-color: #f8fafc;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 22px;
+            border: 8px solid #0f172a;
+            box-shadow: 0 25px 50px -15px rgba(15, 23, 42, 0.4);
+        }
+        @media (max-width: 1024px) {
+            .device-phone-rig { right: -4%; bottom: -10%; }
+        }
+    </style>
+@endonce
+
 @push('scripts')
     @once
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     @endonce
@@ -55,123 +104,10 @@
             function init() {
                 gsap.registerPlugin(ScrollTrigger);
 
-                const canvas = document.getElementById('{{ $uid }}-canvas');
-                const container = canvas.parentElement;
-                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-                camera.position.set(0, 1.1, 5.2);
-                camera.lookAt(0, 0.55, 0);
-
-                scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-                const key = new THREE.DirectionalLight(0xffffff, 0.9);
-                key.position.set(2, 4, 3);
-                scene.add(key);
-                const fill = new THREE.DirectionalLight(0xbfdcff, 0.4);
-                fill.position.set(-3, 1, -2);
-                scene.add(fill);
-
-                // Everything we place in the scene needs to stay within this
-                // horizontal half-width (world units) regardless of how
-                // narrow/wide the container is - laptop spans roughly
-                // x=-1.2..0.5, phone rests at x=1.2, so 1.6 covers both with
-                // a margin. When the container is tall/narrow, back the
-                // camera off further so that half-width is still visible.
-                const MIN_HALF_WIDTH = 1.6;
-                const MIN_DISTANCE = 5.2;
-
-                function resize() {
-                    const w = container.clientWidth;
-                    const h = container.clientHeight;
-                    renderer.setSize(w, h, false);
-                    const aspect = w / h;
-                    camera.aspect = aspect;
-                    const vFov = THREE.MathUtils.degToRad(camera.fov / 2);
-                    const distanceForWidth = MIN_HALF_WIDTH / (Math.tan(vFov) * aspect);
-                    camera.position.z = Math.max(MIN_DISTANCE, distanceForWidth);
-                    camera.updateProjectionMatrix();
-                }
-                window.addEventListener('resize', resize);
-
-                const loader = new THREE.TextureLoader();
-                const bezelMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6, metalness: 0.2 });
-                const baseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6, metalness: 0.2 });
-
-                // --- Laptop ---
-                const laptopGroup = new THREE.Group();
-                laptopGroup.position.x = -0.6;
-
-                const base = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.1, 1.7), baseMat);
-                base.position.y = -0.05;
-                laptopGroup.add(base);
-
-                const hinge = new THREE.Group();
-                hinge.position.set(0, 0.0, -0.8);
-                laptopGroup.add(hinge);
-
-                const lidHeight = 1.4;
-                const lidWidth = 2.0;
-                const bezel = new THREE.Mesh(new THREE.PlaneGeometry(lidWidth, lidHeight), bezelMat);
-                bezel.position.set(0, lidHeight / 2, 0);
-                hinge.add(bezel);
-
-                const laptopRatio = 1357 / 645;
-                const screenHeight = lidHeight - 0.18;
-                const screenWidth = Math.min(lidWidth - 0.18, screenHeight * laptopRatio);
-                const screenMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-                const laptopScreen = new THREE.Mesh(new THREE.PlaneGeometry(screenWidth, screenHeight), screenMat);
-                laptopScreen.position.set(0, lidHeight / 2, 0.01);
-                hinge.add(laptopScreen);
-
-                loader.load('{{ $laptopImage }}', function (tex) {
-                    tex.colorSpace = THREE.SRGBColorSpace;
-                    screenMat.map = tex;
-                    screenMat.needsUpdate = true;
-                });
-
-                scene.add(laptopGroup);
-
-                // --- Phone ---
-                const phoneGroup = new THREE.Group();
-                phoneGroup.position.set(1.2, 0.5, 0.3);
-
-                const phoneW = 0.8;
-                const phoneRatio = 853 / 1844;
-                const phoneH = phoneW / phoneRatio;
-                const phoneBezel = new THREE.Mesh(new THREE.PlaneGeometry(phoneW + 0.12, phoneH + 0.12), bezelMat.clone());
-                phoneGroup.add(phoneBezel);
-
-                const phoneScreenMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
-                const phoneScreen = new THREE.Mesh(new THREE.PlaneGeometry(phoneW, phoneH), phoneScreenMat);
-                phoneScreen.position.z = 0.01;
-                phoneGroup.add(phoneScreen);
-
-                loader.load('{{ $phoneImage }}', function (tex) {
-                    tex.colorSpace = THREE.SRGBColorSpace;
-                    phoneScreenMat.map = tex;
-                    phoneScreenMat.needsUpdate = true;
-                });
-
-                phoneBezel.material.transparent = true;
-                phoneBezel.material.opacity = 1;
-                scene.add(phoneGroup);
-
-                // --- Initial / closed state ---
-                hinge.rotation.x = Math.PI / 2 * 0.98; // closed: lid folded flat onto the base
-                laptopGroup.rotation.y = -0.9; // angled away from viewer
-                phoneGroup.position.x = 4.5;
-                phoneScreenMat.opacity = 0;
-                phoneBezel.material.opacity = 0;
-
-                resize();
-
-                function render() {
-                    renderer.render(scene, camera);
-                    requestAnimationFrame(render);
-                }
-                render();
+                gsap.set('#{{ $uid }}-laptop-lid', { rotateX: -100 });
+                gsap.set('#{{ $uid }}-laptop-rig', { rotateY: 55 });
+                gsap.set('#{{ $uid }}-phone-rig', { opacity: 0, x: 120, scale: 0.9 });
+                gsap.set(['#{{ $uid }}-laptop-label', '#{{ $uid }}-phone-label'], { opacity: 0, y: 10 });
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -180,20 +116,16 @@
                         end: '+=300%',
                         scrub: 1,
                         pin: true,
-                        onRefresh: resize,
                     },
                 });
 
-                tl.to(hinge.rotation, { x: 0, duration: 0.25, ease: 'power2.out' }, 0)
-                  .to(laptopGroup.rotation, { y: 0, duration: 0.25, ease: 'power2.inOut' }, 0.25)
-                  .to(phoneGroup.position, { x: 1.2, duration: 0.25, ease: 'power2.out' }, 0.5)
-                  .to(phoneScreenMat, { opacity: 1, duration: 0.25 }, 0.5)
-                  .to(phoneBezel.material, { opacity: 1, duration: 0.25 }, 0.5)
-                  .to('#{{ $uid }}-laptop-label', { opacity: 1, duration: 0.2 }, 0.78)
-                  .to('#{{ $uid }}-phone-label', { opacity: 1, duration: 0.2 }, 0.78);
+                tl.to('#{{ $uid }}-laptop-lid', { rotateX: 0, duration: 0.25, ease: 'power2.out' }, 0)
+                  .to('#{{ $uid }}-laptop-rig', { rotateY: 0, duration: 0.25, ease: 'power2.inOut' }, 0.25)
+                  .to('#{{ $uid }}-phone-rig', { opacity: 1, x: 0, scale: 1, duration: 0.25, ease: 'power2.out' }, 0.5)
+                  .to(['#{{ $uid }}-laptop-label', '#{{ $uid }}-phone-label'], { opacity: 1, y: 0, duration: 0.2 }, 0.78);
             }
 
-            if (window.THREE && window.gsap && window.ScrollTrigger) {
+            if (window.gsap && window.ScrollTrigger) {
                 init();
             } else {
                 window.addEventListener('load', init);
