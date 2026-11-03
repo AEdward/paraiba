@@ -5,20 +5,20 @@
     $compact = ! empty($data['compact']);
 @endphp
 @if ($compact)
-<section class="py-12 {{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-8 items-center">
+<section class="py-10 border-t border-slate-100 {{ $dark ? 'bg-slate-950 text-white' : 'bg-[#FBFCFE] text-slate-900' }}">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[minmax(0,1fr)_1.9fr] gap-8 lg:gap-12 items-center">
         <div>
             @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
-            @if (! empty($data['heading']))<h2 class="text-3xl font-bold leading-tight max-w-xs">{{ $data['heading'] }}</h2>@endif
+            @if (! empty($data['heading']))<h2 class="text-4xl font-extrabold tracking-tight leading-[1.15] max-w-sm {{ $dark ? 'text-white' : 'text-[#14284B]' }}">{{ $data['heading'] }}</h2>@endif
             @if (! empty($data['body']))<p class="{{ $dark ? 'text-slate-300' : 'text-slate-600' }} mt-3">{{ $data['body'] }}</p>@endif
         </div>
         <div class="grid sm:grid-cols-2 gap-3">
             @foreach ($data['items'] ?? [] as $item)
-                <div class="flex items-start gap-4 rounded-lg border {{ $dark ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white' }} px-5 py-4">
-                    <x-icon :name="$item['icon'] ?? 'sparkles'" class="size-7 shrink-0 mt-0.5 {{ $dark ? 'text-blue-400' : 'text-blue-600' }}" />
+                <div class="flex items-start gap-5 rounded-xl border {{ $dark ? 'border-white/10 bg-white/5' : 'border-slate-200/80 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)]' }} px-6 py-4">
+                    <x-icon :name="$item['icon'] ?? 'sparkles'" :stroke="1.6" class="size-8 shrink-0 mt-0.5 {{ $dark ? 'text-blue-400' : 'text-blue-600' }}" />
                     <div>
-                        <h3 class="text-base font-semibold">{{ $item['title'] ?? '' }}</h3>
-                        <p class="text-sm {{ $dark ? 'text-slate-400' : 'text-slate-500' }} mt-0.5">{{ $item['description'] ?? $item['desc'] ?? '' }}</p>
+                        <h3 class="text-base font-semibold {{ $dark ? 'text-white' : 'text-[#14284B]' }}">{{ $item['title'] ?? '' }}</h3>
+                        <p class="text-sm leading-snug {{ $dark ? 'text-slate-400' : 'text-slate-600' }} mt-1">{{ $item['description'] ?? $item['desc'] ?? '' }}</p>
                     </div>
                 </div>
             @endforeach
