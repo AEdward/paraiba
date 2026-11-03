@@ -23,7 +23,7 @@
     })->filter(fn ($e) => $e['label'] !== '');
 @endphp
 <section class="py-12">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
         @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
         @if (! empty($data['heading']))<h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#14284B]">{{ $data['heading'] }}</h2>@endif
         @if (! empty($data['body']))<p class="mt-2 text-lg text-slate-600">{{ $data['body'] }}</p>@endif

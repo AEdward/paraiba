@@ -6,7 +6,7 @@
 @endphp
 @if ($compact)
 <section class="py-10 border-t border-slate-100 {{ $dark ? 'bg-slate-950 text-white' : 'bg-[#FBFCFE] text-slate-900' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[minmax(0,1fr)_1.9fr] gap-8 lg:gap-12 items-center">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 grid lg:grid-cols-[minmax(0,1fr)_1.9fr] gap-8 lg:gap-12 items-center">
         <div>
             @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
             @if (! empty($data['heading']))<h2 class="text-4xl font-extrabold tracking-tight leading-[1.15] max-w-sm {{ $dark ? 'text-white' : 'text-[#14284B]' }}">{{ $data['heading'] }}</h2>@endif
@@ -27,7 +27,7 @@
 </section>
 @else
 <section class="py-20 {{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
         <div class="{{ $split ? 'grid lg:grid-cols-[minmax(0,1fr)_2fr] gap-12 items-start' : '' }}">
             <div class="{{ $split ? '' : 'max-w-2xl mb-12' }}">
                 @if (! empty($data['eyebrow']))<p class="text-base font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif

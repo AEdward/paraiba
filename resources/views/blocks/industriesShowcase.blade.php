@@ -4,7 +4,7 @@
 @endphp
 @if ($compact)
 <section class="py-8 {{ $dark ? 'bg-[#0B1F3F] text-white' : 'bg-slate-50 text-slate-900' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[2fr_3fr] gap-10 items-center">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 grid lg:grid-cols-[2fr_3fr] gap-10 items-center">
         <div>
             <h2 class="text-3xl font-bold leading-tight max-w-sm">{{ $data['heading'] ?? '' }}</h2>
             @if (! empty($data['body']))<p class="{{ $dark ? 'text-slate-200' : 'text-slate-600' }} mt-3 max-w-md">{{ $data['body'] }}</p>@endif
@@ -18,7 +18,7 @@
 </section>
 @else
 <section class="py-20 {{ $dark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 grid lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
         <div>
             @if (! empty($data['eyebrow']))<p class="text-base font-semibold uppercase tracking-wide text-blue-400">{{ $data['eyebrow'] }}</p>@endif
             <h2 class="text-3xl sm:text-4xl font-bold mt-3">{{ $data['heading'] ?? '' }}</h2>

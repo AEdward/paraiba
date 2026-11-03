@@ -1,5 +1,5 @@
 <section class="pt-20 pb-8">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
         <div class="max-w-2xl mb-14">
             @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
             @if (! empty($data['heading']))<h2 class="text-3xl sm:text-4xl font-bold mt-2">{{ $data['heading'] }}</h2>@endif

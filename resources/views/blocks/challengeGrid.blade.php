@@ -1,5 +1,5 @@
 <section class="py-12">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
         @if (! empty($data['heading']))
             <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#14284B] mb-8">{{ $data['heading'] }}</h2>
         @endif

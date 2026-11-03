@@ -21,7 +21,7 @@
     @endphp
 
     <header class="border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur z-50" x-data="{ mobileOpen: false }">
-        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-4 flex items-center justify-between gap-6">
+        <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 py-4 flex items-center justify-between gap-6">
             <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
                 <img src="/paraiba-symbol.png" alt="Paraiba" class="h-9 w-9 object-contain">
                 <span class="flex flex-col leading-none">
@@ -106,7 +106,7 @@
     </main>
 
     <footer class="bg-[#0B1F3F] text-slate-300">
-        <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-7 grid grid-cols-2 lg:grid-cols-[1.3fr_auto_1fr_auto_1fr_auto_1.2fr] gap-y-8 gap-x-10 items-start">
+        <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 py-7 grid grid-cols-2 lg:grid-cols-[1.3fr_auto_1fr_auto_1fr_auto_1.2fr] gap-y-8 gap-x-10 items-start">
             <a href="{{ route('home') }}" class="col-span-2 lg:col-span-1 flex items-center gap-3">
                 <img src="/paraiba-symbol.png" alt="" class="h-11 w-11 object-contain">
                 <span class="flex flex-col leading-none">

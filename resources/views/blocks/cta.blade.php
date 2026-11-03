@@ -3,7 +3,7 @@
 @endphp
 @if (($data['style'] ?? '') === 'strip')
 <section class="py-10">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#14284B]">{{ $data['heading'] ?? '' }}</h2>
         @if (! empty($data['buttonLabel']))
             <a href="{{ $data['buttonHref'] ?? '#' }}" class="inline-flex items-center rounded-lg bg-blue-600 text-white px-7 py-3.5 text-base font-semibold hover:bg-blue-700 transition-colors">{{ $data['buttonLabel'] }}</a>
@@ -12,7 +12,7 @@
 </section>
 @else
 <section class="py-6">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20">
         <div class="relative overflow-hidden rounded-2xl px-8 sm:px-10 py-6 flex flex-wrap items-center justify-between gap-6 {{ $dark ? 'bg-gradient-to-r from-[#1E5BE6] via-[#2563EB] to-[#3B82F6] text-white' : 'bg-slate-50 text-slate-900' }}">
             @if ($dark)
                 <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-25" viewBox="0 0 800 100" preserveAspectRatio="none" aria-hidden="true">

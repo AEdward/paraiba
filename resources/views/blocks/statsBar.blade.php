@@ -2,7 +2,7 @@
     $dark = ($data['theme'] ?? 'light') === 'dark';
 @endphp
 <section class="py-8 border-y {{ $dark ? 'bg-slate-950 border-white/10 text-white' : 'bg-slate-50 border-slate-200' }}">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 flex flex-wrap items-center justify-center">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 flex flex-wrap items-center justify-center">
         @foreach ($data['items'] ?? [] as $i => $item)
             @if ($i > 0)
                 <span class="hidden sm:block h-7 w-px {{ $dark ? 'bg-white/10' : 'bg-slate-300' }} mx-7 lg:mx-10"></span>

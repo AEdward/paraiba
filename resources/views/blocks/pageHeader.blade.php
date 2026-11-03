@@ -1,5 +1,5 @@
 <section class="bg-gradient-to-b from-[#F7FAFF] to-white">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 pt-6 pb-10">
+    <div class="mx-auto max-w-[90rem] px-6 md:px-10 lg:px-16 xl:px-20 pt-6 pb-10">
         @if (! empty($data['breadcrumb']))
             <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
                 <a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors">Home</a>
