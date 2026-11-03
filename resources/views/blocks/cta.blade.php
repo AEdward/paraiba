@@ -1,4 +1,6 @@
-@php($dark = ($data['theme'] ?? 'dark') === 'dark')
+@php
+    $dark = ($data['theme'] ?? 'dark') === 'dark';
+@endphp
 <section class="py-14 {{ $dark ? 'bg-gradient-to-r from-blue-700 to-blue-500 text-white' : 'bg-slate-50 text-slate-900' }}">
     <div class="mx-auto max-w-6xl px-6 flex flex-wrap items-center justify-between gap-6">
         <div>

@@ -1,4 +1,6 @@
-@php($dark = ($data['theme'] ?? 'light') === 'dark')
+@php
+    $dark = ($data['theme'] ?? 'light') === 'dark';
+@endphp
 <section class="py-16 {{ $dark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900' }}">
     <div class="mx-auto max-w-7xl px-6 grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
         <div>

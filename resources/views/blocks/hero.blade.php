@@ -1,4 +1,6 @@
-@php($dark = ($data['theme'] ?? 'light') === 'dark')
+@php
+    $dark = ($data['theme'] ?? 'light') === 'dark';
+@endphp
 <section class="{{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }} overflow-hidden">
     <div class="mx-auto max-w-7xl px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
         <div class="{{ ($data['align'] ?? 'left') === 'center' ? 'text-center mx-auto' : '' }}">

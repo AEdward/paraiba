@@ -1,4 +1,6 @@
-@php($dark = ($data['theme'] ?? 'light') === 'dark')
+@php
+    $dark = ($data['theme'] ?? 'light') === 'dark';
+@endphp
 <section class="py-8 border-y {{ $dark ? 'bg-slate-950 border-white/10 text-white' : 'bg-slate-50 border-slate-200' }}">
     <div class="mx-auto max-w-7xl px-6 flex flex-wrap items-center justify-center">
         @foreach ($data['items'] ?? [] as $i => $item)
