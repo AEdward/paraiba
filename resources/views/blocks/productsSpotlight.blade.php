@@ -8,7 +8,7 @@
 
         <div class="grid sm:grid-cols-2 gap-8">
             @foreach ($data['items'] ?? [] as $item)
-                <div class="relative rounded-2xl overflow-hidden p-6 flex items-center gap-3" style="background-color: #FBF0E2; min-height: 13rem;">
+                <div class="relative rounded-2xl p-6 flex items-center gap-1" style="background-color: #FBF0E2; min-height: 13rem;">
                     <div class="w-1/3 shrink-0">
                         <div class="flex items-center gap-2.5 mb-4">
                             @if (! empty($item['logoImage']))
@@ -20,7 +20,7 @@
                             @endif
                             <span class="text-lg font-bold text-slate-900">{{ $item['name'] ?? '' }}</span>
                         </div>
-                        <h3 class="text-xl font-semibold text-slate-900">{{ $item['tagline'] ?? '' }}</h3>
+                        <h3 class="text-xl font-semibold text-slate-900 max-w-[10rem]">{{ $item['tagline'] ?? '' }}</h3>
                         @if (! empty($item['buttonLabel']))
                             <a href="{{ $item['buttonHref'] ?? '#' }}" class="inline-flex items-center gap-2 mt-5 rounded-lg bg-blue-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors">
                                 {{ $item['buttonLabel'] }} <x-icon name="arrowRight" class="size-4" />
@@ -34,14 +34,14 @@
                                 ? @getimagesize(public_path($item['image']))
                                 : false;
                         @endphp
-                        <div class="flex-1 flex items-center justify-center">
+                        <div class="flex-1 flex items-center justify-start overflow-visible">
                             <img
                                 src="{{ $item['image'] }}"
                                 alt="{{ $item['name'] ?? '' }}"
                                 loading="lazy"
                                 decoding="async"
                                 @if ($spotlightImageSize) width="{{ $spotlightImageSize[0] }}" height="{{ $spotlightImageSize[1] }}" @endif
-                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'h-52 sm:h-56 w-auto' : 'w-full h-auto' }}"
+                                class="{{ ($item['device'] ?? 'laptop') === 'phone' ? 'h-64 sm:h-72 w-auto' : 'w-full h-auto' }}"
                             >
                         </div>
                     @endif
