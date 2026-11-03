@@ -11,7 +11,9 @@
                 <div class="relative rounded-2xl overflow-hidden p-8 flex items-center gap-4" style="background-color: #FBF0E2; min-height: 20rem;">
                     <div class="w-2/5 shrink-0">
                         <div class="flex items-center gap-2 mb-4">
-                            @if (! empty($item['logoIcon']))
+                            @if (! empty($item['logoImage']))
+                                <img src="{{ $item['logoImage'] }}" alt="" class="size-7 rounded-md object-contain">
+                            @elseif (! empty($item['logoIcon']))
                                 <span class="inline-flex items-center justify-center size-7 rounded-md bg-white text-blue-600 shadow-sm">
                                     <x-icon :name="$item['logoIcon']" class="size-4" />
                                 </span>
