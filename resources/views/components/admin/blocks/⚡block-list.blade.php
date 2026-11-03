@@ -125,6 +125,25 @@ new class extends Component
         }
         unset($this->blocks);
     }
+
+    public function moveBlock(string $blockId, int $direction): void
+    {
+        $blocks = $this->blocks->values();
+        $index = $blocks->search(fn ($b) => $b->id === $blockId);
+        $target = $index === false ? false : $index + $direction;
+
+        if ($index === false || $target < 0 || $target >= $blocks->count()) {
+            return;
+        }
+
+        $a = $blocks[$index];
+        $b = $blocks[$target];
+
+        $this->blockModelClass()::where('id', $a->id)->update(['order' => $b->order]);
+        $this->blockModelClass()::where('id', $b->id)->update(['order' => $a->order]);
+
+        unset($this->blocks);
+    }
 };
 ?>
 
@@ -160,7 +179,11 @@ new class extends Component
             <div wire:key="{{ $block->id }}" data-id="{{ $block->id }}" class="rounded-xl border border-slate-200 bg-white">
                 <div class="flex items-center justify-between px-4 py-3">
                     <div class="flex items-center gap-3">
-                        <span class="drag-handle cursor-move text-slate-300">⠿</span>
+                        <span class="drag-handle cursor-move text-slate-300" aria-label="Drag to reorder block" role="img">⠿</span>
+                        <div class="flex flex-col -my-1">
+                            <button wire:click="moveBlock('{{ $block->id }}', -1)" @disabled($loop->first) aria-label="Move block up" class="text-slate-400 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed leading-none">▲</button>
+                            <button wire:click="moveBlock('{{ $block->id }}', 1)" @disabled($loop->last) aria-label="Move block down" class="text-slate-400 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed leading-none">▼</button>
+                        </div>
                         <span class="font-medium text-sm">{{ \App\Support\Blocks\BlockTypeRegistry::LABELS[$block->type] ?? $block->type }}</span>
                     </div>
                     <div class="flex items-center gap-3">
