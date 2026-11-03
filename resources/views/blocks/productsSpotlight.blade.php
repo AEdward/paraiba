@@ -1,4 +1,4 @@
-<section class="py-20">
+<section class="pt-20 pb-8">
     <div class="mx-auto max-w-[90rem] px-6 lg:px-10">
         <div class="max-w-2xl mb-14">
             @if (! empty($data['eyebrow']))<p class="text-sm font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>@endif
@@ -49,7 +49,7 @@
         </div>
 
         @if (! empty($data['footnote']))
-            <p class="text-center text-base text-slate-500 mt-8">{{ $data['footnote'] }}</p>
+            <p class="text-center text-base text-slate-500 mt-6">{{ $data['footnote'] }}</p>
         @endif
     </div>
 </section>

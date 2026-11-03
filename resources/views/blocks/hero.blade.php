@@ -2,7 +2,7 @@
     $dark = ($data['theme'] ?? 'light') === 'dark';
 @endphp
 <section class="{{ $dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900' }} overflow-hidden">
-    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-24 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="mx-auto max-w-[90rem] px-6 lg:px-10 py-24 grid lg:grid-cols-[1fr_1.35fr] gap-8 lg:gap-4 items-center">
         <div class="{{ ($data['align'] ?? 'left') === 'center' ? 'text-center mx-auto' : '' }}">
             @if (! empty($data['eyebrow']))
                 <p class="text-base font-semibold uppercase tracking-wide text-blue-600">{{ $data['eyebrow'] }}</p>
@@ -35,14 +35,14 @@
                     ? @getimagesize(public_path($data['mockupImage']))
                     : false;
             @endphp
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-start">
                 <img
                     src="{{ $data['mockupImage'] }}"
                     alt=""
                     loading="eager"
                     fetchpriority="high"
                     @if ($heroImageSize) width="{{ $heroImageSize[0] }}" height="{{ $heroImageSize[1] }}" @endif
-                    class="w-full max-w-2xl h-auto"
+                    class="w-full lg:w-[112%] max-w-none h-auto"
                 >
             </div>
         @endif
