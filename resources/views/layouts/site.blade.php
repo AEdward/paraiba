@@ -28,7 +28,18 @@
 
             <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700">
                 <a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors">Home</a>
-                <a href="{{ route('products.index') }}" class="hover:text-blue-600 transition-colors">Products</a>
+
+                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="flex items-center gap-1 hover:text-blue-600 transition-colors">
+                        Products <x-icon name="chevronDown" class="size-3.5" />
+                    </button>
+                    <div x-show="open" x-cloak class="absolute left-0 top-full pt-3 w-56">
+                        <div class="rounded-xl border border-slate-100 bg-white shadow-lg p-2">
+                            <a href="{{ route('products.index') }}#zemen-homes" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">Zemen Homes</a>
+                            <a href="{{ route('products.index') }}#niledating" class="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">NileDating</a>
+                        </div>
+                    </div>
+                </div>
 
                 @foreach ($flatHeaderItems as $item)
                     <a href="{{ $item->href }}" class="hover:text-blue-600 transition-colors">{{ $item->label }}</a>
@@ -52,7 +63,7 @@
 
             <div class="flex items-center gap-3 shrink-0">
                 <a href="{{ route('contact') }}" class="hidden sm:inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold hover:bg-slate-50 transition-colors">Contact</a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center rounded-lg bg-blue-600 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors">Get Started</a>
+                <a href="{{ route('contact') }}" class="inline-flex items-center rounded-lg bg-blue-600 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors">Start a Project</a>
             </div>
         </div>
     </header>
@@ -79,10 +90,8 @@
             <div>
                 <h4 class="text-sm font-semibold text-white mb-3">Products</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('products.index') }}" class="hover:text-white transition-colors">All Products</a></li>
-                    @foreach (\App\Models\ProductSite::orderBy('name')->get() as $site)
-                        <li><a href="{{ route('products.index') }}" class="hover:text-white transition-colors">{{ $site->name }}</a></li>
-                    @endforeach
+                    <li><a href="{{ route('products.index') }}#niledating" class="hover:text-white transition-colors">NileDating</a></li>
+                    <li><a href="{{ route('products.index') }}#zemen-homes" class="hover:text-white transition-colors">Zemen Homes</a></li>
                 </ul>
             </div>
 

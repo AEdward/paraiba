@@ -15,7 +15,7 @@ class BlockTypeRegistry
         'hero', 'richText', 'cardGrid', 'industriesShowcase', 'statsBar',
         'statsQuote', 'quote', 'cta', 'productsPreview', 'partnersTrustBar',
         'openPositions', 'contactPanel', 'productsGrid', 'section', 'techStack',
-        'productShowcase',
+        'productsSpotlight', 'processSteps',
     ];
 
     // Restricted subset usable on product-site (microsite) pages — excludes
@@ -40,7 +40,8 @@ class BlockTypeRegistry
         'productsGrid' => 'Products grid (live)',
         'section' => 'Section (freeform)',
         'techStack' => 'Tech stack',
-        'productShowcase' => 'Product showcase (scroll animation)',
+        'productsSpotlight' => 'Products spotlight (device cards)',
+        'processSteps' => 'Process steps (numbered)',
     ];
 
     // Fields edited as a raw JSON textarea rather than individual inputs —
@@ -54,6 +55,8 @@ class BlockTypeRegistry
         'quote' => ['lines'],
         'techStack' => ['keys'],
         'section' => ['elements'],
+        'productsSpotlight' => ['items'],
+        'processSteps' => ['items'],
     ];
 
     // Mirrors src/lib/blocks/types.ts's 21 SectionElementType values.
@@ -68,11 +71,11 @@ class BlockTypeRegistry
     {
         return match ($type) {
             'hero' => [
-                'eyebrow' => '', 'headline' => 'Headline', 'headlineHighlight' => '',
+                'eyebrow' => '', 'headline' => 'Headline', 'headlineHighlight' => '', 'headline2' => '',
                 'subhead' => '', 'primaryLabel' => '', 'primaryHref' => '',
                 'secondaryLabel' => '', 'secondaryHref' => '',
                 'theme' => 'dark', 'align' => 'left', 'showLogo3D' => false,
-                'mockupImage' => '', 'sideList' => [],
+                'mockupImage' => '', 'phoneImage' => '', 'sideList' => [],
             ],
             'richText' => ['body' => '<p></p>', 'imageUrl' => '', 'imagePosition' => 'right', 'imageFit' => 'cover', 'caption' => ''],
             'cardGrid' => ['eyebrow' => '', 'heading' => '', 'columns' => 3, 'layout' => 'grid', 'imageUrl' => '', 'items' => []],
@@ -88,11 +91,8 @@ class BlockTypeRegistry
             'productsGrid' => ['eyebrow' => '', 'heading' => ''],
             'section' => ['elements' => []],
             'techStack' => ['eyebrow' => '', 'heading' => '', 'keys' => []],
-            'productShowcase' => [
-                'eyebrow' => '', 'headline' => '', 'headlineHighlight' => '', 'subhead' => '',
-                'primaryLabel' => '', 'primaryHref' => '', 'secondaryLabel' => '', 'secondaryHref' => '',
-                'laptopImage' => '', 'laptopLabel' => '', 'phoneImage' => '', 'phoneLabel' => '',
-            ],
+            'productsSpotlight' => ['eyebrow' => '', 'heading' => '', 'body' => '', 'footnote' => '', 'items' => []],
+            'processSteps' => ['heading' => '', 'items' => []],
             default => [],
         };
     }

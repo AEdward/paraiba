@@ -8,6 +8,7 @@
             <h1 class="text-4xl sm:text-5xl font-bold mt-3 leading-tight">
                 {{ $data['headline'] ?? '' }}
                 @if (! empty($data['headlineHighlight']))<span class="text-blue-600">{{ $data['headlineHighlight'] }}</span>@endif
+                @if (! empty($data['headline2']))<br>{{ $data['headline2'] }}@endif
             </h1>
             @if (! empty($data['subhead']))
                 <p class="text-lg {{ $dark ? 'text-slate-300' : 'text-slate-600' }} mt-5 max-w-xl">{{ $data['subhead'] }}</p>
@@ -15,7 +16,7 @@
             <div class="flex flex-wrap gap-3 mt-8 {{ ($data['align'] ?? 'left') === 'center' ? 'justify-center' : '' }}">
                 @if (! empty($data['primaryLabel']))
                     <a href="{{ $data['primaryHref'] ?? '#' }}" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 text-white px-6 py-3 text-sm font-semibold hover:bg-blue-700 transition-colors">
-                        {{ $data['primaryLabel'] }} <x-icon name="arrowRight" class="size-4" />
+                        {{ $data['primaryLabel'] }}
                     </a>
                 @endif
                 @if (! empty($data['secondaryLabel']))
@@ -26,26 +27,62 @@
             </div>
         </div>
 
-        <div class="relative">
-            @if (! empty($data['mockupImage']))
-                <img src="{{ $data['mockupImage'] }}" alt="" class="w-full rounded-2xl">
-            @endif
-
-            @if (! empty($data['sideList']))
-                <div class="hidden lg:flex flex-col gap-3 absolute top-0 -right-4 translate-x-1/3">
-                    @foreach ($data['sideList'] as $item)
-                        <div class="flex items-center gap-3 bg-white rounded-xl shadow-lg shadow-slate-900/5 border border-slate-100 px-4 py-3 w-64">
-                            <span class="shrink-0 flex items-center justify-center size-9 rounded-lg bg-blue-50 text-blue-600">
-                                <x-icon :name="$item['icon'] ?? 'sparkles'" class="size-5" />
-                            </span>
-                            <span>
-                                <span class="block text-sm font-semibold text-slate-900">{{ $item['title'] ?? '' }}</span>
-                                <span class="block text-xs text-slate-500">{{ $item['subtitle'] ?? '' }}</span>
-                            </span>
-                        </div>
-                    @endforeach
+        @if (! empty($data['mockupImage']) || ! empty($data['phoneImage']))
+            <div class="relative flex items-center justify-center py-10">
+                <div class="absolute inset-0 flex items-center justify-center -z-10">
+                    <div class="size-[26rem] rounded-full bg-blue-100/60 blur-2xl"></div>
                 </div>
-            @endif
-        </div>
+
+                @if (! empty($data['mockupImage']))
+                    <div class="hero-laptop">
+                        <div class="hero-laptop-screen" style="background-image: url('{{ $data['mockupImage'] }}')"></div>
+                        <div class="hero-laptop-base"></div>
+                    </div>
+                @endif
+
+                @if (! empty($data['phoneImage']))
+                    <div class="hero-phone" style="background-image: url('{{ $data['phoneImage'] }}')"></div>
+                @endif
+            </div>
+        @endif
     </div>
 </section>
+
+@once
+    <style>
+        .hero-laptop { width: min(34vw, 420px); }
+        .hero-laptop-screen {
+            width: 100%;
+            aspect-ratio: 1357 / 645;
+            background-color: #f8fafc;
+            background-size: cover;
+            background-position: top center;
+            border-radius: 12px 12px 4px 4px;
+            border: 8px solid #1e293b;
+            box-shadow: 0 30px 60px -20px rgba(15, 23, 42, 0.35);
+        }
+        .hero-laptop-base {
+            width: 108%;
+            margin-left: -4%;
+            height: 12px;
+            background: linear-gradient(to bottom, #cbd5e1, #94a3b8);
+            border-radius: 0 0 8px 8px;
+        }
+        .hero-phone {
+            position: absolute;
+            left: -4%;
+            bottom: -6%;
+            width: min(13vw, 160px);
+            aspect-ratio: 853 / 1844;
+            background-color: #f8fafc;
+            background-size: cover;
+            background-position: top center;
+            border-radius: 20px;
+            border: 7px solid #1e293b;
+            box-shadow: 0 25px 50px -15px rgba(15, 23, 42, 0.4);
+        }
+        @media (max-width: 1024px) {
+            .hero-phone { left: -2%; bottom: -10%; }
+        }
+    </style>
+@endonce
