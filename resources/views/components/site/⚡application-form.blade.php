@@ -82,25 +82,37 @@ new class extends Component
         </div>
     @else
         <form wire:submit="save" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <input type="text" wire:model="name" placeholder="Full name" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                    <label for="apply-name" class="block text-sm font-medium mb-1">Full name</label>
+                    <input id="apply-name" type="text" wire:model="name" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm">
                     @error('name') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <input type="email" wire:model="email" placeholder="Email" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                    <label for="apply-email" class="block text-sm font-medium mb-1">Email</label>
+                    <input id="apply-email" type="email" wire:model="email" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm">
                     @error('email') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
-            <input type="text" wire:model="phone" placeholder="Phone (optional)" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
-            <textarea wire:model="cover_letter" rows="4" placeholder="Cover letter (optional)" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"></textarea>
             <div>
-                <input type="file" wire:model="documents" multiple accept=".pdf,.doc,.docx,image/*" class="w-full text-sm">
+                <label for="apply-phone" class="block text-sm font-medium mb-1">Phone <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input id="apply-phone" type="text" wire:model="phone" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm">
+            </div>
+            <div>
+                <label for="apply-cover-letter" class="block text-sm font-medium mb-1">Cover letter <span class="text-slate-400 font-normal">(optional)</span></label>
+                <textarea id="apply-cover-letter" wire:model="cover_letter" rows="4" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-base sm:text-sm"></textarea>
+            </div>
+            <div>
+                <label for="apply-documents" class="block text-sm font-medium mb-1">Documents</label>
+                <input id="apply-documents" type="file" wire:model="documents" multiple accept=".pdf,.doc,.docx,image/*" class="w-full text-sm">
                 <p class="text-xs text-slate-400 mt-1">PDF, Word, or image files, up to 8MB each.</p>
                 @error('documents.*') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 <div wire:loading wire:target="documents" class="text-xs text-slate-400 mt-1">Uploading…</div>
             </div>
-            <button type="submit" class="rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800">Apply now</button>
+            <button type="submit" wire:loading.attr="disabled" wire:target="save" class="rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed">
+                <span wire:loading.remove wire:target="save">Apply now</span>
+                <span wire:loading wire:target="save">Submitting…</span>
+            </button>
         </form>
     @endif
 </div>

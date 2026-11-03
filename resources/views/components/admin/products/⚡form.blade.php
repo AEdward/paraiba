@@ -107,7 +107,7 @@ new class extends Component
     <h1 class="text-xl font-bold mb-6">{{ $project ? 'Edit' : 'New' }} product</h1>
 
     <form wire:submit="save" class="space-y-5">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Name</label>
                 <input type="text" wire:model.blur="name" wire:change="slugify" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -132,7 +132,7 @@ new class extends Component
             @error('description') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Status</label>
                 <select wire:model="status" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -147,7 +147,7 @@ new class extends Component
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Link</label>
                 <input type="url" wire:model="link" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -190,7 +190,7 @@ new class extends Component
         </div>
 
         <div class="flex items-center gap-3 pt-2">
-            <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Save</button>
+            <button type="submit" wire:loading.attr="disabled" wire:target="save" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"><span wire:loading.remove wire:target="save">Save</span><span wire:loading wire:target="save">Saving…</span></button>
             <a href="{{ route('admin.products.index') }}" class="text-sm text-slate-500">Cancel</a>
         </div>
     </form>

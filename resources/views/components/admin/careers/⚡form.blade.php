@@ -97,7 +97,7 @@ new class extends Component
 <div class="mx-auto max-w-3xl px-6 py-10">
     <h1 class="text-xl font-bold mb-6">{{ $posting ? 'Edit' : 'New' }} job posting</h1>
     <form wire:submit="save" class="space-y-5">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Title</label>
                 <input type="text" wire:model="title" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -109,7 +109,7 @@ new class extends Component
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Level</label>
                 <select wire:model="level" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -130,7 +130,7 @@ new class extends Component
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Location</label>
                 <input type="text" wire:model="location" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -153,7 +153,7 @@ new class extends Component
             <textarea wire:model="about_role" rows="3" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"></textarea>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Responsibilities (one per line)</label>
                 <textarea wire:model="responsibilities" rows="4" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"></textarea>
@@ -174,7 +174,7 @@ new class extends Component
             <textarea wire:model="how_to_apply" rows="2" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"></textarea>
         </div>
 
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Positions</label>
                 <input type="number" wire:model="positions" min="1" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -189,7 +189,7 @@ new class extends Component
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Expires</label>
                 <input type="date" wire:model="expires_at" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
@@ -203,7 +203,7 @@ new class extends Component
         </div>
 
         <div class="flex items-center gap-3 pt-2">
-            <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Save</button>
+            <button type="submit" wire:loading.attr="disabled" wire:target="save" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"><span wire:loading.remove wire:target="save">Save</span><span wire:loading wire:target="save">Saving…</span></button>
             <a href="{{ route('admin.careers.index') }}" class="text-sm text-slate-500">Cancel</a>
         </div>
     </form>
