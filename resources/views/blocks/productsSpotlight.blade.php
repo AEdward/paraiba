@@ -37,9 +37,8 @@
                     @if (! empty($item['image']))
                         <div class="relative h-64 sm:h-auto sm:flex-1">
                             @if ($isPhone)
-                                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 h-[108%] aspect-[853/1844] rotate-[5deg] rounded-[2.2rem] bg-[#1b2131] p-[6px] shadow-2xl shadow-slate-900/30">
-                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="h-full w-full rounded-[1.8rem] object-cover object-top">
-                                </div>
+                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[115%] w-auto max-w-none">
+
                             @else
                                 <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="absolute bottom-6 inset-x-0 mx-auto w-[95%] h-auto">
                             @endif
