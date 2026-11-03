@@ -21,8 +21,8 @@ class SitemapController extends Controller
         $base = "{$scheme}://{$root}";
 
         $staticRoutes = [
-            '/', '/about', '/services', '/solutions', '/products', '/work',
-            '/partners', '/careers', '/team', '/resources', '/contact',
+            '/', '/about', '/services', '/solutions', '/products',
+            '/careers', '/contact',
             '/legal/privacy', '/legal/terms', '/legal/cookies',
         ];
 

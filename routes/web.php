@@ -9,7 +9,6 @@ use App\Http\Controllers\Site\CmsPageController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\LegalController;
 use App\Http\Controllers\Site\MicrositeController;
-use App\Http\Controllers\Site\PartnersController;
 use App\Http\Controllers\Site\ProductsController;
 use App\Http\Controllers\SitemapController;
 use App\Models\JobPosting;
@@ -95,11 +94,6 @@ Route::domain($root)->group(function () {
     Route::get('/about', fn () => app(CmsPageController::class)->show('about'))->name('about');
     Route::get('/services', fn () => app(CmsPageController::class)->show('services'))->name('services');
     Route::get('/solutions', fn () => app(CmsPageController::class)->show('solutions'))->name('solutions');
-    Route::get('/work', fn () => app(CmsPageController::class)->show('work'))->name('work');
-    Route::get('/team', fn () => app(CmsPageController::class)->show('team'))->name('team');
-    Route::get('/resources', fn () => app(CmsPageController::class)->show('resources'))->name('resources');
-
-    Route::get('/partners', [PartnersController::class, 'index'])->name('partners.index');
 
     Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('products.show');

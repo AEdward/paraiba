@@ -16,9 +16,6 @@ class PageSeeder extends Seeder
         'products' => 'Products',
         'solutions' => 'Solutions',
         'services' => 'Services',
-        'work' => 'Work',
-        'resources' => 'Resources',
-        'team' => 'Team',
     ];
 
     public function run(): void
