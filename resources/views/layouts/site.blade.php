@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Paraiba Technology PLC')</title>
+    @include('partials.favicons')
     <meta name="description" content="@yield('meta_description', 'Innovative solutions, lasting impact — practical, reliable and beautiful digital products, built out of Addis Ababa.')">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles

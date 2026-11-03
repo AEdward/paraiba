@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $site->name }}</title>
+    @include('partials.favicons')
     @if ($site->theme_color)
         <style>:root { --theme-color: {{ $site->theme_color }}; --theme-color-secondary: {{ $site->theme_color_secondary ?? $site->theme_color }}; }</style>
     @endif
