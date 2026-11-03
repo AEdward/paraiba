@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Pages')
 @section('content')
-@include('admin.partials.nav')
 <div class="mx-auto max-w-4xl px-6 py-10">
     <h1 class="text-xl font-bold mb-6">Pages</h1>
     <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">

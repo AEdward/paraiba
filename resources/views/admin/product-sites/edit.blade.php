@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Edit: '.$site->name)
 @section('content')
-@include('admin.partials.nav')
 <livewire:admin.product-sites.form :site="$site" />
 
 <div class="mx-auto max-w-xl px-6 pb-10">

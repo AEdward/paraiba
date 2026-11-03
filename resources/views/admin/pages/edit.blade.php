@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Edit: '.$page->title)
 @section('content')
-@include('admin.partials.nav')
 <div class="mx-auto max-w-3xl px-6 py-10">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-xl font-bold">{{ $page->title }} <span class="text-slate-400 font-normal text-sm">/{{ $page->slug }}</span></h1>
