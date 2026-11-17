@@ -54,17 +54,6 @@ class SolutionsPageSeeder extends Seeder
                 'heading' => 'AI where it adds value.',
                 'body' => 'We can add intelligent search, document processing, support assistants, and workflow automation to suitable use cases.',
             ]],
-            ['type' => 'techStack', 'data' => [
-                'eyebrow' => '',
-                'heading' => 'The Stack We Use',
-                'body' => 'Languages, frameworks, and technologies for web, mobile, and AI.',
-                'keys' => [
-                    'python', 'javascript', 'typescript', 'php', 'dart', 'openjdk', 'kotlin',
-                    'swift', 'csharp', 'cplusplus', 'html5', 'css3', 'react', 'nextdotjs',
-                    'flutter', 'reactnative', 'laravel', 'django', 'fastapi', 'nodedotjs', 'express',
-                    'livewire', 'alpinedotjs', 'tailwindcss', 'vuedotjs', 'angular', 'mysql', 'postgresql',
-                ],
-            ]],
             ['type' => 'cta', 'data' => [
                 'style' => 'strip',
                 'theme' => 'light',

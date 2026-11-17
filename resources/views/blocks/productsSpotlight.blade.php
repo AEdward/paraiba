@@ -13,8 +13,8 @@
                     $accentClass = ($item['accentStyle'] ?? 'blue') === 'light' ? 'font-normal' : 'text-blue-600';
                 @endphp
                 <div class="relative flex flex-col sm:flex-row sm:h-64 rounded-2xl bg-gradient-to-br from-[#FCF5EC] to-[#F4E6D3] shadow-sm ring-1 ring-black/5">
-                    <div class="sm:w-[45%] shrink-0 p-8 flex flex-col justify-center">
-                        <div class="flex items-center gap-3">
+                    <div class="sm:w-[42%] shrink-0 p-7 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 whitespace-nowrap">
                             @if (! empty($item['logoImage']))
                                 <img src="{{ $item['logoImage'] }}" alt="" class="size-11 rounded-lg object-contain">
                             @elseif (! empty($item['logoIcon']))
@@ -22,12 +22,12 @@
                                     <x-icon :name="$item['logoIcon']" class="size-6" />
                                 </span>
                             @endif
-                            <span class="text-2xl font-bold tracking-tight text-[#14284B] {{ ! empty($item['nameItalic']) ? 'italic' : '' }}">{{ $item['name'] ?? '' }}@if (! empty($item['nameAccent']))<span class="{{ $accentClass }}">{{ $item['nameAccent'] }}</span>@endif</span>
+                            <span class="text-xl xl:text-2xl font-bold tracking-tight text-[#14284B] {{ ! empty($item['nameItalic']) ? 'italic' : '' }}">{{ $item['name'] ?? '' }}@if (! empty($item['nameAccent']))<span class="{{ $accentClass }}">{{ $item['nameAccent'] }}</span>@endif</span>
                         </div>
                         <p class="text-xl leading-snug text-slate-800 mt-4">{{ $item['tagline'] ?? '' }}</p>
                         @if (! empty($item['buttonLabel']))
                             <div>
-                                <a href="{{ $item['buttonHref'] ?? '#' }}" @if (str_starts_with($item['buttonHref'] ?? '', 'http')) target="_blank" rel="noopener" @endif class="inline-flex items-center gap-2 mt-5 rounded-lg bg-blue-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors">
+                                <a href="{{ $item['buttonHref'] ?? '#' }}" @if (str_starts_with($item['buttonHref'] ?? '', 'http')) target="_blank" rel="noopener" @endif class="inline-flex items-center gap-2 mt-5 whitespace-nowrap rounded-lg bg-blue-600 text-white px-4 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors">
                                     {{ $item['buttonLabel'] }} <x-icon name="arrowRight" class="size-4" />
                                 </a>
                             </div>
@@ -40,7 +40,7 @@
                                 <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="absolute bottom-0 left-0 h-[130%] w-auto max-w-none">
 
                             @else
-                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="absolute bottom-6 inset-x-0 mx-auto w-[95%] h-auto">
+                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? '' }}" loading="lazy" decoding="async" class="absolute bottom-3 -right-6 w-[118%] max-w-none h-auto drop-shadow-xl">
                             @endif
                         </div>
                     @endif
